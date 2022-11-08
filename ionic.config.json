@@ -1,0 +1,7 @@
+{
+  "name": "fit-buddy",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
