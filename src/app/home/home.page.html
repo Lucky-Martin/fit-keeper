@@ -1,20 +1,30 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-custom-food-modal></app-custom-food-modal>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+    <div class="fullheight xc">
+        <ion-card>
+            <ion-card-header>
+                <ion-card-subtitle>Macros</ion-card-subtitle>
+                <ion-card-title>Calorie Tracker</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+                <div class="content_container">
+                    <app-tracker></app-tracker>
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col>
+                                <h3>Protein {{ macros.protein }}g</h3>
+                            </ion-col>
+                            <ion-col>
+                                <h3>Carbs {{ macros.carbs }}g</h3>
+                            </ion-col>
+                            <ion-col>
+                                <h3>Fats {{ macros.fats }}g</h3>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </div>
+            </ion-card-content>
+        </ion-card>
+    </div>
 </ion-content>

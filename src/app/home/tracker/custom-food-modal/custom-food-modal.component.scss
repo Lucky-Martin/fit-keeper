@@ -1,0 +1,14 @@
+.name_input {
+    margin-bottom: 20px;
+}
+.quantity_input {
+    margin-top: 20px;
+    max-width: 40%;
+    float: right;
+}
+
+@media screen and (max-width: 992px) {
+    .quantity_input {
+        max-width: 80%;
+    }
+}

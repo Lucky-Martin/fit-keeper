@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UserService } from './home/user/user.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor() {}
+  loggedIn: boolean;
+
+  constructor(private userService: UserService) {
+    this.userService.fetchUser().then(value => {
+      this.loggedIn = !!value;
+    });
+  }
 }

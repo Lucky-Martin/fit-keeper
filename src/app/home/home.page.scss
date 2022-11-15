@@ -25,3 +25,29 @@
 #container a {
   text-decoration: none;
 }
+
+.fullheight {
+  height: 100%;
+}
+
+.xc {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+ion-grid, ion-row {
+  height: 100%;
+  text-align: center;
+}
+ion-card {
+  width: 100%;
+  min-height: 70%;
+}
+.content_container {
+  width: 100%;
+}
+ion-card-content {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
