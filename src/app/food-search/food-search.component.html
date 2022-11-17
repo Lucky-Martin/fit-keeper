@@ -1,0 +1,14 @@
+<app-custom-food-modal></app-custom-food-modal>
+
+<ion-content>
+  <div>
+    <ion-searchbar 
+    (ionChange)="inputChanged($event)"
+    placeholder="Search for a food"></ion-searchbar>
+    <ion-spinner name="lines-sharp" *ngIf="fetching"></ion-spinner>
+    <app-food-list 
+      *ngIf="foundFoods.length > 0 && !fetching" 
+      [foodList]="foundFoods"
+      (foodSelected)="onFoodSelected($event)"></app-food-list>
+  </div>
+</ion-content>

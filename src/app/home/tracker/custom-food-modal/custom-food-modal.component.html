@@ -1,56 +1,43 @@
-<ion-fab vertical="bottom" horizontal="end">
-  <ion-fab-button id="open-modal">
-    <ion-icon name="add"></ion-icon>
-  </ion-fab-button>
-</ion-fab>
-
-<ion-content>
-  <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)" #modal>
-    <ng-template>
-      <ion-header>
-        <ion-toolbar>
-          <ion-buttons slot="start">
-            <ion-button (click)="reset()">Cancel</ion-button>
-          </ion-buttons>
-          <ion-title>Welcome</ion-title>
-          <ion-buttons slot="end">
-            <ion-button (click)="confirm()" [strong]="true">Add</ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content class="ion-padding">
-        <!-- Name -->
-        <ion-item class="name_input">
-          <ion-label position="fixed">Food name</ion-label>
-          <ion-input placeholder="Enter food name" [(ngModel)]="food.name"></ion-input>
-        </ion-item>
-        <ion-list>
-          <!-- Protein -->
-          <ion-item>
-            <ion-label position="fixed" slot="end">Protein</ion-label>
-            <ion-input placeholder="Enter protein value" [(ngModel)]="food.macros.protein" (change)="updateGraph()"></ion-input>
-          </ion-item>
-          <!-- Carbs -->
-          <ion-item>
-            <ion-label position="fixed" slot="end">Carbs</ion-label>
-            <ion-input placeholder="Enter carb value" [(ngModel)]="food.macros.carbs" (change)="updateGraph()"></ion-input>
-          </ion-item>
-          <!-- Fats -->
-          <ion-item>
-            <ion-label position="fixed" slot="end">Fats</ion-label>
-            <ion-input placeholder="Enter fat value" [(ngModel)]="food.macros.fats" (change)="updateGraph()"></ion-input>
-          </ion-item>
-        </ion-list>
-        <!-- Quantity -->
-        <ion-item class="quantity_input">
-          <ion-label position="fixed" slot="end">Quantity</ion-label>
-          <ion-input placeholder="Enter quantity" value="1"></ion-input>
-        </ion-item>
-        <app-food-graph-preview [food]="food" 
-          *ngIf="food.macros.protein > 0 &&
-          food.macros.carbs > 0 &&
-          food.macros.fats > 0"></app-food-graph-preview>
-      </ion-content>
-    </ng-template>
-  </ion-modal>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()" [strong]="true">Add</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <!-- Name -->
+  <ion-item class="name_input">
+    <ion-label position="fixed">Food name</ion-label>
+    <ion-input placeholder="Enter food name" [(ngModel)]="food.name"></ion-input>
+  </ion-item>
+  <ion-list>
+    <!-- Protein -->
+    <ion-item>
+      <ion-label position="fixed" slot="end">Protein</ion-label>
+      <ion-input placeholder="Enter protein value" [(ngModel)]="food.macros.protein" (change)="updateGraph()"></ion-input>
+    </ion-item>
+    <!-- Carbs -->
+    <ion-item>
+      <ion-label position="fixed" slot="end">Carbs</ion-label>
+      <ion-input placeholder="Enter carb value" [(ngModel)]="food.macros.carbs" (change)="updateGraph()"></ion-input>
+    </ion-item>
+    <!-- Fats -->
+    <ion-item>
+      <ion-label position="fixed" slot="end">Fats</ion-label>
+      <ion-input placeholder="Enter fat value" [(ngModel)]="food.macros.fats" (change)="updateGraph()"></ion-input>
+    </ion-item>
+  </ion-list>
+  <!-- Quantity -->
+  <ion-item class="quantity_input">
+    <ion-label position="fixed" slot="end">Quantity</ion-label>
+    <ion-input placeholder="Enter quantity" value="1"></ion-input>
+  </ion-item>
+  <app-food-graph-preview [food]="food" 
+    *ngIf="food.macros.protein > 0 &&
+    food.macros.carbs > 0 &&
+    food.macros.fats > 0"></app-food-graph-preview>
 </ion-content>

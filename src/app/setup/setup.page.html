@@ -11,15 +11,17 @@
           <ion-card-content>
             <h2>Select your gender</h2>
             <p *ngIf="user.gender" [textContent]="user.gender" class="gender"></p>
-            <ion-button (click)="selectGender('male')">
-              <ion-icon name="man"></ion-icon>
-            </ion-button>
-            <ion-button (click)="selectGender('female')">
-              <ion-icon name="woman"></ion-icon>
-            </ion-button>
+            <ion-segment value="default">
+              <ion-segment-button value="default" (click)="selectGender('male')">
+                <ion-icon name="man"></ion-icon>
+              </ion-segment-button>
+              <ion-segment-button value="segment" (click)="selectGender('female')">
+                <ion-icon name="woman"></ion-icon>
+              </ion-segment-button>
+            </ion-segment>
             <h3>Choose your age</h3>
-            <p *ngIf="user.age > 0" class="age">{{ user.age }} years old</p>
             <ion-range 
+              [pin]="true"
               [min]="12"
               [max]="100"
               [(ngModel)]="user.age"></ion-range>

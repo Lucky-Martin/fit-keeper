@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
+import { FoodService } from 'src/app/food-search/food.service';
 import { Macros } from './food.model';
 import { TrackingService } from './tracking.service';
 

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { FoodListComponent } from './food-list/food-list.component';
+import { FoodSearchComponent } from './food-search/food-search.component';
+import { HomePage } from './home/home.page';
 import { UserService } from './home/user/user.service';
 import { WorkoutsComponent } from './workouts/workouts.component';
 
@@ -13,7 +14,7 @@ const routes: Routes = [
   {
     path: 'home',
     canActivate: [UserService],
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    component: HomePage
   },
   {
     path: 'setup',
@@ -22,7 +23,7 @@ const routes: Routes = [
   {
     path: 'food',
     canActivate: [UserService],
-    component: FoodListComponent
+    component: FoodSearchComponent
   },
   {
     path: 'workouts',

@@ -1,0 +1,5 @@
+<ion-list>
+    <ion-item button *ngFor="let food of foodList" (click)="selected(food)">
+        <ion-label>{{ food }}</ion-label>
+    </ion-item>
+</ion-list>

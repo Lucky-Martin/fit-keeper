@@ -1,7 +1,11 @@
-<app-custom-food-modal></app-custom-food-modal>
+<ion-fab vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="onOpenModal()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+</ion-fab>
 
 <ion-content [fullscreen]="true">
-    <div class="fullheight xc">
+    <div class="xc fix_nav">
         <ion-card>
             <ion-card-header>
                 <ion-card-subtitle>Macros</ion-card-subtitle>

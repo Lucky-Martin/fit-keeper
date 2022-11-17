@@ -1,9 +1,7 @@
-import { Component, ViewChild} from '@angular/core';
-import { IonModal } from '@ionic/angular';
-import { OverlayEventDetail } from '@ionic/core/components';
-import { UpdateGraphService } from 'src/app/food-list/food-graph-preview/update-graph.service';
+import { Component, Input, ViewChild} from '@angular/core';
+import { IonModal, ModalController } from '@ionic/angular';
+import { UpdateGraphService } from 'src/app/food-search/food-list/food-graph-preview/update-graph.service';
 import { Food } from '../food.model';
-import { TrackingService } from '../tracking.service';
 
 @Component({
   selector: 'app-custom-food-modal',
@@ -11,34 +9,36 @@ import { TrackingService } from '../tracking.service';
   styleUrls: ['./custom-food-modal.component.scss'],
 })
 export class CustomFoodModalComponent {
+  @Input() button: boolean = true;
   @ViewChild('modal') modal: IonModal;
-  food: Food = new Food();
+  food: Food;
 
-  constructor(private trackingService: TrackingService,
-              private updateGraphService: UpdateGraphService) {}
+  constructor(private updateGraphService: UpdateGraphService,
+              private modalController: ModalController) {
+    if (this.food == undefined) {
+      this.food = new Food();
+    }
+
+    console.log(this.food);
+    
+  }
 
   updateGraph() {
     this.updateGraphService.updateGraphPreview(this.food.macros);
   }
 
-  reset() {
-    this.food = new Food();
-    this.modal.dismiss(null, 'cancel');
+  cancel() {
+    this.reset();
+    return this.modalController.dismiss(null, 'cancel');
   }
 
   confirm() {
-    this.food.calories += this.food.macros.protein * 4;
-    this.food.calories += this.food.macros.carbs * 4;
-    this.food.calories += this.food.macros.fats * 9;
-    this.trackingService.AddFood(this.food);
-
+    const foodCopy = this.food;
     this.reset();
+    return this.modalController.dismiss(foodCopy, 'confirm');
   }
 
-  onWillDismiss(event: Event) {
-    const ev = event as CustomEvent<OverlayEventDetail<string>>;
-    if (ev.detail.role === 'confirm') {
-
-    }
+  reset() {
+    this.food = new Food();
   }
 }
