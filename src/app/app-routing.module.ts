@@ -17,10 +17,6 @@ const routes: Routes = [
     component: HomePage
   },
   {
-    path: 'setup',
-    loadChildren: () => import('./setup/setup.module').then( m => m.SetupPageModule)
-  },
-  {
     path: 'food',
     canActivate: [UserService],
     component: FoodSearchComponent
@@ -29,6 +25,10 @@ const routes: Routes = [
     path: 'workouts',
     canActivate: [UserService],
     component: WorkoutsComponent
+  },
+  {
+    path: 'setup',
+    loadChildren: () => import('./setup/setup.module').then( m => m.SetupPageModule)
   }
 ];
 

@@ -1,3 +1,28 @@
-<div>
-  <canvas #graph></canvas>
+<div class="fs_width">
+  <ion-card>
+    <ion-card-header>
+        <ion-card-subtitle>Macros</ion-card-subtitle>
+        <ion-card-title>Calorie Tracker</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+        <div class="content_container">
+            <div class="graph_container">
+              <canvas #graph></canvas>
+            </div>
+            <ion-grid>
+                <ion-row>
+                    <ion-col>
+                        <h3>Protein {{ macros.protein }}g</h3>
+                    </ion-col>
+                    <ion-col>
+                        <h3>Carbs {{ macros.carbs }}g</h3>
+                    </ion-col>
+                    <ion-col>
+                        <h3>Fats {{ macros.fats }}g</h3>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+    </ion-card-content>
+  </ion-card>
 </div>

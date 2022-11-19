@@ -10,6 +10,10 @@ export class AppComponent {
   loggedIn: boolean;
 
   constructor(private userService: UserService) {
+    this.userService.userLoggedStatus.subscribe(value => {
+      this.loggedIn = value;
+    });
+
     this.userService.fetchUser().then(value => {
       this.loggedIn = !!value;
     });

@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonSlides, ToastController } from '@ionic/angular';
+import { TrackingService } from '../home/tracker/tracking.service';
 import { IUser, User } from '../home/user/user.model';
 import { UserService } from '../home/user/user.service';
 
@@ -12,10 +13,11 @@ import { UserService } from '../home/user/user.service';
 export class SetupPage implements AfterViewInit {
   @ViewChild(IonSlides) private slides: IonSlides;
   private slideIndex: number = 1;
-  user: IUser = new User();
+  user: User = new User();
 
   constructor(private toastController: ToastController,
               private userService: UserService,
+              private trackingService: TrackingService,
               private router: Router) { }
 
   ngAfterViewInit() {
@@ -64,6 +66,7 @@ export class SetupPage implements AfterViewInit {
         break;
       case 3:
         await this.userService.createUser(this.user);
+        this.trackingService.CalculateCalorieGoal(this.user);
         this.router.navigate(['/home']);
         break;
     }

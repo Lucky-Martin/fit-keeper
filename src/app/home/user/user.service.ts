@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { IUser } from './user.model';
 import { Preferences } from '@capacitor/preferences';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 export class UserService implements CanActivate {
   private USER_STORAGE_KEY = "user";
   user: IUser | null;
+  userLoggedStatus: Subject<boolean> = new Subject<boolean>();
 
   constructor(private router: Router) { }
 
@@ -36,6 +37,7 @@ export class UserService implements CanActivate {
     return new Observable<boolean>((observer) => {
       this.fetchUser().then((value: IUser | null) => {
         if (value) {
+          this.userLoggedStatus.next(true);
           observer.next(true);
         } else {
           this.router.navigate(['setup']);

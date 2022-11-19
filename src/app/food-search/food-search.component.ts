@@ -3,7 +3,6 @@ import { ModalController } from '@ionic/angular';
 import { CustomFoodModalComponent } from '../home/tracker/custom-food-modal/custom-food-modal.component';
 import { Food } from '../home/tracker/food.model';
 import { TrackingService } from '../home/tracker/tracking.service';
-import { IFetchFoodData } from './food-response.model';
 import { FoodService } from './food.service';
 
 @Component({
@@ -23,6 +22,9 @@ export class FoodSearchComponent implements OnInit {
   ngOnInit() {}
 
   private async openInputModal(food: Food) {
+    this.fetching = false;
+    this.query = "";
+
     const modal = await this.modalController.create({
       component: CustomFoodModalComponent,
       componentProps: {
@@ -66,6 +68,9 @@ export class FoodSearchComponent implements OnInit {
   }
 
   onFoodSelected(food: string) {
+    this.fetching = true;
+    this.foundFoods = [];
+
     // Fetch food data
     this.foodService.fetchFoodData(food).subscribe(async value => {
       const food = new Food();

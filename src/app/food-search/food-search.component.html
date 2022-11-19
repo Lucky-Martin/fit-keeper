@@ -4,6 +4,7 @@
   <div>
     <ion-searchbar 
     (ionChange)="inputChanged($event)"
+    [value]="query"
     placeholder="Search for a food"></ion-searchbar>
     <ion-spinner name="lines-sharp" *ngIf="fetching"></ion-spinner>
     <app-food-list 

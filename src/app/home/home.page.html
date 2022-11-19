@@ -5,30 +5,8 @@
 </ion-fab>
 
 <ion-content [fullscreen]="true">
-    <div class="xc fix_nav">
-        <ion-card>
-            <ion-card-header>
-                <ion-card-subtitle>Macros</ion-card-subtitle>
-                <ion-card-title>Calorie Tracker</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-                <div class="content_container">
-                    <app-tracker></app-tracker>
-                    <ion-grid>
-                        <ion-row>
-                            <ion-col>
-                                <h3>Protein {{ macros.protein }}g</h3>
-                            </ion-col>
-                            <ion-col>
-                                <h3>Carbs {{ macros.carbs }}g</h3>
-                            </ion-col>
-                            <ion-col>
-                                <h3>Fats {{ macros.fats }}g</h3>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </div>
-            </ion-card-content>
-        </ion-card>
+    <div class="fix_nav">
+        <app-tracker [macros]="macros"></app-tracker>
+        <app-meal-history></app-meal-history>
     </div>
 </ion-content>

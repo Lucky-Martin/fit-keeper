@@ -18,9 +18,6 @@ export class CustomFoodModalComponent {
     if (this.food == undefined) {
       this.food = new Food();
     }
-
-    console.log(this.food);
-    
   }
 
   updateGraph() {

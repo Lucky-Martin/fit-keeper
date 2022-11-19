@@ -16,9 +16,11 @@ import { HomePage } from './home/home.page';
 import { TrackerComponent } from './home/tracker/tracker.component';
 import { FoodGraphPreviewComponent } from './food-search/food-list/food-graph-preview/food-graph-preview.component';
 import { FormsModule } from '@angular/forms';
+import { MealHistoryComponent } from './home/meal-history/meal-history.component';
+import { WorkoutsComponent } from './workouts/workouts.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, ToolbarComponent, FoodSearchComponent, FoodListComponent, CustomFoodModalComponent, HomePage, TrackerComponent, FoodGraphPreviewComponent],
+  declarations: [AppComponent, HeaderComponent, ToolbarComponent, FoodSearchComponent, FoodListComponent, CustomFoodModalComponent, HomePage, TrackerComponent, FoodGraphPreviewComponent, MealHistoryComponent, WorkoutsComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, FormsModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

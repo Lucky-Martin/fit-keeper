@@ -1,7 +1,6 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
-import { FoodService } from 'src/app/food-search/food.service';
-import { Macros } from './food.model';
+import { IMacros } from './food.model';
 import { TrackingService } from './tracking.service';
 
 Chart.register(...registerables);
@@ -12,6 +11,7 @@ Chart.register(...registerables);
   styleUrls: ['./tracker.component.scss'],
 })
 export class TrackerComponent implements AfterViewInit {
+  @Input() macros: IMacros;
   @ViewChild('graph') private graphRef: ElementRef;
   graph: Chart;
 

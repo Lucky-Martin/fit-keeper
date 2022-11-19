@@ -5,15 +5,27 @@
       <ion-icon name="home-outline"></ion-icon>
       <ion-label>Home</ion-label>
     </ion-tab-button>
-    <!-- Food -->
-    <ion-tab-button tab="food">
-      <ion-icon name="fast-food-outline"></ion-icon>
-      <ion-label>Food</ion-label>
+    <!-- History -->
+    <ion-tab-button tab="meal_history">
+      <ion-icon name="calendar-outline"></ion-icon>
+      <ion-label>History</ion-label>
     </ion-tab-button>
+    <!-- Food -->
+    <ion-tab-button></ion-tab-button>
     <!-- Workouts -->
     <ion-tab-button tab="workouts">
       <ion-icon name="barbell-outline"></ion-icon>
       <ion-label>Workouts</ion-label>
     </ion-tab-button>
+    <!-- Settings -->
+    <ion-tab-button tab="setup">
+      <ion-icon name="settings-outline"></ion-icon>
+      <ion-label>Settings</ion-label>
+    </ion-tab-button>
   </ion-tab-bar>
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button tab="food">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-tabs>
