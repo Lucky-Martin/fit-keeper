@@ -6,3 +6,18 @@ ion-tab-bar {
     -moz-box-shadow: 0px -5px 15px 0px rgba(0,0,0,0.2);
     box-shadow: 0px -5px 15px 0px rgba(0,0,0,0.2);
 }
+ion-fab {
+    bottom: 20px;
+}
+ion-fab-button {
+    --background: #E76B3F!important;
+    border: 5px solid #fff;
+    border-radius: 50%;
+    -webkit-box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.5);
+    box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.5);
+    width: 70px;
+    height: 70px;
+    margin-left: unset;
+    margin-inline-start: -8px !important;
+}

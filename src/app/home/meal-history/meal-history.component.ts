@@ -55,10 +55,7 @@ export class MealHistoryComponent implements AfterViewInit {
           label: 'Day',
           data: calories,
           backgroundColor: [
-            '#4DB4D7'
-          ],
-          hoverBackgroundColor: [
-            '#48BF91'
+            '#ffffff'
           ]
         }]
       },

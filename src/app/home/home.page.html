@@ -1,11 +1,6 @@
-<ion-fab vertical="bottom" horizontal="end">
-    <ion-fab-button (click)="onOpenModal()">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-</ion-fab>
-
 <ion-content [fullscreen]="true">
-    <div class="fix_nav">
+    <div class="fix_nav container">
+        <h2 class="greeting">Hi, {{username}}</h2>
         <app-tracker [macros]="macros"></app-tracker>
         <app-meal-history></app-meal-history>
     </div>

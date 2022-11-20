@@ -32,18 +32,19 @@ export class TrackerComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.graph = new Chart(this.graphRef.nativeElement, {
       type: 'doughnut',
+      options: {
+        animation: {
+          animateScale: false
+        }
+      },
       data: {
         labels: ['Calories Consumed', 'Calories Left'],
         datasets: [{
           label: 'Calories',
-          data: [this.trackingService.calories, this.trackingService.GetCaloriesLeft()],
+          data: [Math.round(this.trackingService.calories), Math.round(this.trackingService.GetCaloriesLeft())],
           backgroundColor: [
-            '#4DB4D7',
-            '#48BF91'
-          ],
-          hoverBackgroundColor: [
-            '#4DB4D7',
-            '#48BF91'
+            '#802E11',
+            '#E76B3F'
           ]
         }]
       }

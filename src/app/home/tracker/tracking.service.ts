@@ -157,14 +157,17 @@ export class TrackingService {
 
   public GetMacros(): Macros {
     const macros = new Macros();
+    this.fetchCurrentDayFoods().then(value => {
+      this.foods = value;
 
-    for (let i = 0; i < this.foods.length; i++) {
-      const element = this.foods[i];
-
-      macros.protein += Number(element.macros.protein);
-      macros.carbs += Number(element.macros.carbs);
-      macros.fats += Number(element.macros.fats);
-    }
+      for (let i = 0; i < this.foods.length; i++) {
+        const element = this.foods[i];
+  
+        macros.protein += Math.round(Number(element.macros.protein));
+        macros.carbs += Math.round(Number(element.macros.carbs));
+        macros.fats += Math.round(Number(element.macros.fats));
+      }
+    });
 
     return macros;
   }

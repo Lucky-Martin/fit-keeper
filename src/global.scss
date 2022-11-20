@@ -26,8 +26,13 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 .fix_nav {
-    margin-top: 70px!important;
+    margin-top: 90px!important;
 }
 .fs_width {
     width: 100vw;
+}
+.container {
+    max-width: 90%;
+    display: block;
+    margin: 0 auto;
 }

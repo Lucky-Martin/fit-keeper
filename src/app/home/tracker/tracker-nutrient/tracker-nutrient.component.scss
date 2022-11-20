@@ -1,0 +1,32 @@
+ion-col:nth-child(1) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon_container {
+    padding: 13px 15px;
+    width: max-content;
+    border-radius: 50%;
+}
+.icon_container ion-icon {
+    font-size: 22px;
+}
+.stacked_label {
+    color: gray;
+}
+.protein { 
+    -webkit-box-shadow: 0px 0px 10px 7px #fdf1d1;
+    -moz-box-shadow: 0px 0px 10px 7px #fdf1d1;
+    box-shadow: 0px 0px 10px 7px #fdf1d1;
+}
+.carbs {
+    -webkit-box-shadow: 0px 0px 10px 7px #e7dcf2;
+    -moz-box-shadow: 0px 0px 10px 7px #e7dcf2;
+    box-shadow: 0px 0px 10px 7px #e7dcf2;
+}
+.fat {
+    -webkit-box-shadow: 0px 0px 10px 7px #cfebfd;
+    -moz-box-shadow: 0px 0px 10px 7px #cfebfd;
+    box-shadow: 0px 0px 10px 7px #cfebfd;
+}
