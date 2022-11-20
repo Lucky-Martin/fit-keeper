@@ -50,7 +50,7 @@ export class MealHistoryComponent implements AfterViewInit {
     this.graph = new Chart(this.graphRef.nativeElement, {
       type: 'bar',
       data: {
-        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        labels: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'],
         datasets: [{
           label: 'Day',
           data: calories,
@@ -62,11 +62,23 @@ export class MealHistoryComponent implements AfterViewInit {
       options: {
         scales: {
           x: {
+            ticks: {
+              color: "#ffffff",
+              font: {
+                family: "Candara"
+              }
+            },
             grid: {
               display: false
             }
           },
           y: {
+            ticks: {
+              color: "#ffffff",
+              font: {
+                family: "Candara"
+              }
+            },
             grid: {
               display: false
             }
@@ -74,5 +86,7 @@ export class MealHistoryComponent implements AfterViewInit {
         }
       }
     });
+
+    this.graph.config.options.color = "#ffffff";
   }
 }

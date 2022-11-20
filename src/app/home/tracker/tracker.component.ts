@@ -4,6 +4,7 @@ import { IMacros } from './food.model';
 import { TrackingService } from './tracking.service';
 
 Chart.register(...registerables);
+Chart.defaults.color = "#000";
 
 @Component({
   selector: 'app-tracker',
@@ -45,7 +46,7 @@ export class TrackerComponent implements AfterViewInit {
           backgroundColor: [
             '#802E11',
             '#E76B3F'
-          ]
+          ],
         }]
       }
     });

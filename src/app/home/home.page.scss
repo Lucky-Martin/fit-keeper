@@ -38,11 +38,19 @@ ion-card {
   width: 100%;
   min-height: 70%;
 }
+
 .content_container {
   width: 100%;
 }
+
 ion-card-content {
   display: flex;
   align-items: center;
   height: 100%;
+}
+
+.greeting {
+  margin: 100px 0 0;
+  font-family: 'Candara', sans-serif;
+  font-weight: bold;
 }

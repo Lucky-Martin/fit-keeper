@@ -14,11 +14,16 @@ ion-col:nth-child(1) {
 }
 .stacked_label {
     color: gray;
+    margin: 10px 0 3px;
+}
+p {
+    margin: 0;
+    padding: 0;
 }
 .protein { 
-    -webkit-box-shadow: 0px 0px 10px 7px #fdf1d1;
-    -moz-box-shadow: 0px 0px 10px 7px #fdf1d1;
-    box-shadow: 0px 0px 10px 7px #fdf1d1;
+    -webkit-box-shadow: 0px 0px 10px 7px #9fcc5866;
+    -moz-box-shadow: 0px 0px 10px 7px #9fcc5866;
+    box-shadow: 0px 0px 10px 7px #9fcc5866;
 }
 .carbs {
     -webkit-box-shadow: 0px 0px 10px 7px #e7dcf2;
@@ -29,4 +34,10 @@ ion-col:nth-child(1) {
     -webkit-box-shadow: 0px 0px 10px 7px #cfebfd;
     -moz-box-shadow: 0px 0px 10px 7px #cfebfd;
     box-shadow: 0px 0px 10px 7px #cfebfd;
+}
+
+@media only screen and (max-width: 576px) {
+    .nutrient_container {
+        text-align: center;
+    }
 }
