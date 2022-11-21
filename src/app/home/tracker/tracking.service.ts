@@ -177,6 +177,7 @@ export class TrackingService {
   }
 
   public GetCaloriesLeft(): number {
+    this.fetchCalorieGoal();
     return this.calorieGoal - this.calories;
   }
 

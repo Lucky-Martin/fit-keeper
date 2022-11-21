@@ -31,6 +31,9 @@ export class TrackerComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    console.log(this.trackingService.GetCaloriesLeft());
+    
+
     this.graph = new Chart(this.graphRef.nativeElement, {
       type: 'doughnut',
       options: {

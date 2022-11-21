@@ -65,7 +65,7 @@ export class MealHistoryComponent implements AfterViewInit {
             ticks: {
               color: "#ffffff",
               font: {
-                family: "Candara"
+                family: "OpenSans"
               }
             },
             grid: {
@@ -76,7 +76,7 @@ export class MealHistoryComponent implements AfterViewInit {
             ticks: {
               color: "#ffffff",
               font: {
-                family: "Candara"
+                family: "OpenSans"
               }
             },
             grid: {
