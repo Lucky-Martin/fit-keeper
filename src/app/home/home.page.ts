@@ -18,6 +18,8 @@ export class HomePage implements OnInit {
               private userService: UserService,
               private modalController: ModalController) {
     this.trackingService.GetMacrosAsObservable().subscribe((value: Macros) => {
+      console.log("here", value);
+      
       this.macros = value;
     });
     this.userService.fetchUser().then(value => {
@@ -27,7 +29,7 @@ export class HomePage implements OnInit {
 
   ngOnInit(): void {
     this.macros = this.trackingService.GetMacros();
-    console.log(this.macros);
+    console.log("here", this.macros);
   }
 
   async onOpenModal() {

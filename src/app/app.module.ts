@@ -19,12 +19,14 @@ import { FormsModule } from '@angular/forms';
 import { MealHistoryComponent } from './home/meal-history/meal-history.component';
 import { WorkoutsComponent } from './workouts/workouts.component';
 import { TrackerNutrientComponent } from './home/tracker/tracker-nutrient/tracker-nutrient.component';
+import { DaySelectorComponent } from './home/day-selector/day-selector.component';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, ToolbarComponent, 
     FoodSearchComponent, FoodListComponent, CustomFoodModalComponent, 
     HomePage, TrackerComponent, FoodGraphPreviewComponent, 
-    MealHistoryComponent, WorkoutsComponent, TrackerNutrientComponent],
+    MealHistoryComponent, WorkoutsComponent, TrackerNutrientComponent,
+    DaySelectorComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, FormsModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
