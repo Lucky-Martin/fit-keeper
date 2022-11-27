@@ -7,8 +7,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HeaderComponent } from './header/header.component';
-import { ToolbarComponent } from './toolbar/toolbar.component';
+import { HomeHeaderComponent } from './headers/home-header/home-header.component';
 import { FoodSearchComponent } from './food-search/food-search.component';
 import { FoodListComponent } from './food-search/food-list/food-list.component';
 import { CustomFoodModalComponent } from './home/tracker/custom-food-modal/custom-food-modal.component';
@@ -20,13 +19,16 @@ import { MealHistoryComponent } from './home/meal-history/meal-history.component
 import { WorkoutsComponent } from './workouts/workouts.component';
 import { TrackerNutrientComponent } from './home/tracker/tracker-nutrient/tracker-nutrient.component';
 import { DaySelectorComponent } from './home/day-selector/day-selector.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
+import { MealHistoryHeaderComponent } from './headers/meal-history-header/meal-history-header.component';
+import { HistoryComponent } from './history/history.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, ToolbarComponent, 
+  declarations: [AppComponent, HomeHeaderComponent, MealHistoryHeaderComponent, ToolbarComponent,
     FoodSearchComponent, FoodListComponent, CustomFoodModalComponent, 
-    HomePage, TrackerComponent, FoodGraphPreviewComponent, 
+    HomePage, HistoryComponent, TrackerComponent, FoodGraphPreviewComponent, 
     MealHistoryComponent, WorkoutsComponent, TrackerNutrientComponent,
-    DaySelectorComponent],
+    DaySelectorComponent, MealHistoryComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, FormsModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

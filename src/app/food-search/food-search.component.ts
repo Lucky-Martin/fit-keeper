@@ -27,9 +27,7 @@ export class FoodSearchComponent implements OnInit {
 
     const modal = await this.modalController.create({
       component: CustomFoodModalComponent,
-      componentProps: {
-        food: food
-      }
+      componentProps: {food}
     });
 
     modal.present();
@@ -75,6 +73,8 @@ export class FoodSearchComponent implements OnInit {
     this.foodService.fetchFoodData(food).subscribe(async value => {
       const food = new Food();
       food.name = value.text;
+      food.image = value.parsed[0].food.image;
+      food.weight = 100;
       food.macros.protein = value.parsed[0].food.nutrients.PROCNT;
       food.macros.carbs = value.parsed[0].food.nutrients.CHOCDF;
       food.macros.fats = value.parsed[0].food.nutrients.FAT;

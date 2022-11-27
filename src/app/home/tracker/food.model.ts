@@ -12,6 +12,8 @@ export class Macros implements IMacros {
 
 export class Food {
     name: string = '';
+    image?: string;
     calories: number = 0;
+    weight?: number;
     macros: Macros = new Macros();
 }

@@ -1,0 +1,8 @@
+<app-meal-history-header [day]="day" (dayChanged)="onDateChanged($event)"></app-meal-history-header>
+<ion-content class="ion-padding">
+  <ion-modal [isOpen]="selectingDay">
+    <ng-template>
+      <ion-datetime [firstDayOfWeek]="1"></ion-datetime>
+    </ng-template>
+  </ion-modal>
+</ion-content>

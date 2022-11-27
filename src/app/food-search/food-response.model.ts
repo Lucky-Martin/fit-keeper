@@ -13,5 +13,14 @@ export interface IFetchFoodData {
                 }
             }
         }
+    ],
+    hints: [
+        {
+            measures: [
+                {
+                    weight: number;
+                }
+            ]
+        }
     ]
 }

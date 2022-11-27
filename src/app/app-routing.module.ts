@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { FoodSearchComponent } from './food-search/food-search.component';
+import { HistoryComponent } from './history/history.component';
 import { HomePage } from './home/home.page';
 import { UserService } from './home/user/user.service';
 import { WorkoutsComponent } from './workouts/workouts.component';
@@ -15,6 +16,11 @@ const routes: Routes = [
     path: 'home',
     canActivate: [UserService],
     component: HomePage
+  },
+  {
+    path: 'meal_history',
+    canActivate: [UserService],
+    component: HistoryComponent
   },
   {
     path: 'food',

@@ -14,30 +14,49 @@
     <ion-label position="fixed">Food name</ion-label>
     <ion-input placeholder="Enter food name" [(ngModel)]="food.name"></ion-input>
   </ion-item>
-  <ion-list>
-    <!-- Protein -->
-    <ion-item>
-      <ion-label position="fixed" slot="end">Protein</ion-label>
-      <ion-input placeholder="Enter protein value" [(ngModel)]="food.macros.protein" (change)="updateGraph()"></ion-input>
-    </ion-item>
-    <!-- Carbs -->
-    <ion-item>
-      <ion-label position="fixed" slot="end">Carbs</ion-label>
-      <ion-input placeholder="Enter carb value" [(ngModel)]="food.macros.carbs" (change)="updateGraph()"></ion-input>
-    </ion-item>
-    <!-- Fats -->
-    <ion-item>
-      <ion-label position="fixed" slot="end">Fats</ion-label>
-      <ion-input placeholder="Enter fat value" [(ngModel)]="food.macros.fats" (change)="updateGraph()"></ion-input>
-    </ion-item>
-  </ion-list>
-  <!-- Quantity -->
-  <ion-item class="quantity_input">
-    <ion-label position="fixed" slot="end">Quantity</ion-label>
-    <ion-input placeholder="Enter quantity" value="1"></ion-input>
+  <ion-item *ngIf="food.image">
+    <img [src]="food.image" alt="Food Image">
   </ion-item>
-  <app-food-graph-preview [food]="food" 
-    *ngIf="food.macros.protein > 0 &&
-    food.macros.carbs > 0 &&
-    food.macros.fats > 0"></app-food-graph-preview>
+  <ion-grid>
+    <ion-row class="flex_center">
+      <ion-col size="6 ">
+        <app-food-graph-preview [food]="food" 
+        *ngIf="food.macros.protein > 0 &&
+        food.macros.carbs > 0 &&
+        food.macros.fats > 0"></app-food-graph-preview>
+      </ion-col>
+      <ion-col size="6">
+        <ion-list>
+          <!-- Protein -->
+          <ion-item>
+            <ion-label position="fixed" slot="end">Protein</ion-label>
+            <ion-input placeholder="Enter protein value" [(ngModel)]="food.macros.protein" (change)="updateGraph()"></ion-input>
+          </ion-item>
+          <!-- Carbs -->
+          <ion-item>
+            <ion-label position="fixed" slot="end">Carbs</ion-label>
+            <ion-input placeholder="Enter carb value" [(ngModel)]="food.macros.carbs" (change)="updateGraph()"></ion-input>
+          </ion-item>
+          <!-- Fats -->
+          <ion-item>
+            <ion-label position="fixed" slot="end">Fats</ion-label>
+            <ion-input placeholder="Enter fat value" [(ngModel)]="food.macros.fats" (change)="updateGraph()"></ion-input>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- Quantity -->
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-label position="fixed" slot="end">Weight</ion-label>
+        <ion-input type="number" placeholder="Enter weight" [min]="1" [(ngModel)]="food.weight" (input)="onWeightChanged($event)"></ion-input>
+      </ion-col>
+      <ion-col>
+        <ion-label position="fixed" slot="end">Quantity</ion-label>
+        <ion-input type="number" placeholder="Enter quantity" value="1"></ion-input>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
