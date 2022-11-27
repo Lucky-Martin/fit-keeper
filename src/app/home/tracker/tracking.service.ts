@@ -35,7 +35,7 @@ export class TrackingService {
     });
   }
 
-  public async loadDayData(day: Date) {
+  public async SetDay(day: Date) {
     this.addCurrentDayToMealHistory();
     this.Reset();
 

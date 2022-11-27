@@ -15,12 +15,16 @@ export class TrackerComponent implements AfterViewInit {
   @Input() macros: IMacros;
   @ViewChild('graph') private graphRef: ElementRef;
   graph: Chart;
+  caloriesLeft: number;
 
-  constructor(private trackingService: TrackingService) { 
+  constructor(public trackingService: TrackingService) { 
     this.trackingService.GetMacrosAsObservable().subscribe(this.updateChart.bind(this));
+    this.caloriesLeft = this.trackingService.GetCaloriesLeft();
   }
 
   private updateChart() {
+    this.caloriesLeft = this.trackingService.GetCaloriesLeft();
+    
     this.graph.data.datasets[0].data.pop();
     this.graph.data.datasets[0].data.pop();
 

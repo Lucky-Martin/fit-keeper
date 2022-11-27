@@ -8,6 +8,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 export class MealHistoryHeaderComponent implements OnInit {
   @Input() day: string;
   @Output() dayChanged: EventEmitter<string> = new EventEmitter<string>();
+  date: Date;
 
   constructor() {
   }

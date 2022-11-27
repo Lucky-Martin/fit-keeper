@@ -3,3 +3,19 @@
     display: block;
     margin: 15px auto 20px;
 }
+.label_container h4 {
+    margin: 0;
+    font-size: 32px;
+}
+.label_container h6 {
+    margin-top: 0;
+    color: #9d9d9d;
+    min-height: 38px;
+}
+.second_row .label_container {
+    border-left: 4px solid #e76b3f;
+    padding-left: 10px;
+}
+.text_center {
+    text-align: center;
+}

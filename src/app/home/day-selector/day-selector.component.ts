@@ -12,7 +12,7 @@ export class DaySelectorComponent implements OnInit {
   constructor(private trackingService: TrackingService) { }
 
   async ngOnInit() {
-    this.daySelected = (new Date(await this.trackingService.fetchCurrentDay()).getDay() - 1).toString();
+    this.daySelected = (new Date(await this.trackingService.fetchCurrentDay()).getDay()).toString();
   }
 
   onDaySelected() {
@@ -20,6 +20,6 @@ export class DaySelectorComponent implements OnInit {
     const dayOfWeek = new Date();
     dayOfWeek.setDate(mondayDate.getDate() + Number(this.daySelected));
     
-    this.trackingService.loadDayData(dayOfWeek);
+    this.trackingService.SetDay(dayOfWeek);
   }
 }

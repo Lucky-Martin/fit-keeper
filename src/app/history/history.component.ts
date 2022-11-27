@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { TrackingService } from '../home/tracker/tracking.service';
 
 @Component({
   selector: 'app-history',
@@ -10,10 +11,17 @@ export class HistoryComponent implements OnInit {
   day: string;
   selectingDay: boolean;
 
-  constructor() { }
+  constructor(private trackingService: TrackingService) { }
 
   ngOnInit() {
     this.day = new Date().toDateString();
+  }
+
+  onDateSelected(event) {
+    const date = event.detail.value;
+    this.trackingService.SetDay(new Date(date));
+    this.day = date.toDateString();
+    this.selectingDay = false;
   }
 
   onDateChanged(changeString: string) {

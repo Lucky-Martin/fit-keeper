@@ -13,6 +13,10 @@ export class FoodListComponent implements OnInit {
 
   ngOnInit() {}
 
+  checkIfFavourite(food: string): boolean {
+    return false;
+  }
+
   selected(item: string) {
     this.foodSelected.emit(item);
   }

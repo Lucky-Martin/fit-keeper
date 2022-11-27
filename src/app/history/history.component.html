@@ -2,7 +2,7 @@
 <ion-content class="ion-padding">
   <ion-modal [isOpen]="selectingDay">
     <ng-template>
-      <ion-datetime [firstDayOfWeek]="1"></ion-datetime>
+      <ion-datetime [firstDayOfWeek]="1" (ionChange)="onDateSelected($event)"></ion-datetime>
     </ng-template>
   </ion-modal>
 </ion-content>
