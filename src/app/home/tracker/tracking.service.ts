@@ -24,15 +24,24 @@ export class TrackingService {
   }
 
   public async init() {
+    this.currentDay = new Date().toDateString();
+
     await this.fetchCalorieGoal();
     await this.fetchConsumedCalories();
-    await this.addCurrentDayToMealHistory().then(async () => {
-      await this.Reset();
-      await this.saveCurrentDayFoods(true);
-      this.setCurrentDay().then(() => {
-        this.macrosListener.next(this.GetMacros());
+    
+    if (this.currentDay !== await this.fetchCurrentDay()) {
+      await this.addCurrentDayToMealHistory().then(async () => {
+        await this.Reset();
+        await this.saveCurrentDayFoods(true);
+        this.setCurrentDay().then(() => {
+          this.macrosListener.next(this.GetMacros());
+        });
+
+        await this.SetDay(new Date());
       });
-    });
+    } else {
+      await this.SetDay(new Date());
+    }
   }
 
   public async SetDay(day: Date) {

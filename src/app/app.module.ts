@@ -22,13 +22,14 @@ import { DaySelectorComponent } from './home/day-selector/day-selector.component
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { MealHistoryHeaderComponent } from './headers/meal-history-header/meal-history-header.component';
 import { HistoryComponent } from './history/history.component';
+import { NutrientButtonComponent } from './home/tracker/custom-food-modal/nutrient-button/nutrient-button.component';
 
 @NgModule({
   declarations: [AppComponent, HomeHeaderComponent, MealHistoryHeaderComponent, ToolbarComponent,
     FoodSearchComponent, FoodListComponent, CustomFoodModalComponent, 
     HomePage, HistoryComponent, TrackerComponent, FoodGraphPreviewComponent, 
     MealHistoryComponent, WorkoutsComponent, TrackerNutrientComponent,
-    DaySelectorComponent, MealHistoryComponent],
+    DaySelectorComponent, MealHistoryComponent, NutrientButtonComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, FormsModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

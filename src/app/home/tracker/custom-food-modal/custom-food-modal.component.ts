@@ -15,8 +15,7 @@ export class CustomFoodModalComponent {
   food: Food;
   foodCopy: Food;
 
-  constructor(private updateGraphService: UpdateGraphService,
-              private modalController: ModalController) {
+  constructor(private modalController: ModalController) {
     if (this.food == undefined) {
       this.food = new Food();
     }
@@ -35,8 +34,8 @@ export class CustomFoodModalComponent {
     this.food.macros.fats = Math.round(this.foodCopy.macros.fats * multiplier);
   }
 
-  updateGraph() {
-    this.updateGraphService.updateGraphPreview(this.food.macros);
+  onMacrosChanged(nutrientName: string, value: number) {
+    this.food.macros[nutrientName] = value;
   }
 
   cancel() {

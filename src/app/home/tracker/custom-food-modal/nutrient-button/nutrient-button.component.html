@@ -1,0 +1,22 @@
+<div class="nutrient_container">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" sizeSm="6">
+        <div class="icon_container {{nutrientName}}">
+          <ion-icon src="/assets/icon/protein.svg" *ngIf="nutrientName === 'protein'"></ion-icon>
+          <ion-icon src="/assets/icon/carbs.svg" *ngIf="nutrientName === 'carbs'"></ion-icon>
+          <ion-icon src="/assets/icon/fat.svg" *ngIf="nutrientName === 'fats'"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div>
+          <p class="stacked_label">{{nutrientName.charAt(0).toUpperCase() + nutrientName.slice(1)}}</p>
+          <p class="picker_button flex_center" (click)="openPicker()">
+            {{value.toFixed()}}g
+            <ion-icon name="chevron-down-outline"></ion-icon>
+          </p>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
