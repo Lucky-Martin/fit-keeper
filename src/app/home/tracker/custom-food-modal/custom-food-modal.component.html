@@ -12,12 +12,41 @@
 </ion-header>
 <ion-content class="ion-padding">
   <!-- Name -->
-  <ion-item class="name_input">
-    <ion-label position="fixed">Food name</ion-label>
-    <ion-input placeholder="Enter food name" [(ngModel)]="food.name"></ion-input>
-  </ion-item>
-  <ion-item *ngIf="food.image">
-    <img [src]="food.image" alt="Food Image">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="8">
+        <ion-item class="name_input">
+          <ion-label position="fixed">Food name</ion-label>
+          <ion-input placeholder="Enter food name" [(ngModel)]="food.name"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <app-nutrient-button 
+          [nutrientName]="'calories'" 
+          [value]="food.macros.carbs"></app-nutrient-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <img [src]="food.image" alt="Food Image" *ngIf="food.image">
+  <ion-item>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="5" class="ion-text-end">
+          <ion-button fill="clear" (click)="updateQuantity(false)">
+            <ion-icon name="remove-circle-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col size="2" class="ion-text-center">
+          <ion-label position="fixed" slot="end">Quantity</ion-label>
+          <ion-input [value]="quantity" [disabled]="true"></ion-input>
+        </ion-col>
+        <ion-col size="5" class="ion-text-start">
+          <ion-button fill="clear" (click)="updateQuantity(true)">
+            <ion-icon name="add-circle-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-item>
   <ion-grid>
     <ion-row>
@@ -44,13 +73,13 @@
   <!-- Quantity -->
   <ion-grid>
     <ion-row>
-      <ion-col>
-        <ion-label position="fixed" slot="end">Weight</ion-label>
-        <ion-input type="number" placeholder="Enter weight" [min]="1" [(ngModel)]="food.weight" (input)="onWeightChanged($event)"></ion-input>
-      </ion-col>
-      <ion-col>
-        <ion-label position="fixed" slot="end">Quantity</ion-label>
-        <ion-input type="number" placeholder="Enter quantity" value="1"></ion-input>
+      <ion-col class="ion-start-center">
+        <div>
+          <app-nutrient-button 
+          [nutrientName]="'weight'" 
+          [value]="food.weight"
+          (changeValue)="onWeightChanged($event)"></app-nutrient-button>
+        </div>
       </ion-col>
     </ion-row>
   </ion-grid>

@@ -6,12 +6,15 @@
           <ion-icon src="/assets/icon/protein.svg" *ngIf="nutrientName === 'protein'"></ion-icon>
           <ion-icon src="/assets/icon/carbs.svg" *ngIf="nutrientName === 'carbs'"></ion-icon>
           <ion-icon src="/assets/icon/fat.svg" *ngIf="nutrientName === 'fats'"></ion-icon>
+          <ion-icon src="/assets/icon/weight.svg" *ngIf="nutrientName === 'weight'"></ion-icon>
+          <ion-icon src="/assets/icon/weight.svg" *ngIf="nutrientName === 'calories'"></ion-icon>
         </div>
       </ion-col>
       <ion-col>
         <div>
           <p class="stacked_label">{{nutrientName.charAt(0).toUpperCase() + nutrientName.slice(1)}}</p>
-          <p class="picker_button flex_center" (click)="openPicker()">
+          <p class="flex_center" *ngIf="nutrientName === 'calories'">{{value.toFixed()}}</p>
+          <p class="picker_button flex_center" (click)="openPicker()" *ngIf="nutrientName != 'calories'">
             {{value.toFixed()}}g
             <ion-icon name="chevron-down-outline"></ion-icon>
           </p>

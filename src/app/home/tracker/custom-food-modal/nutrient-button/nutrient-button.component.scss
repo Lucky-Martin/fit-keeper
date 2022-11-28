@@ -3,7 +3,11 @@ ion-col:nth-child(1) {
     justify-content: center;
     align-items: center;
 }
-
+.nutrient_container {
+    max-width: 256px;
+    display: block;
+    margin: auto;
+}
 .icon_container {
     padding: 13px 15px;
     width: max-content;
@@ -30,7 +34,12 @@ p {
     -moz-box-shadow: 0px 0px 10px 7px #e7dcf2;
     box-shadow: 0px 0px 10px 7px #e7dcf2;
 }
-.fat {
+.fats {
+    -webkit-box-shadow: 0px 0px 10px 7px #E1EDCD;
+    -moz-box-shadow: 0px 0px 10px 7px #E1EDCD;
+    box-shadow: 0px 0px 10px 7px #E1EDCD;
+}
+.weight {
     -webkit-box-shadow: 0px 0px 10px 7px #cfebfd;
     -moz-box-shadow: 0px 0px 10px 7px #cfebfd;
     box-shadow: 0px 0px 10px 7px #cfebfd;
