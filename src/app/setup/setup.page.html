@@ -11,7 +11,7 @@
           <ion-card-content>
             <h2>Select your gender</h2>
             <p *ngIf="user.gender" [textContent]="user.gender" class="gender"></p>
-            <ion-segment value="default">
+            <ion-segment>
               <ion-segment-button value="default" (click)="selectGender('male')">
                 <ion-icon name="man"></ion-icon>
               </ion-segment-button>
@@ -20,11 +20,10 @@
               </ion-segment-button>
             </ion-segment>
             <h3>Choose your age</h3>
-            <ion-range 
-              [pin]="true"
-              [min]="12"
-              [max]="100"
-              [(ngModel)]="user.age"></ion-range>
+            <ion-item>
+              <ion-label position="floating">Enter your age</ion-label>
+              <ion-input type="number" [(ngModel)]="user.age"></ion-input>
+            </ion-item>
             <h3>How would you like us to call you?</h3>
             <ion-item>
                 <ion-label position="stacked">Your name</ion-label>
@@ -58,7 +57,7 @@
             <ion-item>
               <ion-label position="floating">Weight</ion-label>
               <ion-input type="number" [(ngModel)]="user.weight"></ion-input>
-              <ion-note slot="helper">Enter your current weight in CM</ion-note>
+              <ion-note slot="helper">Enter your current weight in KG</ion-note>
             </ion-item>
           </ion-card-content>
           <div class="button_margin">

@@ -67,7 +67,7 @@ export class TrackingService {
     this.macrosListener.next(this.GetMacros());
   }
 
-  private calculateCalories(macros: IMacros): number {
+  public calculateCalories(macros: IMacros): number {
     let calories = 0;
     calories += macros.protein * 4;
     calories += macros.carbs * 4;

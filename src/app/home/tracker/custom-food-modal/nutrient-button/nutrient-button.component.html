@@ -14,7 +14,11 @@
         <div>
           <p class="stacked_label">{{nutrientName.charAt(0).toUpperCase() + nutrientName.slice(1)}}</p>
           <p class="flex_center" *ngIf="nutrientName === 'calories'">{{value.toFixed()}}</p>
-          <p class="picker_button flex_center" (click)="openPicker()" *ngIf="nutrientName != 'calories'">
+          <ion-input (ionChange)="onChangeValueEvent($event)"></ion-input>
+          <p 
+            class="picker_button flex_center" 
+            (click)="openPicker()" 
+            *ngIf="(nutrientName != 'calories' && nutrientName != 'weight') && value != undefined">
             {{value.toFixed()}}g
             <ion-icon name="chevron-down-outline"></ion-icon>
           </p>
