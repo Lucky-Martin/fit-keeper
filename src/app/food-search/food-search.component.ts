@@ -24,34 +24,6 @@ export class FoodSearchComponent implements OnInit {
   ngOnInit() {
   }
 
-  private async openInputModal(food: Food) {
-    this.fetching = false;
-    this.query = '';
-
-    const modal = await this.modalController.create({
-      component: AddFoodModalComponent,
-      componentProps: {food}
-    });
-
-    modal.present();
-
-    const {data, role} = await modal.onWillDismiss();
-
-    if (role === 'confirm') {
-      this.onAddFood(data);
-    }
-  }
-
-  private onAddFood({food, quantity}) {
-    if (!food.calories) {
-      food.calories += food.macros.protein * 4;
-      food.calories += food.macros.carbs * 4;
-      food.calories += food.macros.fats * 9;
-    }
-
-    this.trackingService.addFood(food, quantity);
-  }
-
   openFavourites() {
     this.favouritesOpened = true;
   }
@@ -81,6 +53,7 @@ export class FoodSearchComponent implements OnInit {
 
   onFoodSelected(food: string) {
     this.fetching = true;
+    this.query = '';
     this.foundFoods = [];
 
     // Fetch food data
@@ -98,5 +71,33 @@ export class FoodSearchComponent implements OnInit {
     }, err => {
       console.log(err);
     });
+  }
+
+  private async openInputModal(food: Food) {
+    this.fetching = false;
+    this.query = '';
+
+    const modal = await this.modalController.create({
+      component: AddFoodModalComponent,
+      componentProps: {food}
+    });
+
+    await modal.present();
+
+    const {data, role} = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      this.onAddFood(data);
+    }
+  }
+
+  private onAddFood({food, quantity}) {
+    if (!food.calories) {
+      food.calories += food.macros.protein * 4;
+      food.calories += food.macros.carbs * 4;
+      food.calories += food.macros.fats * 9;
+    }
+
+    this.trackingService.addFood(food, quantity);
   }
 }

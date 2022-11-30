@@ -3,3 +3,27 @@ ion-datetime {
     height: 100%;
     max-width: none;
 }
+.overview_card {
+  background: rgb(68,95,130);
+  background: linear-gradient(70deg, rgb(60 109 174) 10%, rgb(81, 133, 201) 100%);
+  color: #ffffff;
+  border-radius: 16px;
+  max-width: 512px;
+  display: block;
+  margin: auto;
+}
+ion-card-title,
+ion-card-subtitle {
+  color: #ffffff;
+}
+ion-list {
+  background: transparent;
+}
+ion-list ion-item {
+  --background: transparent;
+  color: #fff;
+  margin: 10px 0;
+}
+ion-list ion-item img {
+  border-radius: 50%;
+}

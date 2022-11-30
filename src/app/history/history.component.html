@@ -5,4 +5,47 @@
       <ion-datetime [firstDayOfWeek]="1" (ionChange)="onDateSelected($event)"></ion-datetime>
     </ng-template>
   </ion-modal>
+  <ion-card class="overview_card">
+    <ion-card-header>
+      <ion-card-subtitle>Consumed food</ion-card-subtitle>
+      <ion-card-title>Overview</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="data_overview">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <p>{{totalCalories.toFixed()}} KCAL</p>
+            </ion-col>
+            <ion-col>
+              <p>{{macrosOverview.protein.toFixed()}} Protein</p>
+            </ion-col>
+            <ion-col>
+              <p>{{macrosOverview.carbs.toFixed()}} Carbs</p>
+            </ion-col>
+            <ion-col>
+              <p>{{macrosOverview.fats.toFixed()}} Fats</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+      <ion-list>
+        <ion-item *ngFor="let meal of meals">
+          <ion-thumbnail slot="start">
+            <img alt="Meal Image" [src]="meal.image" />
+          </ion-thumbnail>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="8">
+                <h4>{{meal.name}}</h4>
+              </ion-col>
+              <ion-col>
+                <h4>{{meal.weight}}g</h4>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
