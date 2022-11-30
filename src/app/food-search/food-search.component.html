@@ -12,7 +12,7 @@
             <ion-spinner name="lines-sharp" *ngIf="fetching"></ion-spinner>
         </ion-col>
         <ion-col>
-          <ion-button class="favourites_button">
+          <ion-button class="favourites_button" (click)="openFavourites()">
             <ion-icon name="heart-outline"></ion-icon>
           </ion-button>
         </ion-col>
@@ -23,4 +23,7 @@
       [foodList]="foundFoods"
       (foodSelected)="onFoodSelected($event)"></app-food-list>
   </div>
+  <app-favourites 
+    *ngIf="favouritesOpened"
+    (onClosed)="closeFavourites()"></app-favourites>
 </ion-content>

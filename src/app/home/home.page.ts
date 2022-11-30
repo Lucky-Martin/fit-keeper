@@ -15,11 +15,8 @@ export class HomePage implements OnInit {
   username: string;
 
   constructor(private trackingService: TrackingService,
-              private userService: UserService,
-              private modalController: ModalController) {
+              private userService: UserService) {
     this.trackingService.GetMacrosAsObservable().subscribe((value: Macros) => {
-      console.log("here", value);
-      
       this.macros = value;
     });
     this.userService.fetchUser().then(value => {
@@ -29,26 +26,5 @@ export class HomePage implements OnInit {
 
   ngOnInit(): void {
     this.macros = this.trackingService.GetMacros();
-  }
-
-  async onOpenModal() {
-    const modal = await this.modalController.create({
-      component: CustomFoodModalComponent
-    });
-
-    modal.present();
-
-    const { data, role } = await modal.onWillDismiss();
-
-    if (role === 'confirm') {
-      this.onAddFood(data);
-    }
-  }
-
-  onAddFood(food: Food) {
-    food.calories += food.macros.protein * 4;
-    food.calories += food.macros.carbs * 4;
-    food.calories += food.macros.fats * 9;
-    this.trackingService.AddFood(food);
   }
 }

@@ -8,11 +8,14 @@
                             <h4>{{ food }}</h4>
                         </ion-col>
                         <ion-col class="icon_container">
-                            <ion-icon *ngIf="!checkIfFavourite(food)" name="heart-outline"></ion-icon>
+                            <ion-button fill="clear" (click)="addToFavourites(food)">
+                                <ion-icon *ngIf="checkIfFavourite(food)" name="heart"></ion-icon>
+                                <ion-icon *ngIf="!checkIfFavourite(food)" name="heart-outline"></ion-icon>
+                            </ion-button>
                         </ion-col>
                     </ion-row>
                   </ion-grid>
             </ion-card-content>
-          </ion-card>
+        </ion-card>
     </div>
 </ion-list>

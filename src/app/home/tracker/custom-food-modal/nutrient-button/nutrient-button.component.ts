@@ -62,8 +62,7 @@ export class NutrientButtonComponent implements OnInit {
   }
 
   onChangeValueEvent(event) {
-    console.log();
-    
+    this.changeValue.emit({key: this.nutrientName, value: this.value});
   }
 
 }

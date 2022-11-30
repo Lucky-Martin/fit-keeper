@@ -15,6 +15,7 @@ export class FoodService {
   constructor(private httpClient: HttpClient) { }
 
   fetchFoodAutocomplete(search: string): Observable<string[]> {
+    // this.httpClient.head
     return this.httpClient.get<string[]>(this.autoCompleteAP, {
       params: {
         app_id: environment.appId,

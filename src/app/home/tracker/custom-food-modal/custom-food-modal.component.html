@@ -81,6 +81,12 @@
           (changeValue)="onWeightChanged($event)"></app-nutrient-button>
         </div>
       </ion-col>
+      <ion-col size="4" class="icon_container">
+        <ion-button fill="clear">
+          <ion-icon name="heart-outline"></ion-icon>
+          <ion-icon name="heart" *ngIf="false"></ion-icon>
+        </ion-button>
+      </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>

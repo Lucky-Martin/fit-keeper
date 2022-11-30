@@ -14,6 +14,7 @@ export class FoodSearchComponent implements OnInit {
   query: string;
   foundFoods: string[] = [];
   fetching: boolean = false;
+  favouritesOpened: boolean = false; 
 
   constructor(private trackingService: TrackingService,
               private foodService: FoodService,
@@ -24,7 +25,7 @@ export class FoodSearchComponent implements OnInit {
   private async openInputModal(food: Food) {
     this.fetching = false;
     this.query = "";
-
+    
     const modal = await this.modalController.create({
       component: CustomFoodModalComponent,
       componentProps: {food}
@@ -39,11 +40,22 @@ export class FoodSearchComponent implements OnInit {
     }
   }
 
-  private onAddFood(food: Food) {
-    food.calories += food.macros.protein * 4;
-    food.calories += food.macros.carbs * 4;
-    food.calories += food.macros.fats * 9;
-    this.trackingService.AddFood(food);
+  private onAddFood({food, quantity}) {
+    if (!food.calories) {
+      food.calories += food.macros.protein * 4;
+      food.calories += food.macros.carbs * 4;
+      food.calories += food.macros.fats * 9;
+    }
+
+    this.trackingService.AddFood(food, quantity);
+  }
+
+  openFavourites() {
+    this.favouritesOpened = true;
+  }
+
+  closeFavourites() {
+    this.favouritesOpened = false;
   }
 
   inputChanged(event) {
@@ -59,8 +71,8 @@ export class FoodSearchComponent implements OnInit {
     this.foodService.fetchFoodAutocomplete(query).subscribe(value => {
       this.foundFoods = value;
       this.fetching = false;
-    }, err => {
-      console.log(err);
+      }, err => {
+        console.log(err);
       this.fetching = false;
     });
   }

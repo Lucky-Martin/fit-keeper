@@ -17,18 +17,7 @@ export class MealHistoryComponent implements AfterViewInit {
     this.trackingService.GetMacrosAsObservable().subscribe(this.updateGraph.bind(this));
   } 
 
-  private calculateCalories(macros: IMacros): number {
-    let calories = 0;
-    calories += macros.protein * 4;
-    calories += macros.carbs * 4;
-    calories += macros.fats * 9;
-
-    return calories;
-  }
-
-  private async updateGraph() {
-    console.log("update grapg");
-    
+  private async calculateCaloriesForDay(): Promise<number[]> {
     const mealHistory = await this.trackingService.fetchMealHistory();
     const weekStart = this.trackingService.getMondayOfWeek();
     const calories: number[] = [];
@@ -41,16 +30,20 @@ export class MealHistoryComponent implements AfterViewInit {
       if (mealHistory[dateString]) {
         let caloriesForDay: number = 0;
         for(let j = 0; j < mealHistory[dateString].length; j++) {
-          caloriesForDay += this.calculateCalories(mealHistory[dateString][j].macros);
+          caloriesForDay += mealHistory[dateString][j].calories;
         }
         
-        calories.push(caloriesForDay);
+        calories.push(Math.round(caloriesForDay));
       } else {
         calories.push(0);
       }
     }
 
-    console.log(calories);
+    return calories;
+  }
+
+  private async updateGraph() {
+    let calories = await this.calculateCaloriesForDay();
     
     this.graph.data.datasets[0].data = null;
     this.graph.data.datasets[0].data = calories;
@@ -58,33 +51,14 @@ export class MealHistoryComponent implements AfterViewInit {
   }
 
   async ngAfterViewInit() {
-    const mealHistory = await this.trackingService.fetchMealHistory();
-    const weekStart = this.trackingService.getMondayOfWeek();
-    const calories: number[] = [];
-
-    for(let i = 0; i < this.daysInAWeek; i++) {
-      const nextDay = new Date();
-      nextDay.setDate(weekStart.getDate() + i);
-      const dateString = nextDay.toDateString();
-
-      if (mealHistory[dateString]) {
-        let caloriesForDay: number = 0;
-        for(let j = 0; j < mealHistory[dateString].length; j++) {
-          caloriesForDay += this.calculateCalories(mealHistory[dateString][j].macros);
-        }
-        
-        calories.push(caloriesForDay);
-      } else {
-        calories.push(0);
-      }
-    }
+    let calories = await this.calculateCaloriesForDay();
 
     this.graph = new Chart(this.graphRef.nativeElement, {
       type: 'bar',
       data: {
         labels: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'],
         datasets: [{
-          label: 'Day',
+          label: 'KCAL',
           data: calories,
           backgroundColor: [
             '#ffffff'

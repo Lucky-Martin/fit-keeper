@@ -12,6 +12,10 @@ img {
     max-width: 256px;
     border-radius: 16%;
 }
+.icon_container {
+    display: flex;
+    align-items: center;
+}
 ion-icon {
     font-size: 28px;
 }

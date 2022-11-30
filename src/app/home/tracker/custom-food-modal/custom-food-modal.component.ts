@@ -1,7 +1,5 @@
 import { Component, Input, OnInit, ViewChild} from '@angular/core';
 import { IonModal, ModalController } from '@ionic/angular';
-import { UpdateGraphService } from 'src/app/food-search/food-list/food-graph-preview/update-graph.service';
-import { IFetchFoodData } from 'src/app/food-search/food-response.model';
 import { Food, Macros } from '../food.model';
 import { TrackingService } from '../tracking.service';
 
@@ -18,21 +16,29 @@ export class CustomFoodModalComponent implements OnInit {
   calories: number = 0;
   private initialMacros: Macros;
 
-  constructor(private modalController: ModalController,
-              private trackingService: TrackingService) {
+  constructor(private trackingService: TrackingService,
+              private modalController: ModalController) {
     if (this.food == undefined) {
       this.food = new Food();
     }
   }
 
   ngOnInit(): void {
-    this.calories = this.trackingService.calculateCalories(this.food.macros);
+    this.calories = this.food.calories;
+  }
+
+  async onAddFavourite() {
+    await this.trackingService.addFoodToFavourites(this.food.name);
+  }
+
+  async onRemoveFavourite() {
+    await this.trackingService.removeFoodFromFavourites(this.food.name);
   }
 
   onWeightChanged(event) {
-    if (event.target.value && event.target.value < 1) {
+    if (event.value && event.value < 1) {
       return this.food.weight = 1;
-    } else if (event.target.value > 1000) {
+    } else if (event.value > 1000) {
       return this.food.weight = 1000;
     }
 
@@ -40,9 +46,9 @@ export class CustomFoodModalComponent implements OnInit {
       this.initialMacros = this.food.macros;
     }
 
-    this.food.weight = event.target.value;
+    this.food.weight = event.value;
 
-    const multiplier = event.target.value / 100;
+    const multiplier = event.value / 100;
 
     const foodCopyJson = JSON.stringify(this.initialMacros);
 
@@ -71,7 +77,7 @@ export class CustomFoodModalComponent implements OnInit {
   confirm() {
     const foodCopy = this.food;
     this.reset();
-    return this.modalController.dismiss(foodCopy, 'confirm');
+    return this.modalController.dismiss({food: foodCopy, quantity: this.quantity}, 'confirm');
   }
 
   reset() {

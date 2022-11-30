@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { TrackingService } from 'src/app/home/tracker/tracking.service';
 
 @Component({
   selector: 'app-food-list',
@@ -9,12 +10,16 @@ export class FoodListComponent implements OnInit {
   @Input() foodList: string[];
   @Output() foodSelected: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor() { }
+  constructor(private trackingService: TrackingService) { }
 
   ngOnInit() {}
 
-  checkIfFavourite(food: string): boolean {
-    return false;
+  async checkIfFavourite(food: string): Promise<boolean> {
+    return await this.trackingService.checkIfFavourite(food);
+  }
+
+  addToFavourites(food: string) {
+    this.trackingService.addFoodToFavourites(food);
   }
 
   selected(item: string) {
