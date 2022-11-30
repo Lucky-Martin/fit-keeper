@@ -1,27 +1,26 @@
-import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { Food, IMacros, Macros } from './food.model';
-import { User } from './../user/user.model';
-import { Preferences } from '@capacitor/preferences';
+import {Injectable} from '@angular/core';
+import {Observable, Subject} from 'rxjs';
+import {Food, IMacros, Macros} from './food.model';
+import {User} from '../../setup/user.model';
+import {Preferences} from '@capacitor/preferences';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TrackingService {
-  private readonly calorieGoalKey = "CALORIE_GOAL";
-  private readonly consumedCaloriesKey = "CONSUMED_CALORIES";
-  private readonly mealHistoryKey = "MEAL_HISTORY";
-  private readonly currentDayKey = "CURRENT_DAY";
-  private readonly currentDayFoodsKey = "CURRENT_DAY_FOODS";
-  private readonly favouritesKey = "FAVOURITES";
-
   foods: Food[] = [];
-  calories: number = 0;
+  calories = 0;
   calorieGoal: number;
   macrosListener: Subject<Macros> = new Subject<Macros>();
   currentDay: string;
 
-  constructor() { 
+  private readonly calorieGoalKey = 'CALORIE_GOAL';
+  private readonly consumedCaloriesKey = 'CONSUMED_CALORIES';
+  private readonly mealHistoryKey = 'MEAL_HISTORY';
+  private readonly currentDayKey = 'CURRENT_DAY';
+  private readonly currentDayFoodsKey = 'CURRENT_DAY_FOODS';
+
+  constructor() {
     this.init();
   }
 
@@ -30,122 +29,43 @@ export class TrackingService {
 
     await this.fetchCalorieGoal();
     await this.fetchConsumedCalories();
-    
+
     if (this.currentDay !== await this.fetchCurrentDay()) {
       await this.addCurrentDayToMealHistory().then(async () => {
-        await this.Reset();
+        await this.reset();
         await this.saveCurrentDayFoods(true);
         this.setCurrentDay().then(() => {
-          this.macrosListener.next(this.GetMacros());
+          this.macrosListener.next(this.getMacros());
         });
 
-        await this.SetDay(new Date());
+        await this.setDay(new Date());
       });
     } else {
-      await this.SetDay(new Date());
+      await this.setDay(new Date());
     }
   }
 
-  private async fetchCalorieGoal() {
-    const { value } = await Preferences.get({ key: this.calorieGoalKey });
-    this.calorieGoal = Number(value);
-  }
-
-  private async saveConsumedCalories() {
-    console.log("saving", this.calories, this.calories.toString());
-    
-    await Preferences.set({ key: this.consumedCaloriesKey, value: this.calories.toString() });
-  }
-
-  private async fetchConsumedCalories() {
-    const currentlySavedDay: string = await this.fetchCurrentDay();
-    if (currentlySavedDay !== this.currentDay) {
-      await this.addCurrentDayToMealHistory();
-      await this.saveCurrentDayFoods();
-      await this.saveConsumedCalories();
-    }
-
-    const { value } = await Preferences.get({ key: this.consumedCaloriesKey });
-    this.calories = Number(value);
-  }
-
-  private async addCurrentDayToMealHistory() {
-    const mealHistory: {[day: string] : Food[]} = await this.fetchMealHistory();
-    const dayId: string = await this.fetchCurrentDay();
-    mealHistory[dayId] = await this.fetchCurrentDayFoods();
-
-    await Preferences.set({key: this.mealHistoryKey, value: JSON.stringify(mealHistory)});
-  }
-
-  public async fetchMealHistory(): Promise<{[day: string] : Food[]}> {
-    let {value} = await Preferences.get({ key: this.mealHistoryKey });
-    let parsedValue: {[day: string] : Food[]};
-
-    if (value == undefined || !value) {
-      parsedValue = {};
-    } else {
-      parsedValue = JSON.parse(value);
-    }
-
-    return parsedValue;
-  }
-
-  private async setCurrentDay(date?: string) {
-    await Preferences.set({ key: this.currentDayKey, value: date ? date : new Date().toDateString() });
-  }
-
-  private async fetchCurrentDayFoods(): Promise<Food[]> {
-    let {value} = await Preferences.get({ key: this.currentDayFoodsKey });
-    return JSON.parse(value);
-  }
-
-  private async saveCurrentDayFoods(empty: boolean = false) {
-    await Preferences.set({ key: this.currentDayFoodsKey, value: empty ? "[]" : JSON.stringify(this.foods) });
-  }
-
-  public async addFoodToFavourites(name: string) {
-    let favourites = await this.fetchFavourites();
-    favourites.push(name);
-    await Preferences.set({ key: this.favouritesKey, value: JSON.stringify(favourites) });
-  }
-
-  public async removeFoodFromFavourites(name: string) {
-    let favourites = await this.fetchFavourites();
-    let foodIndex = favourites.indexOf(name);
-    favourites = favourites.splice(foodIndex, 1);
-    await Preferences.set({ key: this.favouritesKey, value: JSON.stringify(favourites) });
-  }
-
-  public async fetchFavourites(): Promise<string[]> {
-    let {value} = await Preferences.get({ key: this.favouritesKey });
-    return JSON.parse(value);
-  }
-
-  public async checkIfFavourite(name: string): Promise<boolean> {
-    return this.fetchFavourites()[name];
-  }
-
-  public async SetDay(day: Date) {
-    this.addCurrentDayToMealHistory();
-    this.Reset();
+  public async setDay(day: Date) {
+    await this.addCurrentDayToMealHistory();
+    this.reset();
 
     this.currentDay = day.toDateString();
-    this.setCurrentDay(this.currentDay);
-    
-    const meals: {[day: string] : Food[]} = await this.fetchMealHistory();
+    await this.setCurrentDay(this.currentDay);
+
+    const meals: { [day: string]: Food[] } = await this.fetchMealHistory();
     let foodForTheDay: Food[] = [];
 
     if (meals[this.currentDay]) {
       foodForTheDay = meals[this.currentDay];
-      for(let i = 0; i < foodForTheDay.length; i++) {
-        this.calories += foodForTheDay[i].calories;
+      for (let i = 0; i < foodForTheDay.length; i++) {
+        this.calories += this.calculateCalories(foodForTheDay[i].macros);
       }
     }
 
     this.foods = foodForTheDay;
-    
-    this.saveCurrentDayFoods();
-    this.macrosListener.next(this.GetMacros());
+
+    await this.saveCurrentDayFoods();
+    this.macrosListener.next(this.getMacros());
   }
 
   public calculateCalories(macros: IMacros): number {
@@ -157,11 +77,6 @@ export class TrackingService {
     return calories;
   }
 
-  public async fetchCurrentDay(): Promise<string> {
-    let {value} = await Preferences.get({ key: this.currentDayKey });
-    return value;
-  }
-
   public getMondayOfWeek(): Date {
     const today = new Date();
     const first = today.getDate() - today.getDay() + 1;
@@ -170,24 +85,24 @@ export class TrackingService {
     return monday;
   }
 
-  public async CalculateCalorieGoal(user: User) {
+  public async calculateCalorieGoal(user: User) {
     let bmr: number;
     let amr: number;
 
-    if (user.gender === "male") {
+    if (user.gender === 'male') {
       bmr = 66.47 + (13.75 * user.weight) + (5.003 * user.height) - (6.755 * user.age);
     } else {
       bmr = 655.1 + (9.563 * user.weight) + (1.850 * user.height) - (4.676 * user.age);
     }
 
-    switch(user.activity) {
+    switch (user.activity) {
       case 'sedentary':
         amr = bmr * 1.2;
         break;
       case 'lightly_active':
         amr = bmr * 1.375;
         break;
-      case 'moderatly_active':
+      case 'moderately_active':
         amr = bmr * 1.55;
         break;
       case 'very_active':
@@ -195,24 +110,22 @@ export class TrackingService {
         break;
     }
 
-    if (user.goal == "loose_weight") {
+    if (user.goal === 'loose_weight') {
       amr -= 400;
-    } else if (user.goal == "gain_weight") {
+    } else if (user.goal === 'gain_weight') {
       amr += 400;
     }
 
     this.calorieGoal = Math.round(amr);
-    await Preferences.set({ key: this.calorieGoalKey, value: this.calorieGoal.toString() });
+    await Preferences.set({key: this.calorieGoalKey, value: this.calorieGoal.toString()});
   }
 
-  public AddFood(food: Food, quantity: number = 1): void {
-    if (this.foods.length == 0) { 
+  public addFood(food: Food, quantity: number = 1): void {
+    if (this.foods.length === 0) {
       this.foods = [];
     }
-    
-    for(let i = 0; i < quantity; i++) {
-      console.log("pushing", food);
-      
+
+    for (let i = 0; i < quantity; i++) {
       this.foods.push(food);
       this.calories += food.calories;
     }
@@ -220,29 +133,27 @@ export class TrackingService {
     this.saveConsumedCalories();
     this.saveCurrentDayFoods();
     this.addCurrentDayToMealHistory().then(() => {
-      this.macrosListener.next(this.GetMacros());
+      this.macrosListener.next(this.getMacros());
     });
   }
 
-  public RemoveFood(food: Food): void {
-    const mealIndex: number = this.foods.findIndex(meal => {
-      return meal.name === food.name;
-    });
+  public removeFood(food: Food): void {
+    const mealIndex: number = this.foods.findIndex(meal => meal.name === food.name);
 
     if (mealIndex > -1) {
       this.foods.slice(mealIndex, 1);
     }
   }
 
-  public GetMacros(): Macros {
+  public getMacros(): Macros {
     const macros = new Macros();
-    
+
     this.fetchCurrentDayFoods().then(value => {
       this.foods = value;
 
       for (let i = 0; i < this.foods.length; i++) {
         const element = this.foods[i];
-  
+
         macros.protein += Math.round(Number(element.macros.protein));
         macros.carbs += Math.round(Number(element.macros.carbs));
         macros.fats += Math.round(Number(element.macros.fats));
@@ -252,17 +163,77 @@ export class TrackingService {
     return macros;
   }
 
-  public GetMacrosAsObservable(): Observable<Macros> {
+  public getMacrosAsObservable(): Observable<Macros> {
     return this.macrosListener.asObservable();
   }
 
-  public GetCaloriesLeft(): number {
+  public getCaloriesLeft(): number {
     this.fetchCalorieGoal();
     return this.calorieGoal - this.calories;
   }
 
-  public Reset(): void {
+  public async fetchCurrentDay(): Promise<string> {
+    const {value} = await Preferences.get({key: this.currentDayKey});
+    return value;
+  }
+
+  public async fetchMealHistory(): Promise<{ [day: string]: Food[] }> {
+    const {value} = await Preferences.get({key: this.mealHistoryKey});
+    let parsedValue: { [day: string]: Food[] };
+
+    if (value === undefined || !value) {
+      parsedValue = {};
+    } else {
+      parsedValue = JSON.parse(value);
+    }
+
+    return parsedValue;
+  }
+
+  public reset(): void {
     this.foods = [];
     this.calories = 0;
+  }
+
+  private async fetchCalorieGoal() {
+    const {value} = await Preferences.get({key: this.calorieGoalKey});
+    this.calorieGoal = Number(value);
+  }
+
+  private async saveConsumedCalories() {
+    await Preferences.set({key: this.consumedCaloriesKey, value: this.calories.toString()});
+  }
+
+  private async fetchConsumedCalories() {
+    const currentlySavedDay: string = await this.fetchCurrentDay();
+    if (currentlySavedDay !== this.currentDay) {
+      await this.addCurrentDayToMealHistory();
+      await this.saveCurrentDayFoods();
+      await this.saveConsumedCalories();
+    }
+
+    const {value} = await Preferences.get({key: this.consumedCaloriesKey});
+    this.calories = Number(value);
+  }
+
+  private async addCurrentDayToMealHistory() {
+    const mealHistory: { [day: string]: Food[] } = await this.fetchMealHistory();
+    const dayId: string = await this.fetchCurrentDay();
+    mealHistory[dayId] = await this.fetchCurrentDayFoods();
+
+    await Preferences.set({key: this.mealHistoryKey, value: JSON.stringify(mealHistory)});
+  }
+
+  private async setCurrentDay(date?: string) {
+    await Preferences.set({key: this.currentDayKey, value: date ? date : new Date().toDateString()});
+  }
+
+  private async fetchCurrentDayFoods(): Promise<Food[]> {
+    const {value} = await Preferences.get({key: this.currentDayFoodsKey});
+    return JSON.parse(value);
+  }
+
+  private async saveCurrentDayFoods(empty: boolean = false) {
+    await Preferences.set({key: this.currentDayFoodsKey, value: empty ? '[]' : JSON.stringify(this.foods)});
   }
 }

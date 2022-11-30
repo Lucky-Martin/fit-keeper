@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { TrackingService } from '../tracker/tracking.service';
+import {Component, OnInit} from '@angular/core';
+import {TrackingService} from '../tracker/tracking.service';
 
 @Component({
   selector: 'app-day-selector',
@@ -9,7 +9,8 @@ import { TrackingService } from '../tracker/tracking.service';
 export class DaySelectorComponent implements OnInit {
   daySelected: string;
 
-  constructor(private trackingService: TrackingService) { }
+  constructor(private trackingService: TrackingService) {
+  }
 
   async ngOnInit() {
     this.daySelected = (new Date(await this.trackingService.fetchCurrentDay()).getDay() - 1).toString();
@@ -19,7 +20,7 @@ export class DaySelectorComponent implements OnInit {
     const mondayDate = this.trackingService.getMondayOfWeek();
     const dayOfWeek = new Date();
     dayOfWeek.setDate(mondayDate.getDate() + Number(this.daySelected));
-    
-    this.trackingService.SetDay(dayOfWeek);
+
+    this.trackingService.setDay(dayOfWeek);
   }
 }

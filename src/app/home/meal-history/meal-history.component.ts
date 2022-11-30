@@ -1,7 +1,6 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { Chart } from 'chart.js';
-import { IMacros } from '../tracker/food.model';
-import { TrackingService } from '../tracker/tracking.service';
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {Chart} from 'chart.js';
+import {TrackingService} from '../tracker/tracking.service';
 
 @Component({
   selector: 'app-meal-history',
@@ -12,10 +11,10 @@ export class MealHistoryComponent implements AfterViewInit {
   private readonly daysInAWeek = 7;
   @ViewChild('graph') private graphRef: ElementRef;
   graph: Chart;
-  
+
   constructor(private trackingService: TrackingService) {
-    this.trackingService.GetMacrosAsObservable().subscribe(this.updateGraph.bind(this));
-  } 
+    this.trackingService.getMacrosAsObservable().subscribe(this.updateGraph.bind(this));
+  }
 
   private async calculateCaloriesForDay(): Promise<number[]> {
     const mealHistory = await this.trackingService.fetchMealHistory();
@@ -32,7 +31,7 @@ export class MealHistoryComponent implements AfterViewInit {
         for(let j = 0; j < mealHistory[dateString].length; j++) {
           caloriesForDay += mealHistory[dateString][j].calories;
         }
-        
+
         calories.push(Math.round(caloriesForDay));
       } else {
         calories.push(0);
@@ -44,7 +43,7 @@ export class MealHistoryComponent implements AfterViewInit {
 
   private async updateGraph() {
     let calories = await this.calculateCaloriesForDay();
-    
+
     this.graph.data.datasets[0].data = null;
     this.graph.data.datasets[0].data = calories;
     this.graph.update();

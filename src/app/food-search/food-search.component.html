@@ -4,12 +4,12 @@
     <ion-grid>
       <ion-row>
         <ion-col size="9">
-          <ion-searchbar 
+          <ion-searchbar
             animated="true"
             (ionChange)="inputChanged($event)"
             [value]="query"
             placeholder="Search for a food"></ion-searchbar>
-            <ion-spinner name="lines-sharp" *ngIf="fetching"></ion-spinner>
+          <ion-spinner name="lines-sharp" *ngIf="fetching"></ion-spinner>
         </ion-col>
         <ion-col>
           <ion-button class="favourites_button" (click)="openFavourites()">
@@ -18,12 +18,12 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-    <app-food-list 
-      *ngIf="foundFoods.length > 0 && !fetching" 
+    <app-food-list
+      *ngIf="foundFoods.length > 0 && !fetching"
       [foodList]="foundFoods"
       (foodSelected)="onFoodSelected($event)"></app-food-list>
   </div>
-  <app-favourites 
+  <app-favourites
     *ngIf="favouritesOpened"
-    (onClosed)="closeFavourites()"></app-favourites>
+    (closed)="closeFavourites()"></app-favourites>
 </ion-content>

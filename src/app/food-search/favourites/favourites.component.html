@@ -10,17 +10,17 @@
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
-        <ion-card *ngFor="let food of favourites" (click)="onAddFood()">
+        <ion-card *ngFor="let food of favourites" (click)="onAddFood(food)">
           <ion-card-content>
-              <ion-grid>
-                  <ion-row>
-                      <ion-col size="10" class="name_container">
-                          <h4>{{ food.text }}</h4>
-                      </ion-col>
-                      <ion-col class="icon_container">
-                        <ion-icon name="heart"></ion-icon>
-                      </ion-col>
-                  </ion-row>
+            <ion-grid>
+              <ion-row>
+                <ion-col size="10" class="name_container">
+                  <h4>{{ food.text }}</h4>
+                </ion-col>
+                <ion-col class="icon_container">
+                  <ion-icon name="heart"></ion-icon>
+                </ion-col>
+              </ion-row>
               </ion-grid>
           </ion-card-content>
         </ion-card>

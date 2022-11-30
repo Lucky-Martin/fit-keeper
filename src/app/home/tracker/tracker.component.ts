@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { Chart, registerables } from 'chart.js';
-import { IMacros } from './food.model';
-import { TrackingService } from './tracking.service';
+import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {Chart, registerables} from 'chart.js';
+import {IMacros} from './food.model';
+import {TrackingService} from './tracking.service';
 
 Chart.register(...registerables);
 Chart.defaults.color = "#000";
@@ -17,19 +17,19 @@ export class TrackerComponent implements AfterViewInit {
   graph: Chart;
   caloriesLeft: number;
 
-  constructor(public trackingService: TrackingService) { 
-    this.trackingService.GetMacrosAsObservable().subscribe(this.updateChart.bind(this));
-    this.caloriesLeft = this.trackingService.GetCaloriesLeft();
+  constructor(public trackingService: TrackingService) {
+    this.trackingService.getMacrosAsObservable().subscribe(this.updateChart.bind(this));
+    this.caloriesLeft = this.trackingService.getCaloriesLeft();
   }
 
   private updateChart() {
-    this.caloriesLeft = this.trackingService.GetCaloriesLeft();
-    
+    this.caloriesLeft = this.trackingService.getCaloriesLeft();
+
     this.graph.data.datasets[0].data.pop();
     this.graph.data.datasets[0].data.pop();
 
     this.graph.data.datasets[0].data.push(this.trackingService.calories);
-    this.graph.data.datasets[0].data.push(this.trackingService.GetCaloriesLeft());
+    this.graph.data.datasets[0].data.push(this.trackingService.getCaloriesLeft());
 
     this.graph.update();
   }
@@ -46,7 +46,7 @@ export class TrackerComponent implements AfterViewInit {
         labels: ['Calories Consumed', 'Calories Left'],
         datasets: [{
           label: 'Calories',
-          data: [Math.round(this.trackingService.calories), Math.round(this.trackingService.GetCaloriesLeft())],
+          data: [Math.round(this.trackingService.calories), Math.round(this.trackingService.getCaloriesLeft())],
           backgroundColor: [
             '#802E11',
             '#E76B3F'

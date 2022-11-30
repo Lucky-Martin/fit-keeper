@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { TrackingService } from '../home/tracker/tracking.service';
+import {Component, OnInit} from '@angular/core';
+import {TrackingService} from '../home/tracker/tracking.service';
 
 @Component({
   selector: 'app-history',
@@ -19,7 +19,7 @@ export class HistoryComponent implements OnInit {
 
   onDateSelected(event) {
     const date = event.detail.value;
-    this.trackingService.SetDay(new Date(date));
+    this.trackingService.setDay(new Date(date));
     this.day = date.toDateString();
     this.selectingDay = false;
   }

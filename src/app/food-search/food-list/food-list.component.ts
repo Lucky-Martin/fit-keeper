@@ -1,5 +1,5 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { TrackingService } from 'src/app/home/tracker/tracking.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FavouritesService} from '../favourites/favourites.service';
 
 @Component({
   selector: 'app-food-list',
@@ -9,17 +9,27 @@ import { TrackingService } from 'src/app/home/tracker/tracking.service';
 export class FoodListComponent implements OnInit {
   @Input() foodList: string[];
   @Output() foodSelected: EventEmitter<string> = new EventEmitter<string>();
+  favourites: string[] = [];
 
-  constructor(private trackingService: TrackingService) { }
+  constructor(private favouritesService: FavouritesService) {
+    this.fetchFavourites();
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
-  async checkIfFavourite(food: string): Promise<boolean> {
-    return await this.trackingService.checkIfFavourite(food);
+  private fetchFavourites() {
+    this.favouritesService.fetchFavourites().then(value => {
+      this.favourites = value;
+    });
+  }
+
+  checkIfFavourite(food: string) {
+    return this.favourites.indexOf(food) > -1;
   }
 
   addToFavourites(food: string) {
-    this.trackingService.addFoodToFavourites(food);
+    this.favouritesService.addFoodToFavourites(food);
   }
 
   selected(item: string) {

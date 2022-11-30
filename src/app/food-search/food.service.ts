@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
-import { IFetchFoodData } from './food-response.model';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {environment} from 'src/environments/environment';
+import {Observable} from 'rxjs';
+import {IFetchFoodData} from './food-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +12,10 @@ export class FoodService {
   private readonly foodDataAP: string = "https://api.edamam.com/api/food-database/v2/parser";
   private readonly fetchFoodLimit = 75;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+  }
 
   fetchFoodAutocomplete(search: string): Observable<string[]> {
-    // this.httpClient.head
     return this.httpClient.get<string[]>(this.autoCompleteAP, {
       params: {
         app_id: environment.appId,

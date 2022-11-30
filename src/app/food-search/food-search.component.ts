@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
-import { CustomFoodModalComponent } from '../home/tracker/custom-food-modal/custom-food-modal.component';
-import { Food } from '../home/tracker/food.model';
-import { TrackingService } from '../home/tracker/tracking.service';
-import { FoodService } from './food.service';
+import {Component, OnInit} from '@angular/core';
+import {ModalController} from '@ionic/angular';
+import {Food} from '../home/tracker/food.model';
+import {TrackingService} from '../home/tracker/tracking.service';
+import {FoodService} from './food.service';
+import {AddFoodModalComponent} from './add-food-modal/add-food-modal.component';
 
 @Component({
   selector: 'app-food-search',
@@ -13,27 +13,29 @@ import { FoodService } from './food.service';
 export class FoodSearchComponent implements OnInit {
   query: string;
   foundFoods: string[] = [];
-  fetching: boolean = false;
-  favouritesOpened: boolean = false; 
+  fetching = false;
+  favouritesOpened = false;
 
   constructor(private trackingService: TrackingService,
               private foodService: FoodService,
-              private modalController: ModalController) { }
+              private modalController: ModalController) {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   private async openInputModal(food: Food) {
     this.fetching = false;
-    this.query = "";
-    
+    this.query = '';
+
     const modal = await this.modalController.create({
-      component: CustomFoodModalComponent,
+      component: AddFoodModalComponent,
       componentProps: {food}
     });
 
     modal.present();
 
-    const { data, role } = await modal.onWillDismiss();
+    const {data, role} = await modal.onWillDismiss();
 
     if (role === 'confirm') {
       this.onAddFood(data);
@@ -47,7 +49,7 @@ export class FoodSearchComponent implements OnInit {
       food.calories += food.macros.fats * 9;
     }
 
-    this.trackingService.AddFood(food, quantity);
+    this.trackingService.addFood(food, quantity);
   }
 
   openFavourites() {
@@ -60,8 +62,8 @@ export class FoodSearchComponent implements OnInit {
 
   inputChanged(event) {
     const query: string = event.detail.value;
-    
-    if (query === "") {
+
+    if (query === '') {
       this.foundFoods = [];
       return;
     }
@@ -71,7 +73,7 @@ export class FoodSearchComponent implements OnInit {
     this.foodService.fetchFoodAutocomplete(query).subscribe(value => {
       this.foundFoods = value;
       this.fetching = false;
-      }, err => {
+    }, err => {
         console.log(err);
       this.fetching = false;
     });
@@ -95,6 +97,6 @@ export class FoodSearchComponent implements OnInit {
       this.openInputModal(food);
     }, err => {
       console.log(err);
-    })
+    });
   }
 }

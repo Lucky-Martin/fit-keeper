@@ -1,9 +1,9 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { IonSlides, ToastController } from '@ionic/angular';
-import { TrackingService } from '../home/tracker/tracking.service';
-import { IUser, User } from '../home/user/user.model';
-import { UserService } from '../home/user/user.service';
+import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
+import {IonSlides, ToastController} from '@ionic/angular';
+import {TrackingService} from '../home/tracker/tracking.service';
+import {User} from './user.model';
+import {UserService} from '../home/user/user.service';
 
 @Component({
   selector: 'app-setup',
@@ -66,7 +66,7 @@ export class SetupPage implements AfterViewInit {
         break;
       case 3:
         await this.userService.createUser(this.user);
-        this.trackingService.CalculateCalorieGoal(this.user);
+        this.trackingService.calculateCalorieGoal(this.user);
         this.router.navigate(['/home']);
         break;
     }

@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
-import { CustomFoodModalComponent } from './tracker/custom-food-modal/custom-food-modal.component';
-import { Food, Macros } from './tracker/food.model';
-import { TrackingService } from './tracker/tracking.service';
-import { UserService } from './user/user.service';
+import {Component, OnInit} from '@angular/core';
+import {Macros} from './tracker/food.model';
+import {TrackingService} from './tracker/tracking.service';
+import {UserService} from './user/user.service';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +14,7 @@ export class HomePage implements OnInit {
 
   constructor(private trackingService: TrackingService,
               private userService: UserService) {
-    this.trackingService.GetMacrosAsObservable().subscribe((value: Macros) => {
+    this.trackingService.getMacrosAsObservable().subscribe((value: Macros) => {
       this.macros = value;
     });
     this.userService.fetchUser().then(value => {
@@ -25,6 +23,6 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit(): void {
-    this.macros = this.trackingService.GetMacros();
+    this.macros = this.trackingService.getMacros();
   }
 }
