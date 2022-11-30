@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {IonSlides, ToastController} from '@ionic/angular';
 import {TrackingService} from '../home/tracker/tracking.service';
 import {User} from './user.model';
-import {UserService} from '../home/user/user.service';
+import {UserService} from './user.service';
 
 @Component({
   selector: 'app-setup',
@@ -12,8 +12,8 @@ import {UserService} from '../home/user/user.service';
 })
 export class SetupPage implements AfterViewInit {
   @ViewChild(IonSlides) private slides: IonSlides;
-  private slideIndex: number = 1;
   user: User = new User();
+  private slideIndex = 1;
 
   constructor(private toastController: ToastController,
               private userService: UserService,
@@ -24,42 +24,22 @@ export class SetupPage implements AfterViewInit {
     this.slides.lockSwipes(true);
   }
 
-  private async displayError(message: string) {
-    const toast = await this.toastController.create({
-      position: "bottom",
-      duration: 3000,
-      buttons: [
-        {
-          text: 'Dismiss',
-          role: 'cancel'
-        }
-      ],
-      message
-    });
-
-    await toast.present();
-  }
-
   selectGender(gender: string) {
     this.user.gender = gender;
-  }
-
-  rangeFormat(value: number) {
-    return `${value}cm`;
   }
 
   async nextSlide() {
     switch(this.slideIndex) {
       case 1:
         if (!this.user.gender || !this.user.name || !this.user.age) {
-          return this.displayError("Please enter all required data!");
+          return this.displayError('Please enter all required data!');
         }
 
         this.slideIndex = 2;
         break;
       case 2:
         if (!this.user.height || !this.user.weight) {
-          return this.displayError("Please enter all required data!");
+          return this.displayError('Please enter all required data!');
         }
 
         this.slideIndex = 3;
@@ -75,5 +55,21 @@ export class SetupPage implements AfterViewInit {
     this.slides.slideNext().then(() => {
       this.slides.lockSwipes(true);
     });
+  }
+
+  private async displayError(message: string) {
+    const toast = await this.toastController.create({
+      position: 'bottom',
+      duration: 3000,
+      buttons: [
+        {
+          text: 'Dismiss',
+          role: 'cancel'
+        }
+      ],
+      message
+    });
+
+    await toast.present();
   }
 }

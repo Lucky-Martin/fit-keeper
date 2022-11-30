@@ -18,21 +18,26 @@ export class FoodListComponent implements OnInit {
   ngOnInit() {
   }
 
-  private fetchFavourites() {
-    this.favouritesService.fetchFavourites().then(value => {
-      this.favourites = value;
+  addToFavourites(food: string) {
+    this.favouritesService.addFoodToFavourites(food).then(() => {
+      this.fetchFavourites();
     });
   }
 
-  checkIfFavourite(food: string) {
-    return this.favourites.indexOf(food) > -1;
-  }
-
-  addToFavourites(food: string) {
-    this.favouritesService.addFoodToFavourites(food);
+  removeFromFavourites(food: string) {
+    this.favouritesService.removeFoodFromFavourites(food).then(() => {
+      console.log('here');
+      this.fetchFavourites();
+    });
   }
 
   selected(item: string) {
     this.foodSelected.emit(item);
+  }
+
+  private fetchFavourites() {
+    this.favouritesService.fetchFavourites().then(value => {
+      this.favourites = value;
+    });
   }
 }

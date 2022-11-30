@@ -26,13 +26,7 @@ export class FavouritesComponent implements OnInit {
   }
 
   async ngOnInit() {
-    const favouritesList: string[] = await this.favouritesService.fetchFavourites() || [];
-
-    for (let i = 0; i < favouritesList.length; i++) {
-      this.foodService.fetchFoodData(favouritesList[i]).subscribe(food => {
-        this.favourites.push(food);
-      });
-    }
+    await this.loadFavourites();
   }
 
   async onAddFood(foodData: IFetchFoodData) {
@@ -45,23 +39,54 @@ export class FavouritesComponent implements OnInit {
     food.macros.fats = foodData.parsed[0].food.nutrients.FAT;
     food.calories = foodData.parsed[0].food.nutrients.ENERC_KCAL;
 
+    console.log(food);
+
     const modal = await this.modalController.create({
       component: AddFoodModalComponent,
       componentProps: {food}
     });
+
+    await this.onClose();
 
     await modal.present();
 
     const {data, role} = await modal.onWillDismiss();
 
     if (role === 'confirm') {
-      this.trackingService.addFood(data, 1);
+      this.trackingService.addFood(data.food, data.quantity);
     }
+  }
+
+  async removeFromFavourites(food: IFetchFoodData) {
+    this.fetching = true;
+    await this.favouritesService.removeFoodFromFavourites(food.text);
+    await this.loadFavourites();
   }
 
   async onClose() {
     this.open = false;
     await this.modal.dismiss();
     this.closed.emit();
+  }
+
+  private async loadFavourites() {
+    const favouritesList: string[] = await this.favouritesService.fetchFavourites() || [];
+
+    this.fetching = true;
+    this.favourites = [];
+
+    for (let i = 0; i < favouritesList.length; i++) {
+      this.foodService.fetchFoodData(favouritesList[i]).subscribe(food => {
+        this.favourites.push(food);
+
+        if (i === favouritesList.length - 1) {
+          this.fetching = false;
+        }
+      });
+    }
+
+    if (favouritesList.length === 0) {
+      this.fetching = false;
+    }
   }
 }

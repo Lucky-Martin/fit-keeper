@@ -10,20 +10,27 @@
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
-        <ion-card *ngFor="let food of favourites" (click)="onAddFood(food)">
-          <ion-card-content>
-            <ion-grid>
-              <ion-row>
-                <ion-col size="10" class="name_container">
-                  <h4>{{ food.text }}</h4>
-                </ion-col>
-                <ion-col class="icon_container">
-                  <ion-icon name="heart"></ion-icon>
-                </ion-col>
-              </ion-row>
+        <div class="fs flex_center" *ngIf="fetching">
+          <ion-spinner name="lines-sharp"></ion-spinner>
+        </div>
+        <div *ngIf="!fetching">
+          <ion-card *ngFor="let food of favourites">
+            <ion-card-content>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="8" class="name_container" (click)="onAddFood(food)">
+                    <h4>{{ food.text }}</h4>
+                  </ion-col>
+                  <ion-col class="icon_container">
+                    <ion-button fill="clear" (click)="removeFromFavourites(food)">
+                      <ion-icon name="heart"></ion-icon>
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
               </ion-grid>
-          </ion-card-content>
-        </ion-card>
+            </ion-card-content>
+          </ion-card>
+        </div>
       </ion-content>
     </ng-template>
   </ion-modal>
