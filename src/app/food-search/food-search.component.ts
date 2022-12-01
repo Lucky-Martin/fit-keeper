@@ -4,6 +4,7 @@ import {Food} from '../home/tracker/food.model';
 import {TrackingService} from '../home/tracker/tracking.service';
 import {FoodService} from './food.service';
 import {AddFoodModalComponent} from './add-food-modal/add-food-modal.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-food-search',
@@ -15,13 +16,42 @@ export class FoodSearchComponent implements OnInit {
   foundFoods: string[] = [];
   fetching = false;
   favouritesOpened = false;
+  predefinedDate: string = null;
+  predefinedFoodQuery: string = null;
 
-  constructor(private trackingService: TrackingService,
+  constructor(private route: ActivatedRoute,
+              private trackingService: TrackingService,
               private foodService: FoodService,
               private modalController: ModalController) {
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.route.queryParams
+      .subscribe(params => {
+        this.predefinedDate = params.day;
+        this.predefinedFoodQuery = params.food;
+        console.log(this.predefinedDate, this.predefinedFoodQuery);
+        
+        if (this.predefinedFoodQuery) {
+          this.fetching = true;
+          
+          this.foodService.fetchFoodData(this.predefinedFoodQuery).subscribe(async value => {
+            const food = new Food();
+            food.name = value.text;
+            food.image = value.parsed[0].food.image;
+            food.weight = 100;
+            food.macros.protein = value.parsed[0].food.nutrients.PROCNT;
+            food.macros.carbs = value.parsed[0].food.nutrients.CHOCDF;
+            food.macros.fats = value.parsed[0].food.nutrients.FAT;
+            food.calories = value.parsed[0].food.nutrients.ENERC_KCAL;
+      
+            this.openInputModal(food);
+          }, err => {
+            console.log(err);
+          });
+        }
+      }
+    );
   }
 
   openFavourites() {
@@ -91,13 +121,26 @@ export class FoodSearchComponent implements OnInit {
     }
   }
 
-  private onAddFood({food, quantity}) {
+  private async onAddFood({food, quantity}) {
     if (!food.calories) {
       food.calories += food.macros.protein * 4;
       food.calories += food.macros.carbs * 4;
       food.calories += food.macros.fats * 9;
     }
 
-    this.trackingService.addFood(food, quantity);
+    if (this.predefinedDate) {
+      const mealHistory = await this.trackingService.fetchMealHistory();
+      let meals: Food[] = mealHistory[this.predefinedDate];
+      if (!meals) {
+        meals = [];
+      }
+      for(let i = 0; i < quantity; i++) {
+        meals.push(food);
+      }
+      mealHistory[this.predefinedDate] = meals;
+      this.trackingService.saveMealHistory(JSON.stringify(mealHistory));
+    } else {
+      this.trackingService.addFood(food, quantity);
+    }
   }
 }

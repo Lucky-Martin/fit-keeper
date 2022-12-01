@@ -51,6 +51,7 @@ export class TrackingService {
 
     this.currentDay = day.toDateString();
     await this.setCurrentDay(this.currentDay);
+    await this.saveConsumedCalories(0);
 
     const meals: { [day: string]: Food[] } = await this.fetchMealHistory();
     let foodForTheDay: Food[] = [];
@@ -78,11 +79,12 @@ export class TrackingService {
   }
 
   public getMondayOfWeek(): Date {
-    const today = new Date();
-    const first = today.getDate() - today.getDay() + 1;
+    const date = new Date();
+    var day = date.getDay() || 7;  
+      if(day !== 1 ) 
+        date.setHours(-24 * (day - 1)); 
 
-    const monday = new Date(today.setDate(first));
-    return monday;
+    return date;
   }
 
   public async calculateCalorieGoal(user: User) {
@@ -130,9 +132,9 @@ export class TrackingService {
       this.calories += food.calories;
     }
 
-    this.saveConsumedCalories();
     this.saveCurrentDayFoods();
-    this.addCurrentDayToMealHistory().then(() => {
+    this.saveConsumedCalories();
+    this.addCurrentDayToMealHistory().then(async () => {
       this.macrosListener.next(this.getMacros());
     });
   }
@@ -167,9 +169,8 @@ export class TrackingService {
     return this.macrosListener.asObservable();
   }
 
-  public getCaloriesLeft(): number {
-    this.fetchCalorieGoal();
-    return this.calorieGoal - this.calories;
+  public async getCaloriesLeft(): Promise<number> {
+    return this.calorieGoal - (this.calories);
   }
 
   public async fetchCurrentDay(): Promise<string> {
@@ -190,6 +191,10 @@ export class TrackingService {
     return parsedValue;
   }
 
+  public async saveMealHistory(mealHistory: string) {
+    await Preferences.set({key: this.mealHistoryKey, value: mealHistory});
+  }
+
   public reset(): void {
     this.foods = [];
     this.calories = 0;
@@ -200,8 +205,8 @@ export class TrackingService {
     this.calorieGoal = Number(value);
   }
 
-  private async saveConsumedCalories() {
-    await Preferences.set({key: this.consumedCaloriesKey, value: this.calories.toString()});
+  private async saveConsumedCalories(calories?: number) {
+    await Preferences.set({key: this.consumedCaloriesKey, value: calories ? calories.toString() : this.calories.toString()});
   }
 
   private async fetchConsumedCalories() {

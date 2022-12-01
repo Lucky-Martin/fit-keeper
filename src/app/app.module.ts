@@ -24,6 +24,8 @@ import {MealHistoryHeaderComponent} from './headers/meal-history-header/meal-his
 import {HistoryComponent} from './history/history.component';
 import {NutrientButtonComponent} from './food-search/add-food-modal/nutrient-button/nutrient-button.component';
 import {FavouritesComponent} from './food-search/favourites/favourites.component';
+import { HistoryFoodListComponent } from './history/history-food-list/history-food-list.component';
+import { FavouritesCardComponent } from './history/favourites-card/favourites-card.component';
 
 @NgModule({
   declarations: [AppComponent, HomeHeaderComponent, MealHistoryHeaderComponent, ToolbarComponent,
@@ -31,7 +33,7 @@ import {FavouritesComponent} from './food-search/favourites/favourites.component
     HomePage, HistoryComponent, TrackerComponent, FoodGraphPreviewComponent,
     MealHistoryComponent, WorkoutsComponent, TrackerNutrientComponent,
     DaySelectorComponent, MealHistoryComponent, NutrientButtonComponent,
-    FavouritesComponent],
+    FavouritesComponent, HistoryFoodListComponent, FavouritesCardComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, FormsModule],
   providers: [{provide: RouteReuseStrategy, useClass: IonicRouteStrategy}],
   bootstrap: [AppComponent],

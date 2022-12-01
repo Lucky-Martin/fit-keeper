@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TrackingService} from '../home/tracker/tracking.service';
 import {Food, Macros} from '../home/tracker/food.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-history',
@@ -10,27 +11,36 @@ import {Food, Macros} from '../home/tracker/food.model';
 export class HistoryComponent implements OnInit {
   date: Date = new Date();
   macrosOverview: Macros = new Macros();
+  fetching = false;
   meals: Food[];
   totalCalories = 0;
   day: string;
   selectingDay: boolean;
 
-  constructor(private trackingService: TrackingService) { }
+  constructor(private router: Router,
+              private trackingService: TrackingService) { }
 
   async ngOnInit() {
     this.day = new Date().toDateString();
     await this.fetchMeals();
   }
 
-  async onDateSelected(event) {
-    const date = event.detail.value;
-    await this.trackingService.setDay(new Date(date));
-    this.day = new Date(date).toDateString();
-    await this.fetchMeals();
-    this.selectingDay = false;
+  addFood(food?: string) {
+    this.router.navigate(['/food'],
+    {
+      queryParams: { day: this.day, food }
+    });
   }
 
-  onDateChanged(changeString: string) {
+  async onDateSelected(event) {
+    const date = event.detail.value;
+    this.day = new Date(date).toDateString();
+
+    this.selectingDay = false;
+    await this.fetchMeals();
+  }
+
+  async onDateChanged(changeString: string) {
     switch (changeString) {
       case 'select_day':
         this.selectingDay = true;
@@ -39,22 +49,31 @@ export class HistoryComponent implements OnInit {
         const yesterday = this.date.getDate() - 1;
         this.date = new Date(this.date.setDate(yesterday));
         this.day = this.date.toDateString();
+        await this.fetchMeals();
         break;
       case 'next':
         const tomorrow = this.date.getDate() + 1;
         this.date = new Date(this.date.setDate(tomorrow));
         this.day = this.date.toDateString();
+        await this.fetchMeals();
         break;
       default:
-
         break;
     }
   }
 
   private async fetchMeals()
   {
+    this.fetching = true;
+    this.macrosOverview = new Macros();
+    this.totalCalories = 0;
+
     const mealHistory = await this.trackingService.fetchMealHistory();
     this.meals = mealHistory[this.day];
+
+    if (!this.meals) {
+      this.meals = []; 
+    }
 
     for(let i = 0; i < this.meals.length; i++) {
       const meal = this.meals[i];
@@ -63,5 +82,7 @@ export class HistoryComponent implements OnInit {
       this.macrosOverview.fats += meal.macros.fats;
       this.totalCalories += meal.calories;
     }
+
+    this.fetching = false;
   }
 }

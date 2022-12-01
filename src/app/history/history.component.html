@@ -1,16 +1,30 @@
 <app-meal-history-header [day]="day" (dayChanged)="onDateChanged($event)"></app-meal-history-header>
-<ion-content class="ion-padding">
+<ion-content class="ion-padding"> 
   <ion-modal [isOpen]="selectingDay">
     <ng-template>
-      <ion-datetime [firstDayOfWeek]="1" (ionChange)="onDateSelected($event)"></ion-datetime>
+      <ion-datetime 
+        [firstDayOfWeek]="1"
+        (ionChange)="onDateSelected($event)"></ion-datetime>
     </ng-template>
   </ion-modal>
-  <ion-card class="overview_card">
+  <div [ngClass]="{'fs': fetching}" class="flex_center">
+    <ion-spinner name="lines-sharp" *ngIf="fetching"></ion-spinner>
+  </div>
+  <ion-card class="overview_card" *ngIf="!fetching">
     <ion-card-header>
-      <ion-card-subtitle>Consumed food</ion-card-subtitle>
-      <ion-card-title>Overview</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="8">
+            <ion-card-subtitle>Consumed food</ion-card-subtitle>
+            <ion-card-title>Overview</ion-card-title>
+          </ion-col>
+          <ion-col class="flex_horizontal ion-text-end">
+            <ion-button fill="clear" (click)="addFood()">
+              <ion-icon name="add-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
       <div class="data_overview">
         <ion-grid>
           <ion-row>
@@ -29,23 +43,19 @@
           </ion-row>
         </ion-grid>
       </div>
-      <ion-list>
-        <ion-item *ngFor="let meal of meals">
-          <ion-thumbnail slot="start">
-            <img alt="Meal Image" [src]="meal.image" />
-          </ion-thumbnail>
-          <ion-grid>
-            <ion-row>
-              <ion-col size="8">
-                <h4>{{meal.name}}</h4>
-              </ion-col>
-              <ion-col>
-                <h4>{{meal.weight}}g</h4>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
+    </ion-card-header>
+    <ion-accordion-group>
+      <ion-accordion>
+        <ion-item slot="header" color="blue_gradient">
+          <ion-label>Foods</ion-label>
         </ion-item>
-      </ion-list>
-    </ion-card-content>
+        <div class="ion-padding" slot="content">
+          <ion-card-content>
+            <app-history-food-list [meals]="meals"></app-history-food-list>
+          </ion-card-content>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
   </ion-card>
+  <app-favourites-card (addFood)="addFood($event)"></app-favourites-card>
 </ion-content>

@@ -15,26 +15,30 @@ export class TrackerComponent implements AfterViewInit {
   @Input() macros: IMacros;
   @ViewChild('graph') private graphRef: ElementRef;
   graph: Chart;
-  caloriesLeft: number;
+  caloriesLeft: number = 0;
 
   constructor(public trackingService: TrackingService) {
     this.trackingService.getMacrosAsObservable().subscribe(this.updateChart.bind(this));
-    this.caloriesLeft = this.trackingService.getCaloriesLeft();
+    this.trackingService.getCaloriesLeft().then(value => {
+      this.caloriesLeft = value;
+    });
   }
 
-  private updateChart() {
-    this.caloriesLeft = this.trackingService.getCaloriesLeft();
+  private async updateChart() {
+    this.caloriesLeft = await this.trackingService.getCaloriesLeft();
 
     this.graph.data.datasets[0].data.pop();
     this.graph.data.datasets[0].data.pop();
 
     this.graph.data.datasets[0].data.push(this.trackingService.calories);
-    this.graph.data.datasets[0].data.push(this.trackingService.getCaloriesLeft());
+    this.graph.data.datasets[0].data.push(this.caloriesLeft);
 
     this.graph.update();
   }
 
-  ngAfterViewInit(): void {
+  async ngAfterViewInit() {
+    this.caloriesLeft = await this.trackingService.getCaloriesLeft();
+    
     this.graph = new Chart(this.graphRef.nativeElement, {
       type: 'doughnut',
       options: {
@@ -46,7 +50,7 @@ export class TrackerComponent implements AfterViewInit {
         labels: ['Calories Consumed', 'Calories Left'],
         datasets: [{
           label: 'Calories',
-          data: [Math.round(this.trackingService.calories), Math.round(this.trackingService.getCaloriesLeft())],
+          data: [Math.round(this.trackingService.calories), Math.round(this.caloriesLeft)],
           backgroundColor: [
             '#802E11',
             '#E76B3F'

@@ -18,14 +18,23 @@ export class MealHistoryComponent implements AfterViewInit {
 
   private async calculateCaloriesForDay(): Promise<number[]> {
     const mealHistory = await this.trackingService.fetchMealHistory();
-    const weekStart = this.trackingService.getMondayOfWeek();
+    const current = new Date();
     const calories: number[] = [];
+  
+    var week = []; 
+    // Starting Monday not Sunday
+    current.setDate((current.getDate() - current.getDay() + 1));
+    for (var i = 0; i < 7; i++) {
+        week.push(
+            new Date(current)
+        ); 
+        current.setDate(current.getDate() +1);
+    }
 
     for(let i = 0; i < this.daysInAWeek; i++) {
-      const nextDay = new Date();
-      nextDay.setDate(weekStart.getDate() + i);
-      const dateString = nextDay.toDateString();
-
+      
+      const dateString = week[i].toDateString();
+      
       if (mealHistory[dateString]) {
         let caloriesForDay: number = 0;
         for(let j = 0; j < mealHistory[dateString].length; j++) {
