@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TrackingService} from '../home/tracker/tracking.service';
 import {Food, Macros} from '../home/tracker/food.model';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-history',
@@ -18,11 +18,17 @@ export class HistoryComponent implements OnInit {
   selectingDay: boolean;
 
   constructor(private router: Router,
+              private route: ActivatedRoute,
               private trackingService: TrackingService) { }
 
   async ngOnInit() {
     this.day = new Date().toDateString();
     await this.fetchMeals();
+
+    this.route.params.subscribe(async () => {
+      this.day = new Date().toDateString();
+      await this.fetchMeals();
+    });
   }
 
   addFood(food?: string) {
@@ -72,7 +78,7 @@ export class HistoryComponent implements OnInit {
     this.meals = mealHistory[this.day];
 
     if (!this.meals) {
-      this.meals = []; 
+      this.meals = [];
     }
 
     for(let i = 0; i < this.meals.length; i++) {

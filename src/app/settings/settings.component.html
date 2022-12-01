@@ -1,23 +1,35 @@
 <app-home-header></app-home-header>
 <ion-content>
-  <ion-grid class="fs flex_center">
-    <div>
+  <app-edit-setting-modal
+    [modalOpen]="modalOpen"
+    [settingId]="editSettingId"
+    (closeSettingModal)="closeSettingModal()"></app-edit-setting-modal>
+  <ion-grid class="fs">
+    <div class="buttons_center">
       <ion-row>
-        <ion-col>
-          <app-settings-button></app-settings-button>
+        <ion-col size="6">
+          <app-settings-button
+            [settingName]="'Profile'"
+            (editSetting)="openEditSettingModal($event)"></app-settings-button>
         </ion-col>
-        <ion-col>
-          <app-settings-button></app-settings-button>
+        <ion-col size="6">
+          <app-settings-button
+            [settingName]="'Goals'"
+            (editSetting)="openEditSettingModal($event)"></app-settings-button>
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col>
-          <app-settings-button></app-settings-button>
+        <ion-col size="6">
+          <app-settings-button
+            [settingName]="'Appearance'"
+            (editSetting)="openEditSettingModal($event)"></app-settings-button>
         </ion-col>
-        <ion-col>
-          <app-settings-button></app-settings-button>
+        <ion-col size="6">
+          <app-settings-button
+            [settingName]="'Reset user'"
+            (editSetting)="resetUserSettings()"></app-settings-button>
         </ion-col>
-      </ion-row>  
+      </ion-row>
     </div>
   </ion-grid>
 </ion-content>

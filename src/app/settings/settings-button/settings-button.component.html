@@ -1,3 +1,11 @@
-<div class="button_container flex_center">
-  <p>work</p>
+<div class="button_container flex_center" (click)="openEditSettingModal()">
+  <div>
+    <div class="icon_container" [ngSwitch]="settingName">
+      <ion-icon name="person-outline" *ngSwitchCase="'Profile'"></ion-icon>
+      <ion-icon name="trophy-outline" *ngSwitchCase="'Goals'"></ion-icon>
+      <ion-icon name="brush-outline" *ngSwitchCase="'Appearance'"></ion-icon>
+      <ion-icon name="refresh-outline" *ngSwitchCase="'Reset user'"></ion-icon>
+    </div>
+    <h4 [textContent]="settingName"></h4>
+  </div>
 </div>

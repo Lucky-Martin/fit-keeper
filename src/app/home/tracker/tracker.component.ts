@@ -2,9 +2,10 @@ import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/c
 import {Chart, registerables} from 'chart.js';
 import {IMacros} from './food.model';
 import {TrackingService} from './tracking.service';
+import {ActivatedRoute} from '@angular/router';
 
 Chart.register(...registerables);
-Chart.defaults.color = "#000";
+Chart.defaults.color = '#000';
 
 @Component({
   selector: 'app-tracker',
@@ -15,30 +16,26 @@ export class TrackerComponent implements AfterViewInit {
   @Input() macros: IMacros;
   @ViewChild('graph') private graphRef: ElementRef;
   graph: Chart;
-  caloriesLeft: number = 0;
+  caloriesLeft = 0;
 
-  constructor(public trackingService: TrackingService) {
+  constructor(public trackingService: TrackingService,
+              private route: ActivatedRoute) {
     this.trackingService.getMacrosAsObservable().subscribe(this.updateChart.bind(this));
     this.trackingService.getCaloriesLeft().then(value => {
       this.caloriesLeft = value;
     });
-  }
 
-  private async updateChart() {
-    this.caloriesLeft = await this.trackingService.getCaloriesLeft();
-
-    this.graph.data.datasets[0].data.pop();
-    this.graph.data.datasets[0].data.pop();
-
-    this.graph.data.datasets[0].data.push(this.trackingService.calories);
-    this.graph.data.datasets[0].data.push(this.caloriesLeft);
-
-    this.graph.update();
+    this.route.params.subscribe(() => {
+      this.trackingService.getMacrosAsObservable().subscribe(this.updateChart.bind(this));
+      this.trackingService.getCaloriesLeft().then(value => {
+        this.caloriesLeft = value;
+      });
+    });
   }
 
   async ngAfterViewInit() {
     this.caloriesLeft = await this.trackingService.getCaloriesLeft();
-    
+
     this.graph = new Chart(this.graphRef.nativeElement, {
       type: 'doughnut',
       options: {
@@ -58,5 +55,17 @@ export class TrackerComponent implements AfterViewInit {
         }]
       }
     });
+  }
+
+  private async updateChart() {
+    this.caloriesLeft = await this.trackingService.getCaloriesLeft();
+
+    this.graph.data.datasets[0].data.pop();
+    this.graph.data.datasets[0].data.pop();
+
+    this.graph.data.datasets[0].data.push(this.trackingService.calories);
+    this.graph.data.datasets[0].data.push(this.caloriesLeft);
+
+    this.graph.update();
   }
 }

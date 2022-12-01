@@ -3,7 +3,7 @@ ion-list {
   }
 ion-list ion-item {
     --background: transparent;
-    color: #fff;
+    color: var(--ion-text-color);
     margin: 10px 0;
 }
 ion-list ion-item img {

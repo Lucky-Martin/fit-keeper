@@ -12,7 +12,11 @@ export class UserService implements CanActivate {
   userLoggedStatus: Subject<boolean> = new Subject<boolean>();
   private USER_STORAGE_KEY = 'user';
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {
+    this.fetchUser().then(user => {
+      this.user = user;
+    });
+  }
 
   async createUser(userData: IUser) {
     const user: string = JSON.stringify(userData);
@@ -29,7 +33,13 @@ export class UserService implements CanActivate {
     return JSON.parse(value);
   }
 
+  async updateUser(field: string, value: string | number) {
+    this.user[field] = value;
+    await Preferences.set({key: this.USER_STORAGE_KEY, value: JSON.stringify(this.user)});
+  }
+
   async resetUser(): Promise<void> {
+    this.user = null;
     await Preferences.remove({key: this.USER_STORAGE_KEY});
   }
 

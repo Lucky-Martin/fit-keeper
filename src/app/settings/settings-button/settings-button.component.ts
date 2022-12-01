@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-settings-button',
@@ -6,9 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./settings-button.component.scss'],
 })
 export class SettingsButtonComponent implements OnInit {
+  @Input() settingName: string;
+  @Output() editSetting: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() { }
 
   ngOnInit() {}
 
+  openEditSettingModal() {
+    this.editSetting.emit(this.settingName);
+  }
 }

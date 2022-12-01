@@ -28,15 +28,26 @@ import { HistoryFoodListComponent } from './history/history-food-list/history-fo
 import { FavouritesCardComponent } from './history/favourites-card/favourites-card.component';
 import { SettingsComponent } from './settings/settings.component';
 import { SettingsButtonComponent } from './settings/settings-button/settings-button.component';
+import {EditSettingModalComponent} from './settings/edit-setting-modal/edit-setting-modal.component';
+import {
+  ProfileSettingContentComponent
+} from './settings/edit-setting-modal/profile-setting-content/profile-setting-content.component';
+import {
+  GoalsSettingComponentComponent
+} from './settings/edit-setting-modal/goals-setting-component/goals-setting-component.component';
+import {
+    AppearanceSettingComponentComponent
+} from './settings/edit-setting-modal/appearance-setting-component/appearance-setting-component.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeHeaderComponent, MealHistoryHeaderComponent, ToolbarComponent,
-    FoodSearchComponent, FoodListComponent, AddFoodModalComponent,
-    HomePage, HistoryComponent, TrackerComponent, FoodGraphPreviewComponent,
-    MealHistoryComponent, WorkoutsComponent, TrackerNutrientComponent,
-    DaySelectorComponent, MealHistoryComponent, NutrientButtonComponent,
-    FavouritesComponent, HistoryFoodListComponent, FavouritesCardComponent,
-    SettingsComponent, SettingsButtonComponent],
+    declarations: [AppComponent, HomeHeaderComponent, MealHistoryHeaderComponent, ToolbarComponent,
+        FoodSearchComponent, FoodListComponent, AddFoodModalComponent,
+        HomePage, HistoryComponent, TrackerComponent, FoodGraphPreviewComponent,
+        MealHistoryComponent, WorkoutsComponent, TrackerNutrientComponent,
+        DaySelectorComponent, MealHistoryComponent, NutrientButtonComponent,
+        FavouritesComponent, HistoryFoodListComponent, FavouritesCardComponent,
+        SettingsComponent, SettingsButtonComponent, EditSettingModalComponent,
+        ProfileSettingContentComponent, GoalsSettingComponentComponent, AppearanceSettingComponentComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, FormsModule],
   providers: [{provide: RouteReuseStrategy, useClass: IonicRouteStrategy}],
   bootstrap: [AppComponent],

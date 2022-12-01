@@ -80,9 +80,9 @@ export class TrackingService {
 
   public getMondayOfWeek(): Date {
     const date = new Date();
-    var day = date.getDay() || 7;  
-      if(day !== 1 ) 
-        date.setHours(-24 * (day - 1)); 
+    let day = date.getDay() || 7;
+      if(day !== 1 )
+        date.setHours(-24 * (day - 1));
 
     return date;
   }
@@ -200,7 +200,7 @@ export class TrackingService {
     this.calories = 0;
   }
 
-  private async fetchCalorieGoal() {
+  public async fetchCalorieGoal() {
     const {value} = await Preferences.get({key: this.calorieGoalKey});
     this.calorieGoal = Number(value);
   }
