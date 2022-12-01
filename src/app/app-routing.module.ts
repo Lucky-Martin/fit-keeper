@@ -3,6 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { FoodSearchComponent } from './food-search/food-search.component';
 import { HistoryComponent } from './history/history.component';
 import { HomePage } from './home/home.page';
+import { SettingsComponent } from './settings/settings.component';
 import { UserService } from './setup/user.service';
 import { WorkoutsComponent } from './workouts/workouts.component';
 
@@ -31,6 +32,11 @@ const routes: Routes = [
     path: 'workouts',
     canActivate: [UserService],
     component: WorkoutsComponent
+  },
+  {
+    path: 'settings',
+    canActivate: [UserService],
+    component: SettingsComponent
   },
   {
     path: 'setup',
