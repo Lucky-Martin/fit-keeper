@@ -38,6 +38,7 @@ import {
 import {
     AppearanceSettingComponentComponent
 } from './settings/edit-setting-modal/appearance-setting-component/appearance-setting-component.component';
+import { WorkoutGroupComponent } from './workouts/workout-group/workout-group.component';
 
 @NgModule({
     declarations: [AppComponent, HomeHeaderComponent, MealHistoryHeaderComponent, ToolbarComponent,
@@ -47,7 +48,8 @@ import {
         DaySelectorComponent, MealHistoryComponent, NutrientButtonComponent,
         FavouritesComponent, HistoryFoodListComponent, FavouritesCardComponent,
         SettingsComponent, SettingsButtonComponent, EditSettingModalComponent,
-        ProfileSettingContentComponent, GoalsSettingComponentComponent, AppearanceSettingComponentComponent],
+        ProfileSettingContentComponent, GoalsSettingComponentComponent, AppearanceSettingComponentComponent,
+        WorkoutGroupComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, FormsModule],
   providers: [{provide: RouteReuseStrategy, useClass: IonicRouteStrategy}],
   bootstrap: [AppComponent],

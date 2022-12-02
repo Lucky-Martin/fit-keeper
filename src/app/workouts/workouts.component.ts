@@ -6,6 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./workouts.component.scss'],
 })
 export class WorkoutsComponent implements OnInit {
+  slideOpts = {
+    scrollbar: true,
+    slidesPerView: 2
+  }
 
   constructor() { }
 

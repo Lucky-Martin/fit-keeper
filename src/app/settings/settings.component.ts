@@ -46,6 +46,7 @@ export class SettingsComponent implements OnInit {
               await Preferences.clear();
               await this.userService.resetUser();
               this.userService.userLoggedStatus.next(false);
+              location.reload();
             });
           },
         },
