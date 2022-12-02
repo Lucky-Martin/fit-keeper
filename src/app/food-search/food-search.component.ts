@@ -4,7 +4,7 @@ import {Food} from '../home/tracker/food.model';
 import {TrackingService} from '../home/tracker/tracking.service';
 import {FoodService} from './food.service';
 import {AddFoodModalComponent} from './add-food-modal/add-food-modal.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-food-search',
@@ -19,7 +19,8 @@ export class FoodSearchComponent implements OnInit {
   predefinedDate: string = null;
   predefinedFoodQuery: string = null;
 
-  constructor(private route: ActivatedRoute,
+  constructor(private router: Router,
+              private route: ActivatedRoute,
               private trackingService: TrackingService,
               private foodService: FoodService,
               private modalController: ModalController) {
@@ -118,6 +119,8 @@ export class FoodSearchComponent implements OnInit {
 
     if (role === 'confirm') {
       this.onAddFood(data);
+    } else {
+      this.predefinedFoodQuery = null;
     }
   }
 
@@ -139,8 +142,12 @@ export class FoodSearchComponent implements OnInit {
       }
       mealHistory[this.predefinedDate] = meals;
       this.trackingService.saveMealHistory(JSON.stringify(mealHistory));
+      await this.router.navigate(['/meal_history'], {
+        queryParams: {day: this.predefinedDate}
+      });
     } else {
       this.trackingService.addFood(food, quantity);
+      await this.router.navigate(['/home']);
     }
   }
 }

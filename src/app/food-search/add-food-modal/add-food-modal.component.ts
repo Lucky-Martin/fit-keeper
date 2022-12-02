@@ -71,7 +71,23 @@ export class AddFoodModalComponent implements OnInit {
   }
 
   onMacrosChanged(nutrientName: string, value: number) {
+    let difference = value - Math.round(this.food.macros[nutrientName]);
+
+    let multiplier: number = 1;
+    value > this.food.macros[nutrientName] ? multiplier : -multiplier;
     this.food.macros[nutrientName] = value;
+
+    console.log(value, multiplier, (difference * 4) * multiplier);
+    
+
+    switch(nutrientName) {
+      case 'protein' || 'carbs':
+        this.food.calories += (difference * 4) * multiplier;
+        break;
+      case 'fats':
+        this.food.calories += (difference * 9) * multiplier;
+        break;
+    }
   }
 
   updateQuantity(increase: boolean) {

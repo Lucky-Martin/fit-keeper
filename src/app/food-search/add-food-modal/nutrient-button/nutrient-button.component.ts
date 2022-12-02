@@ -8,7 +8,7 @@ import {PickerColumnOption, PickerController} from '@ionic/angular';
 })
 export class NutrientButtonComponent implements OnInit {
   @Input() nutrientName: string;
-  @Input() value: number = 0;
+  @Input() value: number;
   @Output() changeValue: EventEmitter<{ key: string, value: number }> = new EventEmitter<{ key: string, value: number }>();
 
   constructor(private pickerControler: PickerController) {
@@ -22,9 +22,9 @@ export class NutrientButtonComponent implements OnInit {
     const kilogram = 1000;
     let selectedIndex: number = 0;
 
-    for (let i = 1; i <= kilogram; i++) {
+    for (let i = 0; i <= kilogram; i++) {
       if (Math.round(this.value) === i) {
-        selectedIndex = i - 1;
+        selectedIndex = i;
       }
 
       options.push({

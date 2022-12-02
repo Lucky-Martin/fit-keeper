@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TrackingService} from '../home/tracker/tracking.service';
 import {Food, Macros} from '../home/tracker/food.model';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 
 @Component({
   selector: 'app-history',
@@ -25,8 +25,23 @@ export class HistoryComponent implements OnInit {
     this.day = new Date().toDateString();
     await this.fetchMeals();
 
-    this.route.params.subscribe(async () => {
-      this.day = new Date().toDateString();
+    this.router.events.forEach(async (event) => {
+      if(event instanceof NavigationEnd && this.router.url.includes('meal_history')) {
+        this.date = new Date();
+        this.day = new Date().toDateString();
+        await this.fetchMeals();
+      }
+    });
+
+    this.route.queryParams.subscribe(async params => {
+      if (params.day) {
+        this.date = new Date(params.day);
+        this.day = this.date.toDateString();
+      } else {
+        this.date = new Date();
+        this.day = new Date().toDateString();
+      }
+
       await this.fetchMeals();
     });
   }
@@ -72,9 +87,10 @@ export class HistoryComponent implements OnInit {
   {
     this.fetching = true;
     this.macrosOverview = new Macros();
-    this.totalCalories = 0;
-
     const mealHistory = await this.trackingService.fetchMealHistory();
+
+    this.totalCalories = 0;
+    
     this.meals = mealHistory[this.day];
 
     if (!this.meals) {

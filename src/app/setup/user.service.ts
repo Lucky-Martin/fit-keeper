@@ -34,6 +34,8 @@ export class UserService implements CanActivate {
   }
 
   async updateUser(field: string, value: string | number) {
+    this.user = await this.fetchUser();
+    
     this.user[field] = value;
     await Preferences.set({key: this.USER_STORAGE_KEY, value: JSON.stringify(this.user)});
   }
