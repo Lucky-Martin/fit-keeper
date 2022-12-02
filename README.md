@@ -9,7 +9,7 @@ The application that keeps you fit, and your body will love!
 
 **Every file, resource that have been used in our project!**
 
-## [Google Drive](https://drive.google.com/drive/folders/1fq7TC0AZcImZ_lH4X5s5PfndR3rnWUvH?usp=sharing)
+## [Google Drive](https://drive.google.com/drive/folders/1p2HeKu3jKpXQ2gA_fzpAaU7QuxsNmM6N?usp=share_link)
 
 ## [Presentation](https://docs.google.com/presentation/d/1T4GwvPqXdMn6nUzqsPrtKkKz03rnm3Bq/edit?usp=sharing&ouid=111593716932661768977&rtpof=true&sd=true)
 
