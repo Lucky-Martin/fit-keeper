@@ -132,6 +132,15 @@ export class FoodSearchComponent implements OnInit {
     }
 
     if (this.predefinedDate) {
+      if (this.predefinedDate === new Date().toDateString()) {
+        await this.trackingService.addFood(food, quantity);
+        await this.trackingService.saveCurrentDayFoods();
+        await this.router.navigate(['/meal_history'], {
+          queryParams: {day: this.predefinedDate}
+        });
+        return;
+      }
+
       const mealHistory = await this.trackingService.fetchMealHistory();
       let meals: Food[] = mealHistory[this.predefinedDate];
       if (!meals) {

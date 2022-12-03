@@ -13,6 +13,10 @@ export class WorkoutsComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (window.screen.width < 768) {
+      this.slideOpts.slidesPerView = 1;
+    } 
+  }
 
 }

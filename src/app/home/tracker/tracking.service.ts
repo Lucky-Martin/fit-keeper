@@ -122,7 +122,7 @@ export class TrackingService {
     await Preferences.set({key: this.calorieGoalKey, value: this.calorieGoal.toString()});
   }
 
-  public addFood(food: Food, quantity: number = 1): void {
+  public async addFood(food: Food, quantity: number = 1): Promise<void> {
     if (this.foods.length === 0) {
       this.foods = [];
     }
@@ -132,11 +132,10 @@ export class TrackingService {
       this.calories += food.calories;
     }
 
-    this.saveCurrentDayFoods();
-    this.saveConsumedCalories();
-    this.addCurrentDayToMealHistory().then(async () => {
-      this.macrosListener.next(this.getMacros());
-    });
+    await this.saveCurrentDayFoods();
+    await this.saveConsumedCalories();
+    await this.addCurrentDayToMealHistory();
+    this.macrosListener.next(this.getMacros());
   }
 
   public removeFood(food: Food): void {
@@ -205,6 +204,10 @@ export class TrackingService {
     this.calorieGoal = Number(value);
   }
 
+  public async saveCurrentDayFoods(empty: boolean = false) {
+    await Preferences.set({key: this.currentDayFoodsKey, value: empty ? '[]' : JSON.stringify(this.foods)});
+  }
+
   private async saveConsumedCalories(calories?: number) {
     await Preferences.set({key: this.consumedCaloriesKey, value: calories ? calories.toString() : this.calories.toString()});
   }
@@ -236,9 +239,5 @@ export class TrackingService {
   private async fetchCurrentDayFoods(): Promise<Food[]> {
     const {value} = await Preferences.get({key: this.currentDayFoodsKey});
     return JSON.parse(value);
-  }
-
-  private async saveCurrentDayFoods(empty: boolean = false) {
-    await Preferences.set({key: this.currentDayFoodsKey, value: empty ? '[]' : JSON.stringify(this.foods)});
   }
 }

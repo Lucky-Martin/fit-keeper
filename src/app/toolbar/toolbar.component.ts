@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Keyboard } from '@capacitor/keyboard';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-toolbar',
@@ -7,10 +9,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./toolbar.component.scss'],
 })
 export class ToolbarComponent implements OnInit {
+  showAddButton = true;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+              private platform: Platform) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.platform.is('mobile')) {
+      Keyboard.addListener('keyboardDidShow', () => this.showAddButton = false);
+      Keyboard.addListener('keyboardDidHide', () => this.showAddButton = true);
+    }
+  }
 
   onAddFood() {
     this.router.navigate(['food']);
