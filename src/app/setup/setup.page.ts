@@ -32,14 +32,14 @@ export class SetupPage implements AfterViewInit {
     switch(this.slideIndex) {
       case 1:
         if (!this.user.gender || !this.user.name || !this.user.age) {
-          return this.displayError('Please enter all required data!');
+          return this.displayError('Моля попълнете всички данни!');
         }
 
         this.slideIndex = 2;
         break;
       case 2:
         if (!this.user.height || !this.user.weight) {
-          return this.displayError('Please enter all required data!');
+          return this.displayError('Моля попълнете всички данни!');
         }
 
         this.slideIndex = 3;

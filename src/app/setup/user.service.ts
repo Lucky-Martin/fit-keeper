@@ -35,7 +35,7 @@ export class UserService implements CanActivate {
 
   async updateUser(field: string, value: string | number) {
     this.user = await this.fetchUser();
-    
+
     this.user[field] = value;
     await Preferences.set({key: this.USER_STORAGE_KEY, value: JSON.stringify(this.user)});
   }
@@ -45,6 +45,7 @@ export class UserService implements CanActivate {
     await Preferences.remove({key: this.USER_STORAGE_KEY});
   }
 
+  // eslint-disable-next-line max-len
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
     return new Observable<boolean>((observer) => {
       this.fetchUser().then((value: IUser | null) => {

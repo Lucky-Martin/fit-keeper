@@ -11,6 +11,7 @@ export class TrackingService {
   foods: Food[] = [];
   calories = 0;
   calorieGoal: number;
+  macrosGoal: IMacros;
   macrosListener: Subject<Macros> = new Subject<Macros>();
   currentDay: string;
 
@@ -19,6 +20,7 @@ export class TrackingService {
   private readonly mealHistoryKey = 'MEAL_HISTORY';
   private readonly currentDayKey = 'CURRENT_DAY';
   private readonly currentDayFoodsKey = 'CURRENT_DAY_FOODS';
+  private readonly macroGoalKey = 'MACRO_GOAL';
 
   constructor() {
     this.init();
@@ -28,6 +30,7 @@ export class TrackingService {
     this.currentDay = new Date().toDateString();
 
     await this.fetchCalorieGoal();
+    await this.fetchMacroGoal();
     await this.fetchConsumedCalories();
 
     if (this.currentDay !== await this.fetchCurrentDay()) {
@@ -80,9 +83,9 @@ export class TrackingService {
 
   public getMondayOfWeek(): Date {
     const date = new Date();
-    let day = date.getDay() || 7;
+    const day = date.getDay() || 7;
       if(day !== 1 )
-        date.setHours(-24 * (day - 1));
+        {date.setHours(-24 * (day - 1));}
 
     return date;
   }
@@ -111,7 +114,6 @@ export class TrackingService {
         amr = bmr * 1.9;
         break;
     }
-
     if (user.goal === 'loose_weight') {
       amr -= 400;
     } else if (user.goal === 'gain_weight') {
@@ -119,7 +121,23 @@ export class TrackingService {
     }
 
     this.calorieGoal = Math.round(amr);
+
+    this.macrosGoal = {
+      protein: Math.round((this.calorieGoal * 0.3) / 4),
+      carbs: Math.round((this.calorieGoal * 0.4) / 4),
+      fats: Math.round((this.calorieGoal * 0.3) / 9)
+    };
+
+    if (user.goal === 'loose_weight') {
+      this.macrosGoal = {
+        protein: Math.round((this.calories * 0.4) / 4),
+        carbs: Math.round((this.calories * 0.4) / 4),
+        fats: Math.round((this.calories * 0.2) / 9)
+      };
+    }
+
     await Preferences.set({key: this.calorieGoalKey, value: this.calorieGoal.toString()});
+    await Preferences.set({key: this.macroGoalKey, value: JSON.stringify(this.macrosGoal)});
   }
 
   public async addFood(food: Food, quantity: number = 1): Promise<void> {
@@ -199,9 +217,16 @@ export class TrackingService {
     this.calories = 0;
   }
 
+  public async fetchMacroGoal() {
+    const {value} = await Preferences.get({key: this.macroGoalKey});
+    this.macrosGoal = JSON.parse(value);
+    return this.macrosGoal;
+  }
+
   public async fetchCalorieGoal() {
     const {value} = await Preferences.get({key: this.calorieGoalKey});
     this.calorieGoal = Number(value);
+    return this.calorieGoal;
   }
 
   public async saveCurrentDayFoods(empty: boolean = false) {
