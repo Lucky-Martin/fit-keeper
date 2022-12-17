@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FavouritesService } from 'src/app/food-search/favourites/favourites.service';
 import { NavigationEnd, Router } from '@angular/router';
+import translate from 'translate';
 
 @Component({
   selector: 'app-favourites-card',
@@ -16,7 +17,7 @@ export class FavouritesCardComponent implements OnInit {
 
   async ngOnInit() {
     this.favourites = await this.favouritesService.fetchFavourites();
-    
+
     this.router.events.subscribe(async event => {
       if(event instanceof NavigationEnd && this.router.url.includes('meal_history')) {
         this.favourites = await this.favouritesService.fetchFavourites();
@@ -24,8 +25,8 @@ export class FavouritesCardComponent implements OnInit {
     });
   }
 
-  addFavouriteFood(food: string) {
-    this.addFood.emit(food);
+  async addFavouriteFood(food: string) {
+    this.addFood.emit(await translate(food, {from: 'bg', to: 'en'}));
   }
 
 }

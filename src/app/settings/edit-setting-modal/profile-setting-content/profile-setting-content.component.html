@@ -3,7 +3,7 @@
     <ion-row>
       <ion-item>
         <ion-col size="5">
-          <h4>Name</h4>
+          <h4>Име</h4>
         </ion-col>
         <ion-col class="flex_center">
           <h4 [textContent]="user.name"></h4>
@@ -16,7 +16,7 @@
     <ion-row>
       <ion-item>
         <ion-col size="5">
-          <h4>Age</h4>
+          <h4>Възраст</h4>
         </ion-col>
         <ion-col class="flex_center">
           <h4 [textContent]="user.age"></h4>
@@ -29,7 +29,7 @@
     <ion-row>
       <ion-item>
         <ion-col size="5">
-          <h4>Height</h4>
+          <h4>Височина</h4>
         </ion-col>
         <ion-col class="flex_center">
           <h4>{{user.height}}cm</h4>
@@ -42,7 +42,7 @@
     <ion-row>
       <ion-item>
         <ion-col size="5">
-          <h4>Weight</h4>
+          <h4>Тегло</h4>
         </ion-col>
         <ion-col class="flex_center" (click)="editValue('weight', 'number')">
           <h4>{{user.weight}}kg</h4>
@@ -55,7 +55,7 @@
     <ion-row class="calorie_goal">
       <ion-item>
         <ion-col>
-          <h4>Calorie goal: {{calorieGoal}} kcal/day</h4>
+          <h4>Калорийна цел: {{calorieGoal}} kcal/ден</h4>
         </ion-col>
       </ion-item>
     </ion-row>

@@ -1,6 +1,5 @@
 #container {
   text-align: center;
-
   position: absolute;
   left: 0;
   right: 0;
@@ -16,9 +15,7 @@
 #container p {
   font-size: 16px;
   line-height: 22px;
-
   color: #8c8c8c;
-
   margin: 0;
 }
 
@@ -50,7 +47,7 @@ ion-card-content {
 }
 
 .greeting {
-  margin: 10px 0;
+  margin: 20px 0;
   font-family: 'Candara', sans-serif;
   font-weight: bold;
 }

@@ -2,6 +2,7 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {IonModal, ModalController} from '@ionic/angular';
 import {FavouritesService} from 'src/app/food-search/favourites/favourites.service';
 import {Food} from '../../home/tracker/food.model';
+import translate from 'translate';
 
 @Component({
   selector: 'app-custom-food-modal',
@@ -28,8 +29,9 @@ export class AddFoodModalComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.favourite = this.favourites.indexOf(this.food.name) > -1;
+    this.food.name = await translate(this.food.name, {from: 'en', to: 'bg'});
   }
 
   toggleFavourite() {
@@ -78,7 +80,7 @@ export class AddFoodModalComponent implements OnInit {
     this.food.macros[nutrientName] = value;
 
     console.log(value, multiplier, (difference * 4) * multiplier);
-    
+
 
     switch(nutrientName) {
       case 'protein' || 'carbs':

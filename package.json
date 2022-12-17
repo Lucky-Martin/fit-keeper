@@ -30,6 +30,8 @@
     "chart.js": "^3.9.1",
     "ionicons": "^6.0.3",
     "rxjs": "~6.6.0",
+    "translate": "^1.4.1",
+    "transliteration": "^2.3.5",
     "tslib": "^2.2.0",
     "zone.js": "~0.11.4"
   },

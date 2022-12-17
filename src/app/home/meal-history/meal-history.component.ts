@@ -16,55 +16,13 @@ export class MealHistoryComponent implements AfterViewInit {
     this.trackingService.getMacrosAsObservable().subscribe(this.updateGraph.bind(this));
   }
 
-  private async calculateCaloriesForDay(): Promise<number[]> {
-    const mealHistory = await this.trackingService.fetchMealHistory();
-    const current = new Date();
-    const calories: number[] = [];
-  
-    var week = []; 
-    // Starting Monday not Sunday
-    current.setDate((current.getDate() - current.getDay() + 1));
-    for (var i = 0; i < 7; i++) {
-        week.push(
-            new Date(current)
-        ); 
-        current.setDate(current.getDate() +1);
-    }
-
-    for(let i = 0; i < this.daysInAWeek; i++) {
-      
-      const dateString = week[i].toDateString();
-      
-      if (mealHistory[dateString]) {
-        let caloriesForDay: number = 0;
-        for(let j = 0; j < mealHistory[dateString].length; j++) {
-          caloriesForDay += mealHistory[dateString][j].calories;
-        }
-
-        calories.push(Math.round(caloriesForDay));
-      } else {
-        calories.push(0);
-      }
-    }
-
-    return calories;
-  }
-
-  private async updateGraph() {
-    let calories = await this.calculateCaloriesForDay();
-
-    this.graph.data.datasets[0].data = null;
-    this.graph.data.datasets[0].data = calories;
-    this.graph.update();
-  }
-
   async ngAfterViewInit() {
     let calories = await this.calculateCaloriesForDay();
 
     this.graph = new Chart(this.graphRef.nativeElement, {
       type: 'bar',
       data: {
-        labels: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'],
+        labels: ['ПОН', 'ВТО', 'СРЯ', 'ЧЕТ', 'ПЕТ', 'СЪБ', 'НЕД'],
         datasets: [{
           label: 'KCAL',
           data: calories,
@@ -102,5 +60,47 @@ export class MealHistoryComponent implements AfterViewInit {
     });
 
     this.graph.config.options.color = "#ffffff";
+  }
+
+  private async calculateCaloriesForDay(): Promise<number[]> {
+    const mealHistory = await this.trackingService.fetchMealHistory();
+    const current = new Date();
+    const calories: number[] = [];
+
+    var week = [];
+    // Starting Monday not Sunday
+    current.setDate((current.getDate() - current.getDay() + 1));
+    for (var i = 0; i < 7; i++) {
+      week.push(
+        new Date(current)
+      );
+      current.setDate(current.getDate() +1);
+    }
+
+    for(let i = 0; i < this.daysInAWeek; i++) {
+
+      const dateString = week[i].toDateString();
+
+      if (mealHistory[dateString]) {
+        let caloriesForDay: number = 0;
+        for(let j = 0; j < mealHistory[dateString].length; j++) {
+          caloriesForDay += mealHistory[dateString][j].calories;
+        }
+
+        calories.push(Math.round(caloriesForDay));
+      } else {
+        calories.push(0);
+      }
+    }
+
+    return calories;
+  }
+
+  private async updateGraph() {
+    let calories = await this.calculateCaloriesForDay();
+
+    this.graph.data.datasets[0].data = null;
+    this.graph.data.datasets[0].data = calories;
+    this.graph.update();
   }
 }

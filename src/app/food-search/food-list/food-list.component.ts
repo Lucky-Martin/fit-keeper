@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FavouritesService} from '../favourites/favourites.service';
+import translate from 'translate';
 
 @Component({
   selector: 'app-food-list',
@@ -31,8 +32,8 @@ export class FoodListComponent implements OnInit {
     });
   }
 
-  selected(item: string) {
-    this.foodSelected.emit(item);
+  async selected(item: string) {
+    this.foodSelected.emit(await translate(item, {from: 'bg', to: 'en'}));
   }
 
   private fetchFavourites() {

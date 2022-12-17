@@ -6,6 +6,11 @@
       <ion-icon name="brush-outline" *ngSwitchCase="'Appearance'"></ion-icon>
       <ion-icon name="refresh-outline" *ngSwitchCase="'Reset user'"></ion-icon>
     </div>
-    <h4 [textContent]="settingName"></h4>
+    <div class="name_container" [ngSwitch]="settingName">
+      <h4 *ngSwitchCase="'Profile'">Профил</h4>
+      <h4 *ngSwitchCase="'Goals'">Цели</h4>
+      <h4 *ngSwitchCase="'Appearance'">Външен вид</h4>
+      <h4 *ngSwitchCase="'Reset user'">Нулиране</h4>
+    </div>
   </div>
 </div>

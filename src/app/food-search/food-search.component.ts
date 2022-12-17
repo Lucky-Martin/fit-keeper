@@ -5,6 +5,8 @@ import {TrackingService} from '../home/tracker/tracking.service';
 import {FoodService} from './food.service';
 import {AddFoodModalComponent} from './add-food-modal/add-food-modal.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import {transliterate} from 'transliteration';
+import translate from 'translate';
 
 @Component({
   selector: 'app-food-search',
@@ -32,10 +34,10 @@ export class FoodSearchComponent implements OnInit {
         this.predefinedDate = params.day;
         this.predefinedFoodQuery = params.food;
         console.log(this.predefinedDate, this.predefinedFoodQuery);
-        
+
         if (this.predefinedFoodQuery) {
           this.fetching = true;
-          
+
           this.foodService.fetchFoodData(this.predefinedFoodQuery).subscribe(async value => {
             const food = new Food();
             food.name = value.text;
@@ -45,7 +47,7 @@ export class FoodSearchComponent implements OnInit {
             food.macros.carbs = value.parsed[0].food.nutrients.CHOCDF;
             food.macros.fats = value.parsed[0].food.nutrients.FAT;
             food.calories = value.parsed[0].food.nutrients.ENERC_KCAL;
-      
+
             this.openInputModal(food);
           }, err => {
             console.log(err);
@@ -63,18 +65,30 @@ export class FoodSearchComponent implements OnInit {
     this.favouritesOpened = false;
   }
 
-  inputChanged(event) {
+  async inputChanged(event, trl = false) {
     const query: string = event.detail.value;
-
     if (query === '') {
       this.foundFoods = [];
       return;
     }
 
+    let translatedQuery: string;
+    if (trl) {
+      translatedQuery = transliterate(query);
+    } else {
+      translatedQuery = await translate(query, {from: 'bg', to: 'en'});
+    }
+
     this.fetching = true;
 
-    this.foodService.fetchFoodAutocomplete(query).subscribe(value => {
+    this.foodService.fetchFoodAutocomplete(translatedQuery).subscribe(async value => {
+      for (let i = 0; i < value.length; i++) {
+        value[i] = await translate(value[i], {from: 'en', to: 'bg'});
+      }
       this.foundFoods = value;
+      if (this.foundFoods.length === 0 && !trl) {
+        return this.inputChanged(event, true);
+      }
       this.fetching = false;
     }, err => {
         console.log(err);

@@ -44,7 +44,7 @@ export class TrackerComponent implements AfterViewInit {
         }
       },
       data: {
-        labels: ['Calories Consumed', 'Calories Left'],
+        labels: ['Консумирани', 'Остават'],
         datasets: [{
           label: 'Calories',
           data: [Math.round(this.trackingService.calories), Math.round(this.caloriesLeft)],

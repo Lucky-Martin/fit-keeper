@@ -11,6 +11,10 @@ import {UserService} from '../setup/user.service';
 export class HomePage implements OnInit {
   macros: Macros;
   username: string;
+  slideOpts = {
+    scrollbar: true,
+    slidesPerView: 1.2
+  };
 
   constructor(private trackingService: TrackingService,
               private userService: UserService) {

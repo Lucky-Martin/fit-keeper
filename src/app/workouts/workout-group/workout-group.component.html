@@ -1,5 +1,5 @@
-<div class="group_container">
-  <div class="group_title">
+<div class="group_container" [ngClass]="{'margin_container': margin}">
+  <div class="group_title" [ngClass]="{'margin_title': margin}">
     <h2 [textContent]="groupName"></h2>
   </div>
   <ion-slides pager="true" [options]="slideOptions">

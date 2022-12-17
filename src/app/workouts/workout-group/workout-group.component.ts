@@ -9,6 +9,7 @@ export class WorkoutGroupComponent implements OnInit {
   @Input() groupName: string;
   @Input() images: string[];
   @Input() slideOptions;
+  @Input() margin = true;
 
   constructor() { }
 

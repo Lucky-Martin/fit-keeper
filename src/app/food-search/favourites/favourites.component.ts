@@ -6,6 +6,7 @@ import {IFetchFoodData} from '../food-response.model';
 import {FoodService} from '../food.service';
 import {FavouritesService} from './favourites.service';
 import {AddFoodModalComponent} from '../add-food-modal/add-food-modal.component';
+import translate from 'translate';
 
 @Component({
   selector: 'app-favourites',
@@ -16,6 +17,7 @@ export class FavouritesComponent implements OnInit {
   @Output() closed: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('modal') modal: IonModal;
   favourites: IFetchFoodData[] = [];
+  favouritesBG: string[] = [];
   open = true;
   fetching = false;
 
@@ -39,8 +41,6 @@ export class FavouritesComponent implements OnInit {
     food.macros.fats = foodData.parsed[0].food.nutrients.FAT;
     food.calories = foodData.parsed[0].food.nutrients.ENERC_KCAL;
 
-    console.log(food);
-
     const modal = await this.modalController.create({
       component: AddFoodModalComponent,
       componentProps: {food}
@@ -53,7 +53,7 @@ export class FavouritesComponent implements OnInit {
     const {data, role} = await modal.onWillDismiss();
 
     if (role === 'confirm') {
-      this.trackingService.addFood(data.food, data.quantity);
+      await this.trackingService.addFood(data.food, data.quantity);
     }
   }
 
@@ -71,12 +71,13 @@ export class FavouritesComponent implements OnInit {
 
   private async loadFavourites() {
     const favouritesList: string[] = await this.favouritesService.fetchFavourites() || [];
+    this.favouritesBG = favouritesList;
 
     this.fetching = true;
     this.favourites = [];
 
     for (let i = 0; i < favouritesList.length; i++) {
-      this.foodService.fetchFoodData(favouritesList[i]).subscribe(food => {
+      this.foodService.fetchFoodData(await translate(favouritesList[i], {from: 'bg', to: 'en'})).subscribe(food => {
         this.favourites.push(food);
 
         if (i === favouritesList.length - 1) {

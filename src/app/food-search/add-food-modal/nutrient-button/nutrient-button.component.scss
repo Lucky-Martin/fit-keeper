@@ -66,6 +66,12 @@ p {
   border-radius: 4px;
   cursor: pointer;
 }
+.calories_text {
+  text-align: left;
+}
+.weight_item {
+  --background: transparent;
+}
 
 @media only screen and (max-width: 576px) {
   .nutrient_container {

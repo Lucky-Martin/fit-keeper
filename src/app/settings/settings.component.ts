@@ -31,8 +31,8 @@ export class SettingsComponent implements OnInit {
 
   async resetUserSettings() {
     const alert = await this.alertController.create({
-      header: 'Delete user data?',
-      message: 'This action will delete all user data and reset the application',
+      header: 'Нулиране на приложението?',
+      message: 'Това действие ще изтрие всички потребителски данни и ще нулира приложението',
       buttons: [
         {
           text: 'Cancel',

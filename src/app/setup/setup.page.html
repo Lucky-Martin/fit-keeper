@@ -5,11 +5,11 @@
       <ion-slide>
         <ion-card>
           <ion-card-header>
-            <ion-card-title>Gender & Age</ion-card-title>
-            <ion-card-subtitle>Initial setup 1/3</ion-card-subtitle>
+            <ion-card-title>Пол & Възраст</ion-card-title>
+            <ion-card-subtitle>Инициализация 1/3</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
-            <h2>Select your gender</h2>
+            <h2>Изберете пол</h2>
             <p *ngIf="user.gender" [textContent]="user.gender" class="gender"></p>
             <ion-segment>
               <ion-segment-button value="default" (click)="selectGender('male')">
@@ -19,15 +19,15 @@
                 <ion-icon name="woman"></ion-icon>
               </ion-segment-button>
             </ion-segment>
-            <h3>Choose your age</h3>
+            <h3>Въведете възраст</h3>
             <ion-item>
-              <ion-label position="floating">Enter your age</ion-label>
+              <ion-label position="floating">Въведи възраст</ion-label>
               <ion-input type="number" [(ngModel)]="user.age"></ion-input>
             </ion-item>
-            <h3>How would you like us to call you?</h3>
+            <h3>Как искате да ви наричаме?</h3>
             <ion-item>
-                <ion-label position="stacked">Your name</ion-label>
-                <ion-input placeholder="Enter text" [(ngModel)]="user.name"></ion-input>
+                <ion-label position="stacked">Въведи име</ion-label>
+                <ion-input placeholder="Име..." [(ngModel)]="user.name"></ion-input>
               </ion-item>
           </ion-card-content>
           <div class="button_margin">
@@ -45,19 +45,19 @@
       <ion-slide>
         <ion-card>
           <ion-card-header>
-            <ion-card-title>Height & Weight</ion-card-title>
-            <ion-card-subtitle>Initial setup 2/3</ion-card-subtitle>
+            <ion-card-title>Височина & Тегло</ion-card-title>
+            <ion-card-subtitle>Инициализация 2/3</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
             <ion-item fill="solid">
-              <ion-label position="floating">Height</ion-label>
+              <ion-label position="floating">Височина</ion-label>
               <ion-input type="number" [(ngModel)]="user.height"></ion-input>
-              <ion-note slot="helper">Enter your current height in CM</ion-note>
+              <ion-note slot="helper">Въведете височина в CM</ion-note>
             </ion-item>
             <ion-item>
-              <ion-label position="floating">Weight</ion-label>
+              <ion-label position="floating">Тегло</ion-label>
               <ion-input type="number" [(ngModel)]="user.weight"></ion-input>
-              <ion-note slot="helper">Enter your current weight in KG</ion-note>
+              <ion-note slot="helper">Въведете тегло в KG</ion-note>
             </ion-item>
           </ion-card-content>
           <div class="button_margin">
@@ -75,34 +75,34 @@
       <ion-slide>
         <ion-card>
           <ion-card-header>
-            <ion-card-title>Activity & Goal</ion-card-title>
-            <ion-card-subtitle>Initial setup 3/3</ion-card-subtitle>
+            <ion-card-title>Активност & Цел</ion-card-title>
+            <ion-card-subtitle>Инициализация 3/3</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
-            <h3>Enter your activity</h3>
+            <h3>Изберете активност</h3>
             <ion-list>
               <ion-item>
                 <ion-select placeholder="Select weekly activity" [(ngModel)]="user.activity">
-                  <ion-select-option value="sedentary">Sedentary (little or no exercise)</ion-select-option>
-                  <ion-select-option value="lightly_active">Lightly active (1–3 days/week)</ion-select-option>
-                  <ion-select-option value="moderately_active">Moderately active (3–5 days/week)</ion-select-option>
-                  <ion-select-option value="very_active">Very active (6–7 days/week)</ion-select-option>
+                  <ion-select-option value="sedentary">Ниска (слаба или никаква активност)</ion-select-option>
+                  <ion-select-option value="lightly_active">Леко активен (активност 1–3 дни/седмица)</ion-select-option>
+                  <ion-select-option value="moderately_active">Активен (активност 3–5 дни/седмица)</ion-select-option>
+                  <ion-select-option value="very_active">Високо активен (активност 6–7 дни/седмица)</ion-select-option>
                 </ion-select>
               </ion-item>
             </ion-list>
-            <h3>Choose your goal</h3>
+            <h3>Изберете цел</h3>
             <ion-list>
               <ion-radio-group value="loose_weight" [(ngModel)]="user.goal">
                 <ion-item>
-                  <ion-label>Loose weight</ion-label>
+                  <ion-label>Отслабване</ion-label>
                   <ion-radio slot="end" value="loose_weight"></ion-radio>
                 </ion-item>
                 <ion-item>
-                  <ion-label>Maintain weight</ion-label>
+                  <ion-label>Поддържане на тегло</ion-label>
                   <ion-radio slot="end" value="maintain_weight"></ion-radio>
                 </ion-item>
                 <ion-item>
-                  <ion-label>Gain weight</ion-label>
+                  <ion-label>Качване</ion-label>
                   <ion-radio slot="end" value="gain_weight"></ion-radio>
                 </ion-item>
               </ion-radio-group>

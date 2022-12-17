@@ -6,7 +6,7 @@
       </ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button (click)="confirm()" [strong]="true">Add</ion-button>
+      <ion-button (click)="confirm()" [strong]="true">Добави</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -14,16 +14,17 @@
   <!-- Name -->
   <ion-grid>
     <ion-row>
-      <ion-col size="8">
+      <ion-col>
         <ion-item class="name_input">
-          <ion-label position="fixed">Food name</ion-label>
-          <ion-input placeholder="Enter food name" [(ngModel)]="food.name"></ion-input>
+          <ion-label position="fixed">Име</ion-label>
+          <ion-input placeholder="Въведи име" [(ngModel)]="food.name"></ion-input>
         </ion-item>
       </ion-col>
-      <ion-col>
-        <app-nutrient-button
-          [nutrientName]="'calories'"
-          [value]="food.calories"></app-nutrient-button>
+      <ion-col size="3" class="icon_container">
+        <ion-button fill="clear" (click)="toggleFavourite()">
+          <ion-icon name="heart-outline" *ngIf="!favourite"></ion-icon>
+          <ion-icon name="heart" *ngIf="favourite"></ion-icon>
+        </ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -37,7 +38,7 @@
           </ion-button>
         </ion-col>
         <ion-col size="2" class="ion-text-center">
-          <ion-label position="fixed" slot="end">Quantity</ion-label>
+          <ion-label position="fixed" slot="end">Количество</ion-label>
           <ion-input [value]="quantity" [disabled]="true"></ion-input>
         </ion-col>
         <ion-col size="5" class="ion-text-start">
@@ -69,23 +70,17 @@
           (changeValue)="onMacrosChanged('fats', $event.value)"></app-nutrient-button>
       </ion-col>
     </ion-row>
-  </ion-grid>
-  <!-- Quantity -->
-  <ion-grid>
     <ion-row>
-      <ion-col class="ion-start-center">
-        <div>
-          <app-nutrient-button
-            [nutrientName]="'weight'"
-            [value]="food.weight"
-            (changeValue)="onWeightChanged($event)"></app-nutrient-button>
-        </div>
+      <ion-col>
+        <app-nutrient-button
+          [nutrientName]="'calories'"
+          [value]="food.calories"></app-nutrient-button>
       </ion-col>
-      <ion-col size="4" class="icon_container">
-        <ion-button fill="clear" (click)="toggleFavourite()">
-          <ion-icon name="heart-outline" *ngIf="!favourite"></ion-icon>
-          <ion-icon name="heart" *ngIf="favourite"></ion-icon>
-        </ion-button>
+      <ion-col>
+        <app-nutrient-button
+          [nutrientName]="'weight'"
+          [value]="food.weight"
+          (changeValue)="onWeightChanged($event)"></app-nutrient-button>
       </ion-col>
     </ion-row>
   </ion-grid>
