@@ -37,16 +37,25 @@
                 </ion-row>
             </ion-grid>
         </ion-col>
-        <ion-col class="flex_center">
+        <ion-col class="flex_center" *ngIf="macroGoal">
             <ion-row>
                 <ion-col sizeXs="4" sizeMd="12">
-                    <app-tracker-nutrient [key]="'protein'" [value]="macros.protein"></app-tracker-nutrient>
+                    <app-tracker-nutrient
+                      [macroGoal]="macroGoal"
+                      [key]="'protein'"
+                      [value]="macros.protein"></app-tracker-nutrient>
                 </ion-col>
                 <ion-col sizeXs="4" sizeMd="12">
-                    <app-tracker-nutrient [key]="'carbs'" [value]="macros.carbs"></app-tracker-nutrient>
+                    <app-tracker-nutrient
+                      [macroGoal]="macroGoal"
+                      [key]="'carbs'"
+                      [value]="macros.carbs"></app-tracker-nutrient>
                 </ion-col>
                 <ion-col sizeXs="4" sizeMd="12">
-                    <app-tracker-nutrient [key]="'fat'" [value]="macros.fats"></app-tracker-nutrient>
+                    <app-tracker-nutrient
+                      [macroGoal]="macroGoal"
+                      [key]="'fat'"
+                      [value]="macros.fats"></app-tracker-nutrient>
                 </ion-col>
             </ion-row>
         </ion-col>

@@ -10,8 +10,8 @@ export interface IUser {
 
 export class User implements IUser {
     name: string;
-    gender: string;
-    age: number = 0;
+    gender = 'male';
+    age: number;
     height: number;
     weight: number;
     goal: string;

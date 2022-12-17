@@ -33,17 +33,22 @@ ion-accordion-group{
     }
 }
 
-@font-face {   
+.alert-wrapper{
+  max-width: unset !important;
+  width: 80% !important;
+}
+
+@font-face {
     font-family: 'OpenSans';
     src: url('./assets/fonts/OpenSans-Regular.ttf');
 }
 
-@font-face {   
+@font-face {
     font-family: 'Candara';
     src: url('./assets/fonts/Candara.ttf');
 }
 
-@font-face {   
+@font-face {
     font-family: 'BarlowCondensed';
     src: url('./assets/fonts/BarlowCondensed-Regular.ttf');
 }
