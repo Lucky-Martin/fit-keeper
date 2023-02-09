@@ -1,8 +1,7 @@
 {
-  "name": "fit-buddy",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "name": "fit-keeper",
+  "version": "1.2.0",
+  "author": "Lucky-Martin",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -20,6 +19,7 @@
     "@angular/platform-browser": "^14.0.0",
     "@angular/platform-browser-dynamic": "^14.0.0",
     "@angular/router": "^14.0.0",
+    "@capacitor-community/barcode-scanner": "^3.0.1",
     "@capacitor/android": "4.4.0",
     "@capacitor/app": "4.1.0",
     "@capacitor/core": "4.4.0",
@@ -69,5 +69,5 @@
     "ts-node": "~8.3.0",
     "typescript": "~4.7.3"
   },
-  "description": "An Ionic project"
+  "description": "Food tracking application"
 }

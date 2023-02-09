@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Keyboard } from '@capacitor/keyboard';
 import { Platform } from '@ionic/angular';
+import { Keyboard } from '@capacitor/keyboard';
 
 @Component({
   selector: 'app-toolbar',
@@ -11,8 +11,7 @@ import { Platform } from '@ionic/angular';
 export class ToolbarComponent implements OnInit {
   showAddButton = true;
 
-  constructor(private router: Router,
-              private platform: Platform) { }
+  constructor(private router: Router, private platform: Platform) { }
 
   ngOnInit() {
     if (this.platform.is('mobile')) {

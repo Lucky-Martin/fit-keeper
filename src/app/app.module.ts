@@ -39,6 +39,8 @@ import {
     AppearanceSettingComponentComponent
 } from './settings/edit-setting-modal/appearance-setting-component/appearance-setting-component.component';
 import { WorkoutGroupComponent } from './workouts/workout-group/workout-group.component';
+import {WeightTrackerComponent} from './home/weight-tracker/weight-tracker.component';
+import {ScanFoodBarcodeComponent} from './food-search/scan-food-barcode/scan-food-barcode.component';
 
 @NgModule({
     declarations: [AppComponent, HomeHeaderComponent, MealHistoryHeaderComponent, ToolbarComponent,
@@ -49,7 +51,7 @@ import { WorkoutGroupComponent } from './workouts/workout-group/workout-group.co
         FavouritesComponent, HistoryFoodListComponent, FavouritesCardComponent,
         SettingsComponent, SettingsButtonComponent, EditSettingModalComponent,
         ProfileSettingContentComponent, GoalsSettingComponentComponent, AppearanceSettingComponentComponent,
-        WorkoutGroupComponent],
+        WorkoutGroupComponent, WeightTrackerComponent, ScanFoodBarcodeComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, FormsModule],
   providers: [{provide: RouteReuseStrategy, useClass: IonicRouteStrategy}],
   bootstrap: [AppComponent],

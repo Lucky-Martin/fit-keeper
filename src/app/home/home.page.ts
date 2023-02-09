@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+ import {Component, OnInit} from '@angular/core';
 import {Macros} from './tracker/food.model';
 import {TrackingService} from './tracker/tracking.service';
 import {UserService} from '../setup/user.service';
