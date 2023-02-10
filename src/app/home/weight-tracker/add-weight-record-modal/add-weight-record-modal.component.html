@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Enter Weight
+      Въведи тегло
     </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="onClose()">
@@ -19,11 +19,11 @@
   </ion-item>
 
   <ion-item>
-    <ion-label>Weight:</ion-label>
+    <ion-label>Тегло (кг):</ion-label>
     <ion-input
       type="number"
       (change)="setWeight($event.target.value)"></ion-input>
   </ion-item>
 
-  <ion-button expand="full" (click)="onSave()">Save</ion-button>
+  <ion-button expand="full" (click)="onSave()">Добави</ion-button>
 </ion-content>

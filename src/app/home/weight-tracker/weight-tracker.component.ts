@@ -20,19 +20,14 @@ export class WeightTrackerComponent implements AfterViewInit {
   ];
   chart;
 
-  constructor(private weightTrackingService: WeightTrackingService,
-              private modalController: ModalController) {
+  constructor(private weightTrackingService: WeightTrackingService, private modalController: ModalController) {
   }
 
   ngAfterViewInit() {
-    const weightData = this.weightData.map(record => record.weight);
-    const weightDates = this.weightData.map(record => record.date);
-
-    this.displayTracker(weightData, weightDates);
-
     this.weightTrackingService.getWeightRecords().then(data => {
-      // const weightData = data.map(record => record.weight);
-      // const weightDates = data.map(record => record.date);
+      const weightData = data.map(record => record.weight);
+      const weightDates = data.map(record => record.date);
+      this.displayTracker(weightData, weightDates);
     });
   }
 
@@ -47,14 +42,11 @@ export class WeightTrackerComponent implements AfterViewInit {
     const {data, role} = await modal.onWillDismiss();
 
     if (role === 'confirm') {
-      console.log("add", data);
-    } else {
-      console.log("not add");
+      await this.addWeightRecord(data.date, data.weight);
     }
   }
 
   private displayTracker(weights, dates) {
-    console.log(dates);
     this.chart = new Chart(this.graphRef.nativeElement, {
       type: 'line',
       data: {
@@ -62,9 +54,9 @@ export class WeightTrackerComponent implements AfterViewInit {
         datasets: [{
           label: 'Weight',
           data: weights,
-          backgroundColor: 'rgba(54, 162, 235, 0.2)',
-          borderColor: 'rgb(54, 162, 235)',
-          borderWidth: 1
+          fill: false,
+          borderColor: 'rgb(75, 192, 192)',
+          tension: 0.1
         }]
       },
       options: {
@@ -82,9 +74,22 @@ export class WeightTrackerComponent implements AfterViewInit {
     });
   }
 
-  private addWeightRecord() {
-    // this.weightTrackingService.addWeightRecord().then(() => {
-    //   this.weightChart.update();
-    // });
+  private async addWeightRecord(date: string, weight: number) {
+    await this.weightTrackingService.addWeightRecord(weight, date);
+
+    this.chart.data.labels.push(date);
+    this.chart.data.datasets[0].data.push(weight);
+    this.chart.data.labels.sort((a, b) => {
+      const da = new Date(a.date);
+      const db = new Date(b.date);
+
+      if (da < db) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+
+    this.chart.update();
   }
 }
