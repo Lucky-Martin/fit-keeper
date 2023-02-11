@@ -15,6 +15,7 @@ export class WeightTrackingService {
   async getWeightRecords() {
     const weightRecords = await Preferences.get({ key: 'weightRecords' });
     const parsedRecords = weightRecords.value ? JSON.parse(weightRecords.value) : [];
+
     parsedRecords.sort((a, b) => {
       const da = new Date(a.date);
       const db = new Date(b.date);
@@ -26,6 +27,11 @@ export class WeightTrackingService {
       }
 
       return 0;
+    });
+
+    parsedRecords.forEach(record => {
+      const date = new Date(record.date).toISOString().split('T')[0];
+      record.date = date;
     });
 
     return parsedRecords;

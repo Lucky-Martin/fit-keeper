@@ -11,13 +11,6 @@ import {AddWeightRecordModalComponent} from './add-weight-record-modal/add-weigh
 })
 export class WeightTrackerComponent implements AfterViewInit {
   @ViewChild('graph') private graphRef: ElementRef;
-  weightData = [
-    { date: '01.01.2022', weight: 75 },
-    { date: '2022-01-15', weight: 78 },
-    { date: '2022-02-01', weight: 76 },
-    { date: '2022-03-01', weight: 74 },
-    { date: '2022-04-01', weight: 72 }
-  ];
   chart;
 
   constructor(private weightTrackingService: WeightTrackingService, private modalController: ModalController) {
