@@ -7,7 +7,7 @@
     "start": "ng serve",
     "serve": "ionic serve",
     "build": "ng build",
-    "build:android": "ionic capacitor copy android",
+    "build:android": "ionic capacitor copy android && npx cap sync",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
