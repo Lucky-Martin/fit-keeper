@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
+import {BarcodeScanner} from '@awesome-cordova-plugins/barcode-scanner/ngx';
+
 @Component({
   selector: 'app-scan-food-barcode',
   templateUrl: './scan-food-barcode.component.html',
@@ -7,21 +8,16 @@ import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 })
 export class ScanFoodBarcodeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private barcodeScanner: BarcodeScanner) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   async scanBarcode() {
-    await BarcodeScanner.checkPermission({ force: true });
-
-    BarcodeScanner.hideBackground();
-    document.querySelector('body').classList.add('scanner-active');
-
-    const result = await BarcodeScanner.startScan();
-
-    if (result.hasContent) {
-      document.querySelector('body').classList.remove('scanner-active');
-      console.log(result.content);
-    }
+    this.barcodeScanner.scan().then(barcodeData => {
+      console.log('Barcode data', barcodeData);
+      alert(barcodeData);
+    }).catch(err => {
+      console.log('Error', err);
+    });
   }
 }
