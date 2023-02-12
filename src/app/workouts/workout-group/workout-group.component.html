@@ -1,14 +1,10 @@
-<div class="group_container" [ngClass]="{'margin_container': margin}">
-  <div class="group_title" [ngClass]="{'margin_title': margin}">
-    <h2 [textContent]="groupName"></h2>
-  </div>
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>{{groupName}}</ion-card-title>
+  </ion-card-header>
   <ion-slides pager="true" [options]="slideOptions">
     <ion-slide *ngFor="let image of images">
-      <ion-card>
-        <ion-card-content>
-          <img [src]="'/assets/img/' + image">
-        </ion-card-content>
-      </ion-card>
+      <img [src]="'/assets/img/' + image">
     </ion-slide>
   </ion-slides>
-</div>
+</ion-card>

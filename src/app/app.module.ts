@@ -39,7 +39,9 @@ import {
     AppearanceSettingComponentComponent
 } from './settings/edit-setting-modal/appearance-setting-component/appearance-setting-component.component';
 import { WorkoutGroupComponent } from './workouts/workout-group/workout-group.component';
-
+import {WeightTrackerComponent} from './home/weight-tracker/weight-tracker.component';
+import {ScanFoodBarcodeComponent} from './food-search/scan-food-barcode/scan-food-barcode.component';
+import {BarcodeScanner} from '@awesome-cordova-plugins/barcode-scanner/ngx';
 @NgModule({
     declarations: [AppComponent, HomeHeaderComponent, MealHistoryHeaderComponent, ToolbarComponent,
         FoodSearchComponent, FoodListComponent, AddFoodModalComponent,
@@ -49,9 +51,9 @@ import { WorkoutGroupComponent } from './workouts/workout-group/workout-group.co
         FavouritesComponent, HistoryFoodListComponent, FavouritesCardComponent,
         SettingsComponent, SettingsButtonComponent, EditSettingModalComponent,
         ProfileSettingContentComponent, GoalsSettingComponentComponent, AppearanceSettingComponentComponent,
-        WorkoutGroupComponent],
+        WorkoutGroupComponent, WeightTrackerComponent, ScanFoodBarcodeComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, FormsModule],
-  providers: [{provide: RouteReuseStrategy, useClass: IonicRouteStrategy}],
+  providers: [BarcodeScanner, {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
