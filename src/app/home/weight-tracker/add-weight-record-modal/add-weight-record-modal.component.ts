@@ -14,8 +14,8 @@ export class AddWeightRecordModalComponent {
     this.weightRecord = new WeightRecord(new Date(), 0);
   }
 
-  setWeight(value: string) {
-    this.weightRecord.weight = Number(value);
+  setWeight(event) {
+    this.weightRecord.weight = Number(event.value);
   }
 
   onDateSelected(event) {
