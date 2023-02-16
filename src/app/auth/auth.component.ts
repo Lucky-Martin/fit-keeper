@@ -44,7 +44,7 @@ export class AuthComponent implements OnInit {
 
       if (!this.authMode) {
         await this.router.navigate(['auth'], {queryParams: {
-          authMode: 'register'
+          authMode: 'login'
         }});
       }
     });
@@ -74,11 +74,11 @@ export class AuthComponent implements OnInit {
           this.userService.fetchMealHistoryFromDatabase().subscribe(async mealHistory => {
             // Init user data
             await this.trackingService.init();
-            await this.trackingService.setDay(new Date());
             await this.trackingService.calculateCalorieGoal(fetchedUser);
             await this.trackingService.saveMealHistory(JSON.stringify(mealHistory));
             this.trackingService.foods = mealHistory[new Date().toDateString()];
             await this.trackingService.saveCurrentDayFoods();
+            await this.trackingService.setDay(new Date());
 
             await this.router.navigateByUrl('/home', {replaceUrl: true});
           });

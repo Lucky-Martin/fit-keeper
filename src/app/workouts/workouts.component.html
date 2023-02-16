@@ -2,6 +2,7 @@
 <div class="workout_overlay flex_center" *ngIf="overlayImage">
   <div class="content">
     <img [src]="overlayImage" alt="Workout">
+    <ion-button (click)="onSaveImage()">Save</ion-button>
   </div>
 </div>
 <ion-content>
