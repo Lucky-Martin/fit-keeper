@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {UserService} from './setup/user.service';
 import {Preferences} from '@capacitor/preferences';
 
@@ -8,7 +8,7 @@ import {Preferences} from '@capacitor/preferences';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  loggedIn: boolean;
+  loggedIn: boolean = true;
   private readonly appearanceKey = 'APPEARANCE';
 
   constructor(private userService: UserService) {

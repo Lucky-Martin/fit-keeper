@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {BarcodeScanner} from '@awesome-cordova-plugins/barcode-scanner/ngx';
 import {BarcodeService, IBarcodeProductData} from './barcode.service';
-import {IFetchFoodData} from '../food-response.model';
 import {Food} from '../../home/tracker/food.model';
 import {AddFoodModalComponent} from '../add-food-modal/add-food-modal.component';
 import {ModalController, ToastController} from '@ionic/angular';

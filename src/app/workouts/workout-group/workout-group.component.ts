@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-workout-group',
@@ -10,9 +10,14 @@ export class WorkoutGroupComponent implements OnInit {
   @Input() images: string[];
   @Input() slideOptions;
   @Input() margin = true;
+  @Output() workoutSelected: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() { }
 
   ngOnInit() {}
+
+  onWorkoutSelected(img: string) {
+    this.workoutSelected.emit(img);
+  }
 
 }

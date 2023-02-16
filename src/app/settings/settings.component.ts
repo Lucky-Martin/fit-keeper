@@ -29,22 +29,22 @@ export class SettingsComponent implements OnInit {
     this.editSettingId = '';
   }
 
-  async resetUserSettings() {
+  async logoutUser() {
     const alert = await this.alertController.create({
-      header: 'Нулиране на приложението?',
-      message: 'Това действие ще изтрие всички потребителски данни и ще нулира приложението',
+      header: 'Изход от профила?',
+      message: 'Това действие ще ви изкара от вашия потребителски профил.',
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Затвори',
           role: 'cancel'
         },
         {
           text: 'OK',
           role: 'confirm',
           handler: async () => {
-            this.router.navigate(['/setup']).then(async () => {
-              await Preferences.clear();
-              await this.userService.resetUser();
+            this.router.navigate(['/auth'], {queryParams: {
+                authMode: 'login'
+              }}).then(async () => {
               this.userService.userLoggedStatus.next(false);
               location.reload();
             });

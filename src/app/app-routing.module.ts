@@ -6,6 +6,11 @@ import { HomePage } from './home/home.page';
 import { SettingsComponent } from './settings/settings.component';
 import { UserService } from './setup/user.service';
 import { WorkoutsComponent } from './workouts/workouts.component';
+import { AuthComponent } from './auth/auth.component';
+import { canActivate, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+
+const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['auth']);
+const redirectLoggedToHome = () => redirectLoggedInTo(['home']);
 
 const routes: Routes = [
   {
@@ -14,33 +19,38 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'auth',
+    component: AuthComponent
+  },
+  {
     path: 'home',
-    canActivate: [UserService],
-    component: HomePage
+    component: HomePage,
+    ...canActivate(redirectUnauthorizedToLogin)
   },
   {
     path: 'meal_history',
-    canActivate: [UserService],
-    component: HistoryComponent
+    component: HistoryComponent,
+    ...canActivate(redirectUnauthorizedToLogin)
   },
   {
     path: 'food',
-    canActivate: [UserService],
-    component: FoodSearchComponent
+    component: FoodSearchComponent,
+    ...canActivate(redirectUnauthorizedToLogin)
   },
   {
     path: 'workouts',
-    canActivate: [UserService],
-    component: WorkoutsComponent
+    component: WorkoutsComponent,
+    ...canActivate(redirectUnauthorizedToLogin)
   },
   {
     path: 'settings',
-    canActivate: [UserService],
-    component: SettingsComponent
+    component: SettingsComponent,
+    ...canActivate(redirectUnauthorizedToLogin)
   },
   {
     path: 'setup',
-    loadChildren: () => import('./setup/setup.module').then( m => m.SetupPageModule)
+    loadChildren: () => import('./setup/setup.module').then( m => m.SetupPageModule),
+    ...canActivate(redirectUnauthorizedToLogin)
   }
 ];
 

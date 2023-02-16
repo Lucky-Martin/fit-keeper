@@ -3,7 +3,7 @@
     <ion-card-title>{{groupName}}</ion-card-title>
   </ion-card-header>
   <ion-slides pager="true" [options]="slideOptions">
-    <ion-slide *ngFor="let image of images">
+    <ion-slide *ngFor="let image of images" (click)="onWorkoutSelected('/assets/img/' + image)">
       <img [src]="'/assets/img/' + image">
     </ion-slide>
   </ion-slides>

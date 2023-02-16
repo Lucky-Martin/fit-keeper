@@ -3,6 +3,7 @@ import {Observable, Subject} from 'rxjs';
 import {Food, IMacros, Macros} from './food.model';
 import {User} from '../../setup/user.model';
 import {Preferences} from '@capacitor/preferences';
+import {UserService} from '../../setup/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class TrackingService {
   private readonly currentDayFoodsKey = 'CURRENT_DAY_FOODS';
   private readonly macroGoalKey = 'MACRO_GOAL';
 
-  constructor() {
+  constructor(private userService: UserService) {
     this.init();
   }
 
@@ -37,8 +38,9 @@ export class TrackingService {
       await this.addCurrentDayToMealHistory().then(async () => {
         await this.reset();
         await this.saveCurrentDayFoods(true);
-        this.setCurrentDay().then(() => {
-          this.macrosListener.next(this.getMacros());
+        this.setCurrentDay().then(async () => {
+          const macros = await this.getMacros();
+          this.macrosListener.next(macros);
         });
 
         await this.setDay(new Date());
@@ -69,7 +71,8 @@ export class TrackingService {
     this.foods = foodForTheDay;
 
     await this.saveCurrentDayFoods();
-    this.macrosListener.next(this.getMacros());
+    const macros = await this.getMacros();
+    this.macrosListener.next(macros);
   }
 
   public calculateCalories(macros: IMacros): number {
@@ -153,7 +156,9 @@ export class TrackingService {
     await this.saveCurrentDayFoods();
     await this.saveConsumedCalories();
     await this.addCurrentDayToMealHistory();
-    this.macrosListener.next(this.getMacros());
+    await this.userService.saveUserDataToDatabase();
+    const macros = await this.getMacros();
+    this.macrosListener.next(macros);
   }
 
   public removeFood(food: Food): void {
@@ -164,22 +169,24 @@ export class TrackingService {
     }
   }
 
-  public getMacros(): Macros {
+  public getMacros(): Promise<IMacros> {
     const macros = new Macros();
 
-    this.fetchCurrentDayFoods().then(value => {
-      this.foods = value;
+    return new Promise<IMacros>(resolve => {
+      this.fetchCurrentDayFoods().then(value => {
+        this.foods = value;
 
-      for (let i = 0; i < this.foods.length; i++) {
-        const element = this.foods[i];
+        for (let i = 0; i < this.foods.length; i++) {
+          const element = this.foods[i];
 
-        macros.protein += Math.round(Number(element.macros.protein));
-        macros.carbs += Math.round(Number(element.macros.carbs));
-        macros.fats += Math.round(Number(element.macros.fats));
-      }
-    });
+          macros.protein += Math.round(Number(element.macros.protein));
+          macros.carbs += Math.round(Number(element.macros.carbs));
+          macros.fats += Math.round(Number(element.macros.fats));
+        }
 
-    return macros;
+        resolve(macros);
+      });
+    })
   }
 
   public getMacrosAsObservable(): Observable<Macros> {

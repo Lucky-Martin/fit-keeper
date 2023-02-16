@@ -1,0 +1,27 @@
+<app-home-header></app-home-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="credentials" (ngSubmit)="authorizeUser(authMode)">
+    <!--  Email  -->
+    <ion-item fill="solid" class="ion-margin-bottom">
+      <ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
+      <ion-note slot="error" *ngIf="(email.dirty || email.touched) && email.errors">Невалиден email</ion-note>
+    </ion-item>
+
+    <!--  Password  -->
+    <ion-item fill="solid" class="ion-margin-bottom">
+      <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
+      <ion-note slot="error" *ngIf="(password.dirty || password.touched) && password.errors">Паролата трябва да е минимум 8 символа</ion-note>
+    </ion-item>
+
+    <ion-button
+      *ngIf="authMode === 'login'"
+      expand="full"
+      type="submit"
+      [disabled]="credentials.invalid">Login</ion-button>
+    <ion-button
+      *ngIf="authMode === 'register'"
+      expand="full"
+      type="submit">Register</ion-button>
+  </form>
+</ion-content>
