@@ -8,18 +8,9 @@ import {Preferences} from '@capacitor/preferences';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  loggedIn: boolean = true;
   private readonly appearanceKey = 'APPEARANCE';
 
-  constructor(private userService: UserService) {
-    this.userService.userLoggedStatus.subscribe(value => {
-      this.loggedIn = value;
-    });
-
-    this.userService.fetchUser().then(value => {
-      this.loggedIn = !!value;
-    });
-  }
+  constructor() { }
 
   async ngOnInit() {
     const {value} = await Preferences.get({key: this.appearanceKey});

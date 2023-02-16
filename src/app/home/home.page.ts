@@ -28,5 +28,6 @@ export class HomePage implements OnInit {
 
   async ngOnInit() {
     this.macros = await this.trackingService.getMacros();
+    console.log(this.macros);
   }
 }

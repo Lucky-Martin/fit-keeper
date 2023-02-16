@@ -65,14 +65,21 @@ export class AuthComponent implements OnInit {
     if (user) {
       await this.userService.setUID(user.user.uid);
 
+      // Fetch user
       this.userService.fetchUserFromDatabase().subscribe(async (fetchedUser: IUser | null) => {
         if (fetchedUser) {
           await this.userService.createUser(fetchedUser, false);
 
+          // Fetch meal history
           this.userService.fetchMealHistoryFromDatabase().subscribe(async mealHistory => {
+            // Init user data
+            await this.trackingService.init();
+            await this.trackingService.setDay(new Date());
+            await this.trackingService.calculateCalorieGoal(fetchedUser);
             await this.trackingService.saveMealHistory(JSON.stringify(mealHistory));
             this.trackingService.foods = mealHistory[new Date().toDateString()];
             await this.trackingService.saveCurrentDayFoods();
+
             await this.router.navigateByUrl('/home', {replaceUrl: true});
           });
         } else {

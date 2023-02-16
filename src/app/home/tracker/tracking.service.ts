@@ -186,7 +186,7 @@ export class TrackingService {
 
         resolve(macros);
       });
-    })
+    });
   }
 
   public getMacrosAsObservable(): Observable<Macros> {

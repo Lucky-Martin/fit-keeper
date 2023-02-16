@@ -77,6 +77,9 @@ export class UserService {
     const {value} = await Preferences.get({key: 'MEAL_HISTORY'});
     const mealHistory = JSON.parse(value);
 
+    const calorieGoal = await Preferences.get({key: 'CALORIE_GOAL'});
+    const macroGoal = await Preferences.get({key: 'MACRO_GOAL'});
+
     await this.database.collection('users').doc(this.uid).set(user);
     await this.database.collection('mealHistory').doc(this.uid).set(mealHistory);
   }
