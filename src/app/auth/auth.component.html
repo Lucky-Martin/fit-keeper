@@ -11,7 +11,7 @@
     <!--  Password  -->
     <ion-item fill="solid" class="ion-margin-bottom">
       <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
-      <ion-note slot="error" *ngIf="(password.dirty || password.touched) && password.errors">Паролата трябва да е минимум 8 символа</ion-note>
+      <ion-note slot="error" *ngIf="password.touched && password.errors">Паролата трябва да е минимум 8 символа</ion-note>
     </ion-item>
 
     <ion-button
@@ -24,4 +24,12 @@
       expand="full"
       type="submit">Register</ion-button>
   </form>
+  <ion-button
+    *ngIf="authMode === 'register'"
+    fill="clear"
+    (click)="switchAuthMode()">Имаш профил? Вход.</ion-button>
+  <ion-button
+    *ngIf="authMode === 'login'"
+    fill="clear"
+    (click)="switchAuthMode()">Нямаш профил? Регистрация</ion-button>
 </ion-content>

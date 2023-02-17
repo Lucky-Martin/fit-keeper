@@ -18,13 +18,13 @@ export class UserService {
   constructor(private database: AngularFirestore) {
     this.fetchUser().then(async user => {
       this.user = user;
-
-      if (!user) {
-        this.userLogged = false;
-        this.userLoggedStatus.next(false);
-      }
-
       this.uid = await this.fetchUID();
+
+      if (!(window.location.href.indexOf('setup') > -1 || window.location.href.indexOf('auth') > -1)) {
+        console.log('here')
+        this.userLogged = !!this.user;
+        this.userLoggedStatus.next(this.userLogged);
+      }
     });
   }
 

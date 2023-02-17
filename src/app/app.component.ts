@@ -33,8 +33,10 @@ export class AppComponent implements OnInit {
       }
 
       this.userService.fetchMealHistoryFromDatabase().subscribe(async mealHistory => {
-        await this.trackingService.saveMealHistory(JSON.stringify(mealHistory));
-        this.trackingService.foods = mealHistory[new Date().toDateString()];
+        if (mealHistory) {
+          await this.trackingService.saveMealHistory(JSON.stringify(mealHistory));
+          this.trackingService.foods = mealHistory[new Date().toDateString()];
+        }
       });
     });
   }
