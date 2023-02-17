@@ -9,6 +9,7 @@ import {AngularFirestore} from '@angular/fire/compat/firestore';
 })
 export class UserService {
   user: IUser | null;
+  userLogged: boolean;
   userLoggedStatus: Subject<boolean> = new Subject<boolean>();
   private uid: string;
   private userStorageKey = 'USER';
@@ -17,6 +18,12 @@ export class UserService {
   constructor(private database: AngularFirestore) {
     this.fetchUser().then(async user => {
       this.user = user;
+
+      if (!user) {
+        this.userLogged = false;
+        this.userLoggedStatus.next(false);
+      }
+
       this.uid = await this.fetchUID();
     });
   }
@@ -74,11 +81,12 @@ export class UserService {
 
   async saveUserDataToDatabase() {
     const user: IUser = await this.fetchUser();
-    const {value} = await Preferences.get({key: 'MEAL_HISTORY'});
-    const mealHistory = JSON.parse(value);
+    let {value} = await Preferences.get({key: 'MEAL_HISTORY'});
 
-    const calorieGoal = await Preferences.get({key: 'CALORIE_GOAL'});
-    const macroGoal = await Preferences.get({key: 'MACRO_GOAL'});
+    if (!value) {
+      value = '[]';
+    }
+    const mealHistory = JSON.parse(value);
 
     await this.database.collection('users').doc(this.uid).set(user);
     await this.database.collection('mealHistory').doc(this.uid).set(mealHistory);

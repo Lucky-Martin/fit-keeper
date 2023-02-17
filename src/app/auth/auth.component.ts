@@ -83,7 +83,11 @@ export class AuthComponent implements OnInit {
             await this.router.navigateByUrl('/home', {replaceUrl: true});
           });
         } else {
-          await this.router.navigateByUrl('/home', {replaceUrl: true});
+          if (mode === 'register') {
+            await this.router.navigateByUrl('/setup', {replaceUrl: true});
+          } else {
+            await this.router.navigateByUrl('/home', {replaceUrl: true});
+          }
         }
       });
     } else {
