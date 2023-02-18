@@ -3,6 +3,7 @@ import {AlertController} from '@ionic/angular';
 import {Preferences} from '@capacitor/preferences';
 import {Router} from '@angular/router';
 import {UserService} from '../setup/user.service';
+import {AuthService} from '../auth/auth.service';
 
 @Component({
   selector: 'app-settings',
@@ -15,6 +16,7 @@ export class SettingsComponent implements OnInit {
 
   constructor(private alertController: AlertController,
               private userService: UserService,
+              private auth: AuthService,
               private router: Router) { }
 
   ngOnInit() {}
@@ -42,6 +44,7 @@ export class SettingsComponent implements OnInit {
           text: 'OK',
           role: 'confirm',
           handler: async () => {
+            await this.auth.logout();
             this.userService.userLogged = false;
             this.userService.userLoggedStatus.next(false);
             localStorage.clear();
