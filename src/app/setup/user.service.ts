@@ -3,6 +3,7 @@ import { IUser } from './user.model';
 import { Preferences } from '@capacitor/preferences';
 import { Subject } from 'rxjs';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
+import {WeightTrackingService} from '../home/weight-tracker/weight-tracking.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,13 +16,13 @@ export class UserService {
   private userStorageKey = 'USER';
   private uidKey = 'uid';
 
-  constructor(private database: AngularFirestore) {
+  constructor(private database: AngularFirestore,
+              private weightTrackingService: WeightTrackingService) {
     this.fetchUser().then(async user => {
       this.user = user;
       this.uid = await this.fetchUID();
 
       if (!(window.location.href.indexOf('setup') > -1 || window.location.href.indexOf('auth') > -1)) {
-        console.log('here')
         this.userLogged = !!this.user;
         this.userLoggedStatus.next(this.userLogged);
       }
@@ -34,6 +35,10 @@ export class UserService {
 
   fetchMealHistoryFromDatabase() {
     return this.database.collection('mealHistory').doc(this.uid).valueChanges();
+  }
+
+  fetchWeightProgressFromDatabase() {
+    return this.database.collection('weightProgress').doc(this.uid).valueChanges();
   }
 
   async setUID(uid: string) {
@@ -81,6 +86,7 @@ export class UserService {
 
   async saveUserDataToDatabase() {
     const user: IUser = await this.fetchUser();
+    const weightProgress = await this.weightTrackingService.getWeightRecords();
     let {value} = await Preferences.get({key: 'MEAL_HISTORY'});
 
     if (!value) {
@@ -90,5 +96,6 @@ export class UserService {
 
     await this.database.collection('users').doc(this.uid).set(user);
     await this.database.collection('mealHistory').doc(this.uid).set(mealHistory);
+    await this.database.collection('weightProgress').doc(this.uid).set({data: weightProgress});
   }
 }

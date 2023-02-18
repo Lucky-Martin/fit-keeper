@@ -44,6 +44,7 @@ export class SettingsComponent implements OnInit {
           handler: async () => {
             this.userService.userLogged = false;
             this.userService.userLoggedStatus.next(false);
+            localStorage.clear();
 
             this.router.navigate(['/auth'], {queryParams: {
                 authMode: 'login'

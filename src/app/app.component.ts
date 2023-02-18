@@ -3,6 +3,8 @@ import {UserService} from './setup/user.service';
 import {Preferences} from '@capacitor/preferences';
 import {IUser} from './setup/user.model';
 import {TrackingService} from './home/tracker/tracking.service';
+import {WeightTrackingService} from './home/weight-tracker/weight-tracking.service';
+import {IWeightRecord} from './home/weight-tracker/weight-record.model';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +15,8 @@ export class AppComponent implements OnInit {
   private readonly appearanceKey = 'APPEARANCE';
 
   constructor(private userService: UserService,
-              private trackingService: TrackingService) { }
+              private trackingService: TrackingService,
+              private weightTrackingService: WeightTrackingService) { }
 
   async ngOnInit() {
     this.userService.userLoggedStatus.subscribe(status => {
@@ -36,6 +39,13 @@ export class AppComponent implements OnInit {
         if (mealHistory) {
           await this.trackingService.saveMealHistory(JSON.stringify(mealHistory));
           this.trackingService.foods = mealHistory[new Date().toDateString()];
+        }
+      });
+
+      this.userService.fetchWeightProgressFromDatabase().subscribe(async (weightProgress: {data: IWeightRecord[]}) => {
+        if (weightProgress) {
+          await this.weightTrackingService.saveWeightRecords(weightProgress.data);
+          this.weightTrackingService.updateWeightChartSubject.next();
         }
       });
     });
