@@ -125,7 +125,6 @@ export class AuthComponent implements OnInit {
         message: `Грешка при ${errKeyword}. Опитайте отново!`,
         duration: 5000
       });
-
       await toast.present();
     }
   }
