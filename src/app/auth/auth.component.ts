@@ -100,7 +100,7 @@ export class AuthComponent implements OnInit {
           // Fetch meal history
           this.userService.fetchMealHistoryFromDatabase().subscribe(async mealHistory => {
             // Init user data
-            if (mode === 'login') {
+            if (mode === 'login' || provider === 'google') {
               await this.trackingService.init();
               await this.trackingService.calculateCalorieGoal(fetchedUser);
               await this.trackingService.saveMealHistory(JSON.stringify(mealHistory));
