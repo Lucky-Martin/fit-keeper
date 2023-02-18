@@ -3,6 +3,7 @@ import {Macros} from './tracker/food.model';
 import {TrackingService} from './tracker/tracking.service';
 import {UserService} from '../setup/user.service';
  import {LoadingController} from '@ionic/angular';
+ import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -21,13 +22,13 @@ export class HomePage {
 
   constructor(private trackingService: TrackingService,
               private userService: UserService,
-              private loadingController: LoadingController) {
+              private loadingController: LoadingController,
+              private router: Router) {
     this.trackingService.getMacrosAsObservable().subscribe((value: Macros) => {
       this.macros = value;
     });
     this.userService.fetchUser().then(async value => {
       this.username = value.name;
-      console.log(this.userInit, value.init);
       this.userInit = value.init;
       await this.init();
     });
