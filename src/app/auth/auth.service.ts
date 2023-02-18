@@ -25,11 +25,11 @@ export class AuthService {
   async authWithGoogle() {
     try {
       if (this.platform.is('mobile')) {
-        // const googleUser = await GoogleAuth.signIn();
-        // const credential = GoogleAuthProvider.credential(googleUser.authentication.idToken);
-        // return await signInWithCredential(this.auth, credential);
-        const provider = new GoogleAuthProvider();
-        return await this.afAuth.signInWithPopup(provider);
+        const googleUser = await GoogleAuth.signIn();
+        const credential = GoogleAuthProvider.credential(googleUser.authentication.idToken);
+        return await signInWithCredential(this.auth, credential);
+        // const provider = new GoogleAuthProvider();
+        // return await this.afAuth.signInWithPopup(provider);
       } else {
         return await signInWithPopup(this.auth, new GoogleAuthProvider());
       }
