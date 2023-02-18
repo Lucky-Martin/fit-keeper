@@ -50,7 +50,7 @@ export class TrackerComponent implements AfterViewInit {
         labels: ['Консумирани', 'Остават'],
         datasets: [{
           label: 'Calories',
-          data: [Math.round(this.trackingService.calories), Math.round(this.caloriesLeft)],
+          data: [Math.round(this.trackingService.calories), (Math.round(this.caloriesLeft) < 0 ? 0 : Math.round(this.caloriesLeft))],
           backgroundColor: [
             '#802E11',
             '#E76B3F'
