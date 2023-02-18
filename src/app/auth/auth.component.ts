@@ -33,10 +33,15 @@ export class AuthComponent implements OnInit {
     return this.credentials.get('password');
   }
 
+  get confirmPassword() {
+    return this.credentials.get('confirmPassword');
+  }
+
   ngOnInit() {
     this.credentials = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.min(8)]]
+      password: ['', [Validators.required, Validators.min(8)]],
+      confirmPassword: ['', [Validators.required, Validators.min(8)]]
     });
 
     this.route.queryParams.subscribe(async params => {
@@ -53,19 +58,34 @@ export class AuthComponent implements OnInit {
   switchAuthMode() {
     this.authMode = this.authMode === 'register' ? 'login' : 'register';
   }
-  async authorizeUser(mode: string) {
-    if (this.password.errors || this.email.errors) {
-      return;
+  async authorizeUser(mode: string, provider: string = 'default') {
+    if (provider === 'default') {
+      if ((this.password.errors || this.email.errors) || (this.authMode === 'register' && this.confirmPassword.errors)) {
+        return;
+      }
+
+      if (this.authMode === 'register' && (this.password.value !== this.confirmPassword.value)) {
+        const toast = await this.toastController.create({
+          message: `Паролите не съвпадат!`,
+          duration: 5000
+        });
+
+        return await toast.present();
+      }
     }
 
     const loading = await this.loadingController.create();
     await loading.present();
 
     let user;
-    if (mode === 'register') {
-      user = await this.authService.register(this.credentials.value);
+    if (provider === 'google') {
+      user = await this.authService.authWithGoogle();
     } else {
-      user = await this.authService.login(this.credentials.value);
+      if (mode === 'register') {
+        user = await this.authService.register(this.credentials.value);
+      } else {
+        user = await this.authService.login(this.credentials.value);
+      }
     }
     await loading.dismiss();
 

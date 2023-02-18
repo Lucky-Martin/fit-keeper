@@ -4,7 +4,6 @@ import { FoodSearchComponent } from './food-search/food-search.component';
 import { HistoryComponent } from './history/history.component';
 import { HomePage } from './home/home.page';
 import { SettingsComponent } from './settings/settings.component';
-import { UserService } from './setup/user.service';
 import { WorkoutsComponent } from './workouts/workouts.component';
 import { AuthComponent } from './auth/auth.component';
 import { canActivate, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard';

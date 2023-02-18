@@ -84,8 +84,12 @@ export class UserService {
     await Preferences.remove({key: this.userStorageKey});
   }
 
-  async saveUserDataToDatabase() {
+  async saveUserDataToDatabase(setInit = false) {
     const user: IUser = await this.fetchUser();
+    if (setInit) {
+      user.init = true;
+    }
+
     const weightProgress = await this.weightTrackingService.getWeightRecords();
     let {value} = await Preferences.get({key: 'MEAL_HISTORY'});
 

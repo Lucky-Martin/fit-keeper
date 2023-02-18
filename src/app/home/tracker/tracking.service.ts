@@ -133,9 +133,9 @@ export class TrackingService {
 
     if (user.goal === 'loose_weight') {
       this.macrosGoal = {
-        protein: Math.round((this.calories * 0.4) / 4),
-        carbs: Math.round((this.calories * 0.4) / 4),
-        fats: Math.round((this.calories * 0.2) / 9)
+        protein: Math.round((this.calorieGoal * 0.4) / 4),
+        carbs: Math.round((this.calorieGoal * 0.4) / 4),
+        fats: Math.round((this.calorieGoal * 0.2) / 9)
       };
     }
 

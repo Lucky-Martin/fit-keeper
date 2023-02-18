@@ -1,5 +1,12 @@
 import { Injectable } from '@angular/core';
-import {Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from '@angular/fire/auth';
+import { GoogleAuthProvider } from 'firebase/auth';
+import {
+  Auth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut
+} from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +14,14 @@ import {Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOu
 export class AuthService {
 
   constructor(private auth: Auth) { }
+
+  async authWithGoogle() {
+    try {
+      return await signInWithPopup(this.auth, new GoogleAuthProvider());
+    } catch (e) {
+      return null;
+    }
+  }
 
   async register({email, password}) {
     try {
