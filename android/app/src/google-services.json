@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "796792034085",
+    "project_id": "fit-keeper",
+    "storage_bucket": "fit-keeper.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:796792034085:android:765f7408ee8150971700cc",
+        "android_client_info": {
+          "package_name": "com.fit.keeper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "796792034085-8tkac0ci46vfhkjgrk354ldf78drrh39.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fit.keeper",
+            "certificate_hash": "163f60ec0de2aa276daefa71d0759e581b79ff25"
+          }
+        },
+        {
+          "client_id": "796792034085-qg02k12vb2gg77ubd78bicin5m4tm47g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFHrT4bPVEcRECNLjJ4YUQrfzP40lJZKo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "796792034085-qg02k12vb2gg77ubd78bicin5m4tm47g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

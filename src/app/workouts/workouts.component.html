@@ -1,8 +1,8 @@
 <app-home-header></app-home-header>
-<div class="workout_overlay flex_center" *ngIf="overlayImage">
-  <div class="content">
+<div class="workout_overlay flex_center" *ngIf="overlayImage" (click)="closeOverlay()">
+  <div class="content ion-text-center">
     <img [src]="overlayImage" alt="Workout">
-    <ion-button (click)="onSaveImage()">Save</ion-button>
+    <ion-button (click)="onSaveImage()">Запази</ion-button>
   </div>
 </div>
 <ion-content>
