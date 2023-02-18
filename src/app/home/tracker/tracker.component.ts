@@ -25,6 +25,7 @@ export class TrackerComponent implements AfterViewInit {
     this.trackingService.getCaloriesLeft().then(async value => {
       this.caloriesLeft = value;
       this.macroGoal = await this.trackingService.fetchMacroGoal();
+      console.log(this.macroGoal);
     });
 
     this.route.params.subscribe(() => {

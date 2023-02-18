@@ -73,10 +73,17 @@ ion-label {
     width: 100vw;
 }
 .container {
-    max-width: 90%;
+    max-width: 680px;
     display: block;
     margin: 0 auto;
 }
+
+@media only screen and (max-width: 680px) {
+  .container {
+    max-width: 90%;
+  }
+}
+
 .flex_center {
     display: flex;
     justify-content: center;

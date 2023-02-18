@@ -1,0 +1,47 @@
+<app-home-header></app-home-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="credentials" (ngSubmit)="authorizeUser(authMode)">
+    <!--  Email  -->
+    <ion-item fill="solid" class="ion-margin-bottom">
+      <ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
+      <ion-note slot="error" *ngIf="(email.dirty || email.touched) && email.errors">Невалиден email</ion-note>
+    </ion-item>
+
+    <!--  Password  -->
+    <ion-item fill="solid" class="ion-margin-bottom">
+      <ion-input type="password" placeholder="Парола" formControlName="password"></ion-input>
+      <ion-note slot="error" *ngIf="password.touched && password.errors">Паролата трябва да е минимум 8 символа</ion-note>
+    </ion-item>
+
+    <!--  Confirm password  -->
+    <ion-item fill="solid" class="ion-margin-bottom" *ngIf="authMode === 'register'">
+      <ion-input type="password" placeholder="Потвърди парола" formControlName="confirmPassword"></ion-input>
+      <ion-note slot="error" *ngIf="confirmPassword.touched && confirmPassword.errors">Паролата трябва да е минимум 8 символа</ion-note>
+    </ion-item>
+
+    <ion-button
+      *ngIf="authMode === 'login'"
+      expand="full"
+      type="submit"
+      [disabled]="email.invalid || password.invalid">Влез</ion-button>
+    <ion-button
+      *ngIf="authMode === 'register'"
+      expand="full"
+      type="submit">Регистрирай се</ion-button>
+    <ion-button
+      type="button"
+      expand="full"
+      (click)="authorizeUser(authMode, 'google')">
+      Вход с Google
+    </ion-button>
+  </form>
+  <ion-button
+    *ngIf="authMode === 'register'"
+    fill="clear"
+    (click)="switchAuthMode()">Имаш профил? Вход.</ion-button>
+  <ion-button
+    *ngIf="authMode === 'login'"
+    fill="clear"
+    (click)="switchAuthMode()">Нямаш профил? Регистрация</ion-button>
+</ion-content>

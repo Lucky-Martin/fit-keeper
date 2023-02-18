@@ -1,6 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from './setup/user.service';
 import {Preferences} from '@capacitor/preferences';
+import {IUser} from './setup/user.model';
+import {TrackingService} from './home/tracker/tracking.service';
+import {WeightTrackingService} from './home/weight-tracker/weight-tracking.service';
+import {IWeightRecord} from './home/weight-tracker/weight-record.model';
 
 @Component({
   selector: 'app-root',
@@ -8,22 +12,43 @@ import {Preferences} from '@capacitor/preferences';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  loggedIn: boolean;
   private readonly appearanceKey = 'APPEARANCE';
 
-  constructor(private userService: UserService) {
-    this.userService.userLoggedStatus.subscribe(value => {
-      this.loggedIn = value;
-    });
-
-    this.userService.fetchUser().then(value => {
-      this.loggedIn = !!value;
-    });
-  }
+  constructor(private userService: UserService,
+              private trackingService: TrackingService,
+              private weightTrackingService: WeightTrackingService) { }
 
   async ngOnInit() {
+    this.userService.userLoggedStatus.subscribe(status => {
+      if (status) {
+        this.syncWithDB();
+      }
+    });
+
     const {value} = await Preferences.get({key: this.appearanceKey});
     this.updateTheme(value);
+  }
+
+  async syncWithDB() {
+    this.userService.fetchUserFromDatabase().subscribe(async (user: IUser | null) => {
+      if (user) {
+        await this.userService.createUser(user, false);
+      }
+
+      this.userService.fetchMealHistoryFromDatabase().subscribe(async mealHistory => {
+        if (mealHistory) {
+          await this.trackingService.saveMealHistory(JSON.stringify(mealHistory));
+          this.trackingService.foods = mealHistory[new Date().toDateString()];
+        }
+      });
+
+      this.userService.fetchWeightProgressFromDatabase().subscribe(async (weightProgress: {data: IWeightRecord[]}) => {
+        if (weightProgress) {
+          await this.weightTrackingService.saveWeightRecords(weightProgress.data);
+          this.weightTrackingService.updateWeightChartSubject.next();
+        }
+      });
+    });
   }
 
   private updateTheme(value: string) {

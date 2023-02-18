@@ -46,12 +46,13 @@ export class SetupPage implements AfterViewInit {
         break;
       case 3:
         await this.userService.createUser(this.user);
-        this.trackingService.calculateCalorieGoal(this.user);
-        this.router.navigate(['/home']);
+        this.trackingService.calculateCalorieGoal(this.user).then(async () => {
+          await this.router.navigate(['/home']);
+        });
         break;
     }
 
-    this.slides.lockSwipes(false);
+    await this.slides.lockSwipes(false);
     this.slides.slideNext().then(() => {
       this.slides.lockSwipes(true);
     });
