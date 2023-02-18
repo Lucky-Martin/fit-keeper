@@ -7,20 +7,49 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:796792034085:android:765f7408ee8150971700cc",
+        "mobilesdk_app_id": "1:796792034085:android:0e881943ff101d351700cc",
         "android_client_info": {
-          "package_name": "com.fit.keeper"
+          "package_name": "com.alfit.keeper"
         }
       },
       "oauth_client": [
         {
-          "client_id": "796792034085-8tkac0ci46vfhkjgrk354ldf78drrh39.apps.googleusercontent.com",
+          "client_id": "796792034085-un0tk0sac4uoqtafnhbejsplrl5sc8r6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.fit.keeper",
+            "package_name": "com.alfit.keeper",
             "certificate_hash": "163f60ec0de2aa276daefa71d0759e581b79ff25"
           }
         },
+        {
+          "client_id": "796792034085-qg02k12vb2gg77ubd78bicin5m4tm47g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFHrT4bPVEcRECNLjJ4YUQrfzP40lJZKo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "796792034085-pbmfohdamp3ra30ioauri0jt1r6dlc1p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:796792034085:android:c2b0c0834cd14abb1700cc",
+        "android_client_info": {
+          "package_name": "com.keeper.fit"
+        }
+      },
+      "oauth_client": [
         {
           "client_id": "796792034085-qg02k12vb2gg77ubd78bicin5m4tm47g.apps.googleusercontent.com",
           "client_type": 3
