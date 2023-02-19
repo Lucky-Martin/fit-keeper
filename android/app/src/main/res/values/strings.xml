@@ -4,5 +4,4 @@
     <string name="title_activity_main">Fit Keeper</string>
     <string name="package_name">com.fit.keeper</string>
     <string name="custom_url_scheme">com.fit.keeper</string>
-    <string name="server_client_id">796792034085-qg02k12vb2gg77ubd78bicin5m4tm47g.apps.googleusercontent.com</string>
 </resources>

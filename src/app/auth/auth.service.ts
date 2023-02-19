@@ -1,35 +1,25 @@
 import { Injectable } from '@angular/core';
 import {
   Auth, GoogleAuthProvider,
-  createUserWithEmailAndPassword, signInWithCredential,
+  createUserWithEmailAndPassword,
   signInWithEmailAndPassword, signInWithPopup,
   signOut
 } from '@angular/fire/auth';
 import {Platform} from '@ionic/angular';
-import {GoogleAuth} from '@codetrix-studio/capacitor-google-auth';
-import {AngularFireAuth} from '@angular/fire/compat/auth';
-
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
   constructor(public auth: Auth,
-              private afAuth: AngularFireAuth,
-              private platform: Platform) {
-    this.platform.ready().then(() => {
-      GoogleAuth.initialize();
-    });
-  }
+              private platform: Platform) { }
 
   async authWithGoogle() {
     try {
       if (this.platform.is('mobile')) {
-        const googleUser = await GoogleAuth.signIn();
-        const credential = GoogleAuthProvider.credential(googleUser.authentication.idToken);
-        return await signInWithCredential(this.auth, credential);
         // const provider = new GoogleAuthProvider();
         // return await this.afAuth.signInWithPopup(provider);
+        return null;
       } else {
         return await signInWithPopup(this.auth, new GoogleAuthProvider());
       }
