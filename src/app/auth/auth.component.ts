@@ -80,7 +80,6 @@ export class AuthComponent implements OnInit {
     let user;
     if (provider === 'google') {
       user = await this.authService.authWithGoogle();
-      console.error(user);
     } else {
       if (mode === 'register') {
         user = await this.authService.register(this.credentials.value);
