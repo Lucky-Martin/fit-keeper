@@ -39,6 +39,7 @@
     "@ionic/angular": "^6.1.9",
     "chart.js": "^3.9.1",
     "ionicons": "^6.0.3",
+    "phonegap-plugin-barcodescanner": "^8.1.0",
     "rxjs": "~6.6.0",
     "translate": "^1.4.1",
     "transliteration": "^2.3.5",

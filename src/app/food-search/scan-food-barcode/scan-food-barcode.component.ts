@@ -28,6 +28,10 @@ export class ScanFoodBarcodeComponent implements OnInit {
           await this.displayNotFound();
           return;
         }
+        productData.product.nutriments['energy-kcal_serving'] = 249;
+        productData.product.nutriments.proteins_serving = 4;
+        productData.product.nutriments.fat_serving = 12;
+        productData.product.nutriments.carbohydrates_serving = 30;
         await this.addFood(productData);
       });
     }).catch(err => {
