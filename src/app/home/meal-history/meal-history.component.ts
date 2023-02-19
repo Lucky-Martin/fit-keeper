@@ -69,23 +69,32 @@ export class MealHistoryComponent implements AfterViewInit {
 
     var week = [];
     // Starting Monday not Sunday
-    current.setDate((current.getDate() - current.getDay() + 1));
+    current.setDate((current.getDate() - current.getDay()));
+    if (current.toString().includes('Sun')) {
+      current.setDate(current.getDate() - 6);
+      console.log(current);
+    }
+
+    console.log(current);
     for (var i = 0; i < 7; i++) {
       week.push(
         new Date(current)
       );
-      current.setDate(current.getDate() +1);
+      current.setDate(current.getDate() + 1);
     }
 
     for(let i = 0; i < this.daysInAWeek; i++) {
 
       const dateString = week[i].toDateString();
+      console.log(dateString);
 
       if (mealHistory[dateString]) {
         let caloriesForDay: number = 0;
         for(let j = 0; j < mealHistory[dateString].length; j++) {
           caloriesForDay += mealHistory[dateString][j].calories;
         }
+
+        console.log(dateString, caloriesForDay);
 
         calories.push(Math.round(caloriesForDay));
       } else {

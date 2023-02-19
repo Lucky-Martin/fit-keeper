@@ -14,6 +14,7 @@ export class DaySelectorComponent implements OnInit {
 
   async ngOnInit() {
     this.daySelected = (new Date(await this.trackingService.fetchCurrentDay()).getDay() - 1).toString();
+    this.daySelected = Number(this.daySelected) < 0 ? '6' : this.daySelected;
   }
 
   async onDaySelected() {

@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../setup/user.service';
 import {IUser} from '../setup/user.model';
 import {TrackingService} from '../home/tracker/tracking.service';
+import {getRedirectResult} from '@angular/fire/auth';
 
 @Component({
   selector: 'app-auth',
@@ -24,7 +25,6 @@ export class AuthComponent implements OnInit {
               private authService: AuthService,
               private userService: UserService,
               private trackingService: TrackingService) { }
-
   get email() {
     return this.credentials.get('email');
   }
@@ -37,7 +37,7 @@ export class AuthComponent implements OnInit {
     return this.credentials.get('confirmPassword');
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.credentials = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.min(8)]],
@@ -80,6 +80,7 @@ export class AuthComponent implements OnInit {
     let user;
     if (provider === 'google') {
       user = await this.authService.authWithGoogle();
+      console.error(user);
     } else {
       if (mode === 'register') {
         user = await this.authService.register(this.credentials.value);

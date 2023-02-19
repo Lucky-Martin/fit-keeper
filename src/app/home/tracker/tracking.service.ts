@@ -206,7 +206,7 @@ export class TrackingService {
     const {value} = await Preferences.get({key: this.mealHistoryKey});
     let parsedValue: { [day: string]: Food[] };
 
-    if (value === undefined || !value) {
+    if (value === undefined || !value || value === 'undefined') {
       parsedValue = {};
     } else {
       parsedValue = JSON.parse(value);
