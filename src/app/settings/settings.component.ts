@@ -47,7 +47,7 @@ export class SettingsComponent implements OnInit {
             await this.auth.logout();
             this.userService.userLogged = false;
             this.userService.userLoggedStatus.next(false);
-            localStorage.clear();
+            await Preferences.clear();
 
             this.router.navigate(['/auth'], {queryParams: {
                 authMode: 'login'

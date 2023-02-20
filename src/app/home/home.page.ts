@@ -28,6 +28,10 @@ export class HomePage {
       this.macros = value;
     });
     this.userService.fetchUser().then(async value => {
+      if (!value) {
+        return await this.router.navigateByUrl('auth', {replaceUrl: true});
+      }
+
       this.username = value.name;
       this.userInit = value.init;
       await this.init();

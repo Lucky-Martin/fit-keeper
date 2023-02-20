@@ -144,7 +144,7 @@ export class TrackingService {
   }
 
   public async addFood(food: Food, quantity: number = 1): Promise<void> {
-    if (this.foods.length === 0) {
+    if (!this.foods) {
       this.foods = [];
     }
 

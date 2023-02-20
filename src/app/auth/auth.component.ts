@@ -6,7 +6,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../setup/user.service';
 import {IUser} from '../setup/user.model';
 import {TrackingService} from '../home/tracker/tracking.service';
-import {getRedirectResult} from '@angular/fire/auth';
+import {Preferences} from '@capacitor/preferences';
 
 @Component({
   selector: 'app-auth',
@@ -53,6 +53,8 @@ export class AuthComponent implements OnInit {
         }});
       }
     });
+
+    await Preferences.clear();
   }
 
   switchAuthMode() {
@@ -104,7 +106,10 @@ export class AuthComponent implements OnInit {
               await this.trackingService.init();
               await this.trackingService.calculateCalorieGoal(fetchedUser);
               await this.trackingService.saveMealHistory(JSON.stringify(mealHistory));
-              this.trackingService.foods = mealHistory[new Date().toDateString()];
+
+              const todayFoods = mealHistory[new Date().toDateString()];
+
+              this.trackingService.foods = todayFoods ? todayFoods : [];
               await this.trackingService.saveCurrentDayFoods();
               await this.trackingService.setDay(new Date());
             }

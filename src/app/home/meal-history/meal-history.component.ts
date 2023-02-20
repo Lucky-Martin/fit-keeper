@@ -67,34 +67,25 @@ export class MealHistoryComponent implements AfterViewInit {
     const current = new Date();
     const calories: number[] = [];
 
-    var week = [];
-    // Starting Monday not Sunday
-    current.setDate((current.getDate() - current.getDay()));
-    if (current.toString().includes('Sun')) {
+    const week = [];
+    if (current.toLocaleString().includes('Sun')) {
       current.setDate(current.getDate() - 6);
-      console.log(current);
     }
 
-    console.log(current);
-    for (var i = 0; i < 7; i++) {
-      week.push(
-        new Date(current)
-      );
+    for (let i = 0; i < 7; i++) {
+      week.push(new Date(current));
       current.setDate(current.getDate() + 1);
     }
 
     for(let i = 0; i < this.daysInAWeek; i++) {
 
       const dateString = week[i].toDateString();
-      console.log(dateString);
 
       if (mealHistory[dateString]) {
-        let caloriesForDay: number = 0;
+        let caloriesForDay = 0;
         for(let j = 0; j < mealHistory[dateString].length; j++) {
           caloriesForDay += mealHistory[dateString][j].calories;
         }
-
-        console.log(dateString, caloriesForDay);
 
         calories.push(Math.round(caloriesForDay));
       } else {
@@ -106,7 +97,7 @@ export class MealHistoryComponent implements AfterViewInit {
   }
 
   private async updateGraph() {
-    let calories = await this.calculateCaloriesForDay();
+    const calories = await this.calculateCaloriesForDay();
 
     this.graph.data.datasets[0].data = null;
     this.graph.data.datasets[0].data = calories;

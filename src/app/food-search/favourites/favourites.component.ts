@@ -7,6 +7,7 @@ import {FoodService} from '../food.service';
 import {FavouritesService} from './favourites.service';
 import {AddFoodModalComponent} from '../add-food-modal/add-food-modal.component';
 import translate from 'translate';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-favourites',
@@ -24,7 +25,8 @@ export class FavouritesComponent implements OnInit {
   constructor(private favouritesService: FavouritesService,
               private trackingService: TrackingService,
               private modalController: ModalController,
-              private foodService: FoodService) {
+              private foodService: FoodService,
+              private router: Router) {
   }
 
   async ngOnInit() {
@@ -54,6 +56,7 @@ export class FavouritesComponent implements OnInit {
 
     if (role === 'confirm') {
       await this.trackingService.addFood(data.food, data.quantity);
+      await this.router.navigate(['/home']);
     }
   }
 

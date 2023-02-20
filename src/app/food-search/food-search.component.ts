@@ -33,7 +33,6 @@ export class FoodSearchComponent implements OnInit {
       .subscribe(params => {
         this.predefinedDate = params.day;
         this.predefinedFoodQuery = params.food;
-        console.log(this.predefinedDate, this.predefinedFoodQuery);
 
         if (this.predefinedFoodQuery) {
           this.fetching = true;
@@ -48,7 +47,7 @@ export class FoodSearchComponent implements OnInit {
             food.macros.fats = value.parsed[0].food.nutrients.FAT;
             food.calories = value.parsed[0].food.nutrients.ENERC_KCAL;
 
-            this.openInputModal(food);
+            await this.openInputModal(food);
           }, err => {
             console.log(err);
           });
@@ -132,7 +131,7 @@ export class FoodSearchComponent implements OnInit {
     const {data, role} = await modal.onWillDismiss();
 
     if (role === 'confirm') {
-      this.onAddFood(data);
+      await this.onAddFood(data);
     } else {
       this.predefinedFoodQuery = null;
     }
@@ -169,7 +168,7 @@ export class FoodSearchComponent implements OnInit {
         queryParams: {day: this.predefinedDate}
       });
     } else {
-      this.trackingService.addFood(food, quantity);
+      await this.trackingService.addFood(food, quantity);
       await this.router.navigate(['/home']);
     }
   }
