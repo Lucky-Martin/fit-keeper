@@ -55,6 +55,8 @@ export class AuthComponent implements OnInit {
     });
 
     await Preferences.clear();
+    this.userService.userLogged = false;
+    this.userService.userLoggedStatus.next(false);
   }
 
   switchAuthMode() {

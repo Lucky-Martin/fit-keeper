@@ -5,6 +5,7 @@ import {IUser} from './setup/user.model';
 import {TrackingService} from './home/tracker/tracking.service';
 import {WeightTrackingService} from './home/weight-tracker/weight-tracking.service';
 import {IWeightRecord} from './home/weight-tracker/weight-record.model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -16,12 +17,15 @@ export class AppComponent implements OnInit {
 
   constructor(private userService: UserService,
               private trackingService: TrackingService,
-              private weightTrackingService: WeightTrackingService) { }
+              private weightTrackingService: WeightTrackingService,
+              private router: Router) { }
 
   async ngOnInit() {
-    this.userService.userLoggedStatus.subscribe(status => {
+    this.userService.userLoggedStatus.subscribe(async status => {
       if (status) {
-        this.syncWithDB();
+        await this.syncWithDB();
+      } else {
+        await this.router.navigateByUrl('/auth', {replaceUrl: true});
       }
     });
 
