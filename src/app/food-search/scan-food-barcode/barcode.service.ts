@@ -4,13 +4,13 @@ import {Observable} from 'rxjs';
 
 export interface IBarcodeProductData {
   product: {
-    image_front_url: string;
+    image_url: string;
     product_name: string;
     nutriments: {
-      'energy-kcal_serving': number;
-      carbohydrates_serving: number;
-      fat_serving: number;
-      proteins_serving: number;
+      'energy-kcal': number;
+      carbohydrates: number;
+      fat: number;
+      proteins: number;
     };
     product_quantity: string;
   };
