@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {File} from '@ionic-native/file/ngx';
 import {HttpClient} from '@angular/common/http';
 import {Directory, Filesystem} from '@capacitor/filesystem';
-import {Platform} from '@ionic/angular';
+import {Platform, ToastController} from '@ionic/angular';
 
 @Component({
   selector: 'app-workouts',
@@ -17,7 +17,8 @@ export class WorkoutsComponent implements OnInit, OnDestroy {
   overlayImage: string;
   file: File;
   constructor(private http: HttpClient,
-              private platform: Platform) { }
+              private platform: Platform,
+              private toastController: ToastController) { }
 
   ngOnInit() {
     if (window.screen.width < 768) {
@@ -73,5 +74,18 @@ export class WorkoutsComponent implements OnInit, OnDestroy {
       };
       img.src = dataURI;
     }
+    const toast = await this.toastController.create({
+      position: 'bottom',
+      duration: 3000,
+      buttons: [
+        {
+          text: 'Затвори',
+          role: 'cancel'
+        }
+      ],
+      message: 'Успешно запазено в хранилището'
+    });
+
+    await toast.present();
   }
 }

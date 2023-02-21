@@ -7,6 +7,7 @@ import {FoodService} from '../food.service';
 import {FavouritesService} from './favourites.service';
 import {AddFoodModalComponent} from '../add-food-modal/add-food-modal.component';
 import translate from 'translate';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-favourites',
@@ -16,15 +17,15 @@ import translate from 'translate';
 export class FavouritesComponent implements OnInit {
   @Output() closed: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('modal') modal: IonModal;
-  favourites: IFetchFoodData[] = [];
-  favouritesBG: string[] = [];
+  favourites = [];
   open = true;
   fetching = false;
 
   constructor(private favouritesService: FavouritesService,
               private trackingService: TrackingService,
               private modalController: ModalController,
-              private foodService: FoodService) {
+              private foodService: FoodService,
+              private router: Router) {
   }
 
   async ngOnInit() {
@@ -54,6 +55,7 @@ export class FavouritesComponent implements OnInit {
 
     if (role === 'confirm') {
       await this.trackingService.addFood(data.food, data.quantity);
+      await this.router.navigate(['/home']);
     }
   }
 
@@ -71,23 +73,19 @@ export class FavouritesComponent implements OnInit {
 
   private async loadFavourites() {
     const favouritesList: string[] = await this.favouritesService.fetchFavourites() || [];
-    this.favouritesBG = favouritesList;
 
     this.fetching = true;
     this.favourites = [];
 
     for (let i = 0; i < favouritesList.length; i++) {
       this.foodService.fetchFoodData(await translate(favouritesList[i], {from: 'bg', to: 'en'})).subscribe(food => {
+        (food as any).translated_name = favouritesList[i];
         this.favourites.push(food);
 
-        if (i === favouritesList.length - 1) {
+        if (i + 1 === favouritesList.length) {
           this.fetching = false;
         }
       });
-    }
-
-    if (favouritesList.length === 0) {
-      this.fetching = false;
     }
   }
 }

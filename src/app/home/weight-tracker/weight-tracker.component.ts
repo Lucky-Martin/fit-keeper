@@ -13,9 +13,7 @@ import {UserService} from '../../setup/user.service';
 export class WeightTrackerComponent implements AfterViewInit {
   @ViewChild('graph') private graphRef: ElementRef;
   chart;
-
   constructor(private weightTrackingService: WeightTrackingService,
-              private userService: UserService,
               private modalController: ModalController) { }
 
   ngAfterViewInit() {
@@ -48,7 +46,7 @@ export class WeightTrackerComponent implements AfterViewInit {
 
     if (role === 'confirm') {
       await this.addWeightRecord(data.date, data.weight);
-      await this.userService.saveUserDataToDatabase();
+      await this.weightTrackingService.updateWeightRecordsDB();
     }
   }
 

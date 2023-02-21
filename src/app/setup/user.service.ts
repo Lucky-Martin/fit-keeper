@@ -4,6 +4,7 @@ import { Preferences } from '@capacitor/preferences';
 import { Subject } from 'rxjs';
 import {AngularFirestore} from '@angular/fire/compat/firestore';
 import {WeightTrackingService} from '../home/weight-tracker/weight-tracking.service';
+import {user} from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -12,14 +13,13 @@ export class UserService {
   user: IUser | null;
   userLogged: boolean;
   userLoggedStatus: Subject<boolean> = new Subject<boolean>();
-  private uid: string;
+  uid: string;
   private userStorageKey = 'USER';
   private uidKey = 'uid';
 
-  constructor(private database: AngularFirestore,
-              private weightTrackingService: WeightTrackingService) {
-    this.fetchUser().then(async user => {
-      this.user = user;
+  constructor(public database: AngularFirestore) {
+    this.fetchUser().then(async fetchedUser => {
+      this.user = fetchedUser;
       this.uid = await this.fetchUID();
 
       if (!(window.location.href.indexOf('setup') > -1 || window.location.href.indexOf('auth') > -1)) {
@@ -52,15 +52,13 @@ export class UserService {
   }
 
   async createUser(userData: IUser, save = true) {
-    const user: string = JSON.stringify(userData);
-
     await Preferences.set({
       key: this.userStorageKey,
-      value: user
+      value: JSON.stringify(userData)
     });
 
     if (save) {
-      await this.saveUserDataToDatabase();
+      await this.updateUserDB();
     }
   }
 
@@ -76,7 +74,7 @@ export class UserService {
     this.user[field] = value;
     await Preferences.set({key: this.userStorageKey, value: JSON.stringify(this.user)});
 
-    await this.saveUserDataToDatabase();
+    await this.updateUserDB();
   }
 
   async resetUser(): Promise<void> {
@@ -84,22 +82,11 @@ export class UserService {
     await Preferences.remove({key: this.userStorageKey});
   }
 
-  async saveUserDataToDatabase(setInit = false) {
-    const user: IUser = await this.fetchUser();
-    if (setInit) {
-      user.init = true;
-    }
+  async updateUserDB() {
+    await this.database.collection('users').doc(this.uid).set(this.user);
+  }
 
-    const weightProgress = await this.weightTrackingService.getWeightRecords();
-    let {value} = await Preferences.get({key: 'MEAL_HISTORY'});
-
-    if (!value) {
-      value = '[]';
-    }
-    const mealHistory = JSON.parse(value);
-
-    await this.database.collection('users').doc(this.uid).set(user);
-    await this.database.collection('mealHistory').doc(this.uid).set(mealHistory);
-    await this.database.collection('weightProgress').doc(this.uid).set({data: weightProgress});
+  async initUserDB() {
+    await this.updateUserDB();
   }
 }

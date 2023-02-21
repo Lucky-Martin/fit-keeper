@@ -9,12 +9,10 @@ The application that keeps you fit, and your body will love!
 
 **Every file, resource that have been used in our project!**
 
-## [Google Drive](https://drive.google.com/drive/folders/1p2HeKu3jKpXQ2gA_fzpAaU7QuxsNmM6N?usp=share_link)
+## [Google Drive](https://drive.google.com/drive/folders/15P31fOJ_re7NnxnKA-LvspiPBq6M7pV1?usp=share_link)
 
-## [Presentation](https://docs.google.com/presentation/d/1T4GwvPqXdMn6nUzqsPrtKkKz03rnm3Bq/edit?usp=sharing&ouid=111593716932661768977&rtpof=true&sd=true)
+## [Presentation](https://docs.google.com/presentation/d/1gPlOGF1WjdKlNCDyZQXErSHNtDQ8I0zj/edit?usp=share_link&ouid=112082612794513912993&rtpof=true&sd=true)
 
-## [Presentation Speech](https://docs.google.com/document/d/1CJApSL9PFxssrvzVc04S_yTLiAbQMhdHLSf7XFGhffQ/edit?usp=sharing)
+## [Ads materials](https://drive.google.com/drive/folders/1x9pb-yxiwvaR6z9VH2FbidYVRHVDZXy8?usp=share_link)
 
-## [Ads materials](https://drive.google.com/drive/folders/1I3-pR2GtBOSr7ajlsOr0ijMgQ3ax7VFm?usp=sharing)
-
-## [Documentation](https://docs.google.com/document/d/1sx6XZ4A_f-_NTf_ZKT6mchU07gr3hvvE/edit?usp=sharing&ouid=111593716932661768977&rtpof=true&sd=true)
+## [Documentation](https://drive.google.com/drive/folders/10-l-s6Zv-iyqKykY7BMxJl73pdzsQ2BY?usp=share_link)

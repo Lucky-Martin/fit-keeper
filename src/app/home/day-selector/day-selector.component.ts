@@ -20,6 +20,6 @@ export class DaySelectorComponent implements OnInit {
   async onDaySelected() {
     const mondayDate = this.trackingService.getMondayOfWeek();
     mondayDate.setDate(mondayDate.getDate() + Number(this.daySelected));
-    this.trackingService.setDay(mondayDate);
+    await this.trackingService.setDay(mondayDate);
   }
 }

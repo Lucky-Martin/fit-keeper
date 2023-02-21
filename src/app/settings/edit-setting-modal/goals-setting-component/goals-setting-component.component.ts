@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from '../../../setup/user.model';
-import {AlertController} from '@ionic/angular';
+import {AlertController, LoadingController} from '@ionic/angular';
 import {TrackingService} from '../../../home/tracker/tracking.service';
 import {UserService} from '../../../setup/user.service';
 
@@ -16,6 +16,7 @@ export class GoalsSettingComponentComponent implements OnInit {
   goalText: string;
 
   constructor(private alertController: AlertController,
+              private loadingController: LoadingController,
               private trackingService: TrackingService,
               private userService: UserService) { }
 
@@ -91,10 +92,13 @@ export class GoalsSettingComponentComponent implements OnInit {
       buttons: [{
         text: 'Select',
         handler: async (alertData) => {
+          const loading = await this.loadingController.create();
+          await loading.present();
           await this.userService.updateUser(field, typeof alertData === 'object' ? (type === 'number' ? Number(alertData[field]) : alertData[field]) : alertData);
           this.user = await this.fetchUser();
           await this.calculateCalorieGoal();
           this.generateTexts();
+          await loading.dismiss();
         }
       }],
       inputs

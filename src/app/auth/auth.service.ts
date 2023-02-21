@@ -1,29 +1,38 @@
-import { Injectable } from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
+import {Platform} from '@ionic/angular';
+import '@codetrix-studio/capacitor-google-auth';
+import { Plugins } from '@capacitor/core';
 import {
   Auth, GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword, signInWithPopup,
   signOut
 } from '@angular/fire/auth';
-import {Platform} from '@ionic/angular';
+import {AngularFireAuth} from '@angular/fire/compat/auth';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
   constructor(public auth: Auth,
-              private platform: Platform) { }
+              private afAuth: AngularFireAuth,
+              private platform: Platform) {
+    this.platform.ready().then(() => {
+      Plugins.GoogleAuth.initialize();
+    });
+  }
 
   async authWithGoogle() {
     try {
       if (this.platform.is('mobile')) {
-        // const provider = new GoogleAuthProvider();
-        // return await this.afAuth.signInWithPopup(provider);
-        return null;
+        const googleUser = await Plugins.GoogleAuth.signIn();
+        const credential = GoogleAuthProvider.credential(googleUser.authentication.idToken);
+        return await this.afAuth.signInAndRetrieveDataWithCredential(credential);
       } else {
         return await signInWithPopup(this.auth, new GoogleAuthProvider());
       }
     } catch (e) {
+      throw new Error(e);
       return null;
     }
   }
@@ -45,6 +54,6 @@ export class AuthService {
   }
 
   async logout() {
-    return signOut(this.auth);
+    return await signOut(this.auth);
   }
 }
