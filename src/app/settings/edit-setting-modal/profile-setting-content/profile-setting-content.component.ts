@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from '../../../setup/user.service';
 import {User} from '../../../setup/user.model';
-import {AlertController} from '@ionic/angular';
+import {AlertController, LoadingController} from '@ionic/angular';
 import {TrackingService} from '../../../home/tracker/tracking.service';
 
 @Component({
@@ -14,6 +14,7 @@ export class ProfileSettingContentComponent implements OnInit {
   calorieGoal: number;
 
   constructor(private alertController: AlertController,
+              private loadingController: LoadingController,
               private trackingService: TrackingService,
               private userService: UserService) { }
 
@@ -30,13 +31,16 @@ export class ProfileSettingContentComponent implements OnInit {
 
   async editValue(field: string, type?) {
     const alert = await this.alertController.create({
-      header: 'Edit details',
+      header: 'Редакция',
       buttons: [{
-        text: 'Edit',
+        text: 'Промени',
         handler: async (alertData) => {
+          const loading = await this.loadingController.create();
+          await loading.present();
           await this.userService.updateUser(field, alertData[field]);
           this.user = await this.fetchUser();
           await this.calculateCalorieGoal();
+          await loading.dismiss();
         }
       }],
       inputs: [

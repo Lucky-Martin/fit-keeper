@@ -80,7 +80,6 @@ export class MealHistoryComponent implements AfterViewInit {
     for(let i = 0; i < this.daysInAWeek; i++) {
 
       const dateString = week[i].toDateString();
-      console.log(dateString);
 
       if (mealHistory[dateString]) {
         let caloriesForDay = 0;
@@ -88,7 +87,6 @@ export class MealHistoryComponent implements AfterViewInit {
           caloriesForDay += mealHistory[dateString][j].calories;
         }
 
-        console.log(dateString, caloriesForDay);
         calories.push(Math.round(caloriesForDay));
       } else {
         calories.push(0);

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ModalController} from '@ionic/angular';
+import {LoadingController, ModalController} from '@ionic/angular';
 import {Food} from '../home/tracker/food.model';
 import {TrackingService} from '../home/tracker/tracking.service';
 import {FoodService} from './food.service';
@@ -20,21 +20,26 @@ export class FoodSearchComponent implements OnInit {
   favouritesOpened = false;
   predefinedDate: string = null;
   predefinedFoodQuery: string = null;
+  private loading: HTMLIonLoadingElement;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
               private trackingService: TrackingService,
               private foodService: FoodService,
-              private modalController: ModalController) {
+              private modalController: ModalController,
+              private loadingController: LoadingController) {
   }
 
   async ngOnInit() {
+    this.loading = await this.loadingController.create();
+
     this.route.queryParams
-      .subscribe(params => {
+      .subscribe(async params => {
         this.predefinedDate = params.day;
         this.predefinedFoodQuery = params.food;
 
         if (this.predefinedFoodQuery) {
+          await this.loading.present();
           this.fetching = true;
 
           this.foodService.fetchFoodData(this.predefinedFoodQuery).subscribe(async value => {
@@ -78,6 +83,7 @@ export class FoodSearchComponent implements OnInit {
       translatedQuery = await translate(query, {from: 'bg', to: 'en'});
     }
 
+    await this.loading.present();
     this.fetching = true;
 
     this.foodService.fetchFoodAutocomplete(translatedQuery).subscribe(async value => {
@@ -88,14 +94,17 @@ export class FoodSearchComponent implements OnInit {
       if (this.foundFoods.length === 0 && !trl) {
         return this.inputChanged(event, true);
       }
+      await this.loading.dismiss();
       this.fetching = false;
-    }, err => {
-        console.log(err);
+    }, async err => {
+      console.log(err);
       this.fetching = false;
+      await this.loading.dismiss();
     });
   }
 
-  onFoodSelected(food: string) {
+  async onFoodSelected(food: string) {
+    await this.loading.present();
     this.fetching = true;
     this.query = '';
     this.foundFoods = [];
@@ -119,6 +128,7 @@ export class FoodSearchComponent implements OnInit {
 
   private async openInputModal(food: Food) {
     this.fetching = false;
+    await this.loading.dismiss();
     this.query = '';
 
     const modal = await this.modalController.create({

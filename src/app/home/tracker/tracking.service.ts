@@ -53,7 +53,6 @@ export class TrackingService {
   }
 
   public async setDay(day: Date) {
-    await this.addCurrentDayToMealHistory();
     this.reset();
 
     this.currentDay = day.toDateString();
@@ -221,7 +220,6 @@ export class TrackingService {
   }
 
   public async updateMealHistoryDB(mealHistory: MealHistory) {
-    console.log(mealHistory);
     await this.userService.database.collection('mealHistory').doc(this.userService.uid).set(mealHistory);
   }
 
@@ -264,12 +262,12 @@ export class TrackingService {
 
   private async addCurrentDayToMealHistory() {
     const mealHistory: MealHistory = await this.fetchMealHistory();
-    console.log(mealHistory);
     const dayId: string = await this.fetchCurrentDay();
     mealHistory[dayId] = await this.fetchCurrentDayFoods();
-    console.log(mealHistory);
 
-    // await this.updateMealHistoryDB(mealHistory);
+    console.log('Update day', dayId, mealHistory);
+
+    await this.updateMealHistoryDB(mealHistory);
     await Preferences.set({key: this.mealHistoryKey, value: JSON.stringify(mealHistory)});
   }
 

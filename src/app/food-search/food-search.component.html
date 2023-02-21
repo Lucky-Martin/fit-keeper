@@ -3,13 +3,12 @@
   <div>
     <ion-grid>
       <ion-row>
-        <ion-col size="9">
+        <ion-col size="8">
           <ion-searchbar
             animated="true"
             (ionChange)="inputChanged($event)"
             [value]="query"
             placeholder="Търси храна"></ion-searchbar>
-          <ion-spinner name="lines-sharp" *ngIf="fetching"></ion-spinner>
         </ion-col>
         <ion-col>
           <ion-button class="favourites_button" (click)="openFavourites()">
