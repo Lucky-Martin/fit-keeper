@@ -48,7 +48,7 @@ export class HomePage {
         this.userService.userLogged = true;
         this.userService.userLoggedStatus.next(true);
         this.loaded = true;
-        await this.userService.saveUserDataToDatabase(true);
+        await this.userService.initUserDB();
         await loading.dismiss();
       }, 1500);
     } else {

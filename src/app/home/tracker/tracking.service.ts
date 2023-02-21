@@ -5,6 +5,8 @@ import {User} from '../../setup/user.model';
 import {Preferences} from '@capacitor/preferences';
 import {UserService} from '../../setup/user.service';
 
+type MealHistory = { [day: string]: Food[] };
+
 @Injectable({
   providedIn: 'root'
 })
@@ -58,7 +60,7 @@ export class TrackingService {
     await this.setCurrentDay(this.currentDay);
     await this.saveConsumedCalories(0);
 
-    const meals: { [day: string]: Food[] } = await this.fetchMealHistory();
+    const meals: MealHistory = await this.fetchMealHistory();
     let foodForTheDay: Food[] = [];
 
     if (meals[this.currentDay]) {
@@ -156,7 +158,7 @@ export class TrackingService {
     await this.saveCurrentDayFoods();
     await this.saveConsumedCalories();
     await this.addCurrentDayToMealHistory();
-    await this.userService.saveUserDataToDatabase();
+    await this.updateMealHistoryDB(await this.fetchMealHistory());
     const macros = await this.getMacros();
     this.macrosListener.next(macros);
   }
@@ -202,7 +204,7 @@ export class TrackingService {
     return value;
   }
 
-  public async fetchMealHistory(): Promise<{ [day: string]: Food[] }> {
+  public async fetchMealHistory(): Promise<MealHistory> {
     const {value} = await Preferences.get({key: this.mealHistoryKey});
     let parsedValue: { [day: string]: Food[] };
 
@@ -217,6 +219,10 @@ export class TrackingService {
 
   public async saveMealHistory(mealHistory: string) {
     await Preferences.set({key: this.mealHistoryKey, value: mealHistory});
+  }
+
+  public async updateMealHistoryDB(mealHistory: MealHistory) {
+    await this.userService.database.collection('mealHistory').doc(this.userService.uid).set(mealHistory);
   }
 
   public reset(): void {

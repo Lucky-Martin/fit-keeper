@@ -58,6 +58,10 @@ ion-accordion-group{
     src: url('./assets/fonts/BarlowCondensed-Regular.ttf');
 }
 
+.md body[color-theme="dark"] .reverse-title {
+  color: #ffffff;
+}
+
 ion-button, p {
     font-family: 'OpenSans', sans-serif;
 }

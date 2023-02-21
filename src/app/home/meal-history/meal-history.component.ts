@@ -8,16 +8,16 @@ import {TrackingService} from '../tracker/tracking.service';
   styleUrls: ['./meal-history.component.scss'],
 })
 export class MealHistoryComponent implements AfterViewInit {
-  private readonly daysInAWeek = 7;
   @ViewChild('graph') private graphRef: ElementRef;
-  graph: Chart;
+  private readonly daysInAWeek = 7;
+  private graph: Chart;
 
   constructor(private trackingService: TrackingService) {
     this.trackingService.getMacrosAsObservable().subscribe(this.updateGraph.bind(this));
   }
 
   async ngAfterViewInit() {
-    let calories = await this.calculateCaloriesForDay();
+    const calories = await this.calculateCaloriesForDay();
 
     this.graph = new Chart(this.graphRef.nativeElement, {
       type: 'bar',
@@ -35,9 +35,9 @@ export class MealHistoryComponent implements AfterViewInit {
         scales: {
           x: {
             ticks: {
-              color: "#ffffff",
+              color: '#ffffff',
               font: {
-                family: "OpenSans"
+                family: 'OpenSans'
               }
             },
             grid: {
@@ -46,9 +46,9 @@ export class MealHistoryComponent implements AfterViewInit {
           },
           y: {
             ticks: {
-              color: "#ffffff",
+              color: '#ffffff',
               font: {
-                family: "OpenSans"
+                family: 'OpenSans'
               }
             },
             grid: {
@@ -59,27 +59,28 @@ export class MealHistoryComponent implements AfterViewInit {
       }
     });
 
-    this.graph.config.options.color = "#ffffff";
+    this.graph.config.options.color = '#ffffff';
   }
 
   private async calculateCaloriesForDay(): Promise<number[]> {
     const mealHistory = await this.trackingService.fetchMealHistory();
-    const current = new Date();
     const calories: number[] = [];
+    const today = new Date();
+    const day = today.getDay();
+    const diff = today.getDate() - day + (day === 0 ? -6:1);
+    const monday = new Date(today.setDate(diff));
 
     const week = [];
-    if (current.toLocaleString().includes('Sun')) {
-      current.setDate(current.getDate() - 6);
-    }
 
     for (let i = 0; i < 7; i++) {
-      week.push(new Date(current));
-      current.setDate(current.getDate() + 1);
+      week.push(new Date(monday));
+      monday.setDate(monday.getDate() + 1);
     }
 
     for(let i = 0; i < this.daysInAWeek; i++) {
 
       const dateString = week[i].toDateString();
+      console.log(dateString);
 
       if (mealHistory[dateString]) {
         let caloriesForDay = 0;
@@ -87,6 +88,7 @@ export class MealHistoryComponent implements AfterViewInit {
           caloriesForDay += mealHistory[dateString][j].calories;
         }
 
+        console.log(dateString, caloriesForDay);
         calories.push(Math.round(caloriesForDay));
       } else {
         calories.push(0);

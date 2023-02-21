@@ -17,8 +17,7 @@ import {Router} from '@angular/router';
 export class FavouritesComponent implements OnInit {
   @Output() closed: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('modal') modal: IonModal;
-  favourites: IFetchFoodData[] = [];
-  favouritesBG: string[] = [];
+  favourites = [];
   open = true;
   fetching = false;
 
@@ -74,23 +73,19 @@ export class FavouritesComponent implements OnInit {
 
   private async loadFavourites() {
     const favouritesList: string[] = await this.favouritesService.fetchFavourites() || [];
-    this.favouritesBG = favouritesList;
 
     this.fetching = true;
     this.favourites = [];
 
     for (let i = 0; i < favouritesList.length; i++) {
       this.foodService.fetchFoodData(await translate(favouritesList[i], {from: 'bg', to: 'en'})).subscribe(food => {
+        (food as any).translated_name = favouritesList[i];
         this.favourites.push(food);
 
-        if (i === favouritesList.length - 1) {
+        if (i + 1 === favouritesList.length) {
           this.fetching = false;
         }
       });
-    }
-
-    if (favouritesList.length === 0) {
-      this.fetching = false;
     }
   }
 }

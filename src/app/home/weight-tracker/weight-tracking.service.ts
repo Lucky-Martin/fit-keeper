@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Preferences} from '@capacitor/preferences';
 import {IWeightRecord} from './weight-record.model';
 import {Subject} from 'rxjs';
+import {UserService} from '../../setup/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,16 @@ export class WeightTrackingService {
   updateWeightChartSubject: Subject<null> = new Subject<null>();
   private weightRecordsKey = 'weightRecords';
 
+  constructor(private userService: UserService) { }
+
   async saveWeightRecords(weightRecords: IWeightRecord[]) {
     await Preferences.set({ key: this.weightRecordsKey, value: JSON.stringify(weightRecords) });
+  }
+
+  async updateWeightRecordsDB() {
+    await this.userService.database.collection('weightProgress').doc(this.userService.uid).set({
+      data: this.getWeightRecords()
+    });
   }
 
   async addWeightRecord(weight: number, date: string) {
