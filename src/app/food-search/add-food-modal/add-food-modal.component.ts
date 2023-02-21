@@ -25,12 +25,12 @@ export class AddFoodModalComponent implements OnInit {
     }
 
     this.favouritesService.fetchFavourites().then(value => {
-      this.favourites = value;
+      this.favourites = value ? value : [];
     });
   }
 
   async ngOnInit() {
-    this.favourite = this.favourites.indexOf(this.food.name) > -1;
+    this.favourite = (this.favourites ? this.favourites : []).indexOf(this.food.name) > -1;
     this.food.name = await translate(this.food.name, {from: 'en', to: 'bg'});
   }
 

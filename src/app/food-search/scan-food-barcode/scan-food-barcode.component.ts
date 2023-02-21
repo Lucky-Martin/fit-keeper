@@ -28,6 +28,7 @@ export class ScanFoodBarcodeComponent implements OnInit {
           await this.displayNotFound();
           return;
         }
+        console.log(productData);
         await this.addFood(productData);
       });
     }).catch(err => {
@@ -38,12 +39,12 @@ export class ScanFoodBarcodeComponent implements OnInit {
   async addFood(foodData: IBarcodeProductData) {
     const food = new Food();
     food.name = foodData.product.product_name;
-    food.image = foodData.product.image_front_url;
+    food.image = foodData.product.image_url;
     food.weight = Number(foodData.product.product_quantity);
-    food.macros.protein = foodData.product.nutriments.proteins_serving;
-    food.macros.carbs = foodData.product.nutriments.carbohydrates_serving;
-    food.macros.fats = foodData.product.nutriments.fat_serving;
-    food.calories = foodData.product.nutriments['energy-kcal_serving'];
+    food.macros.protein = foodData.product.nutriments.proteins;
+    food.macros.carbs = foodData.product.nutriments.carbohydrates;
+    food.macros.fats = foodData.product.nutriments.fat;
+    food.calories = foodData.product.nutriments['energy-kcal'];
 
     const modal = await this.modalController.create({
       component: AddFoodModalComponent,

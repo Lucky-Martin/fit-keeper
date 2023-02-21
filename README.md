@@ -1,5 +1,8 @@
 # Welcome to FIT Keeper!
 The application that keeps you fit, and your body will love!
+
+<a href="https://play.google.com/store/apps/details?id=com.fit.keeper&pli=1"><img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" height=36px /></a>
+
 # Authors
 
  - Lucky - Martin - Varna, PGKMKS
