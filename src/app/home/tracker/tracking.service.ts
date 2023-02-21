@@ -158,7 +158,6 @@ export class TrackingService {
     await this.saveCurrentDayFoods();
     await this.saveConsumedCalories();
     await this.addCurrentDayToMealHistory();
-    await this.updateMealHistoryDB(await this.fetchMealHistory());
     const macros = await this.getMacros();
     this.macrosListener.next(macros);
   }
@@ -222,6 +221,7 @@ export class TrackingService {
   }
 
   public async updateMealHistoryDB(mealHistory: MealHistory) {
+    console.log(mealHistory);
     await this.userService.database.collection('mealHistory').doc(this.userService.uid).set(mealHistory);
   }
 
@@ -263,10 +263,13 @@ export class TrackingService {
   }
 
   private async addCurrentDayToMealHistory() {
-    const mealHistory: { [day: string]: Food[] } = await this.fetchMealHistory();
+    const mealHistory: MealHistory = await this.fetchMealHistory();
+    console.log(mealHistory);
     const dayId: string = await this.fetchCurrentDay();
     mealHistory[dayId] = await this.fetchCurrentDayFoods();
+    console.log(mealHistory);
 
+    // await this.updateMealHistoryDB(mealHistory);
     await Preferences.set({key: this.mealHistoryKey, value: JSON.stringify(mealHistory)});
   }
 

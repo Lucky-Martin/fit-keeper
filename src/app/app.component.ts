@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
           await this.trackingService.saveMealHistory(JSON.stringify(mealHistory));
           this.trackingService.foods = mealHistory[new Date().toDateString()];
         } else {
-          await this.trackingService.saveMealHistory('[]');
+          await this.trackingService.saveMealHistory('{}');
           this.trackingService.foods = [];
         }
       });
