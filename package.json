@@ -8,6 +8,7 @@
     "serve": "ionic serve",
     "build": "ng build",
     "build:android": "ionic capacitor copy android && npx cap sync",
+    "build:ios": "ionic capacitor copy ios && npx cap sync",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -29,6 +30,7 @@
     "@capacitor/core": "4.4.0",
     "@capacitor/filesystem": "^4.1.4",
     "@capacitor/haptics": "4.0.1",
+    "@capacitor/ios": "4.4.0",
     "@capacitor/keyboard": "^4.0.1",
     "@capacitor/preferences": "^4.0.1",
     "@capacitor/status-bar": "4.0.1",

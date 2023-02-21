@@ -19,7 +19,7 @@ export class AuthService {
       if (this.platform.is('mobile')) {
         // const provider = new GoogleAuthProvider();
         // return await this.afAuth.signInWithPopup(provider);
-        return null;
+        // return signInWithPopup();
       } else {
         return await signInWithPopup(this.auth, new GoogleAuthProvider());
       }

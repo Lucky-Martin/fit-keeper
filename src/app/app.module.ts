@@ -56,7 +56,9 @@ import {AngularFireModule} from '@angular/fire/compat';
         ProfileSettingContentComponent, GoalsSettingComponentComponent, AppearanceSettingComponentComponent,
         WorkoutGroupComponent, WeightTrackerComponent, ScanFoodBarcodeComponent, AddWeightRecordModalComponent],
   imports: [BrowserModule,
-    IonicModule.forRoot(),
+    IonicModule.forRoot({
+      mode: 'md'
+    }),
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
