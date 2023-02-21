@@ -64,7 +64,7 @@ export class SetupPage implements AfterViewInit {
       duration: 3000,
       buttons: [
         {
-          text: 'Dismiss',
+          text: 'Затвори',
           role: 'cancel'
         }
       ],
