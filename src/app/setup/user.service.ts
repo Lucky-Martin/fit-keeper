@@ -57,8 +57,11 @@ export class UserService {
       value: JSON.stringify(userData)
     });
 
+    this.user = userData;
+
+    console.log(this.user);
     if (save) {
-      await this.updateUserDB();
+      await this.database.collection('users').doc(this.uid).set(Object.assign({}, this.user));
     }
   }
 
@@ -83,7 +86,7 @@ export class UserService {
   }
 
   async updateUserDB() {
-    await this.database.collection('users').doc(this.uid).set(this.user);
+    await this.database.collection('users').doc(this.uid).set(Object.assign({}, this.user));
   }
 
   async initUserDB() {
