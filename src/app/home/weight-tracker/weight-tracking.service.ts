@@ -18,8 +18,9 @@ export class WeightTrackingService {
   }
 
   async updateWeightRecordsDB() {
-    await this.userService.database.collection('weightProgress').doc(this.userService.uid).set({
-      data: this.getWeightRecords()
+    const {value} = await Preferences.get({ key: 'uid' });
+    await this.userService.database.collection('weightProgress').doc(value).set({
+      data: await this.getWeightRecords()
     });
   }
 

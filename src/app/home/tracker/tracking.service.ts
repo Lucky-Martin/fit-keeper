@@ -142,6 +142,11 @@ export class TrackingService {
 
     await Preferences.set({key: this.calorieGoalKey, value: this.calorieGoal.toString()});
     await Preferences.set({key: this.macroGoalKey, value: JSON.stringify(this.macrosGoal)});
+
+    return {
+      calories: this.calorieGoal,
+      macros: this.macrosGoal
+    };
   }
 
   public async addFood(food: Food, quantity: number = 1): Promise<void> {
@@ -220,6 +225,7 @@ export class TrackingService {
   }
 
   public async saveMealHistory(mealHistory: string) {
+    console.log(mealHistory);
     await Preferences.set({key: this.mealHistoryKey, value: mealHistory});
   }
 
@@ -228,6 +234,7 @@ export class TrackingService {
       return;
     }
 
+    console.log(mealHistory);
     await this.userService.database.collection('mealHistory').doc(this.userService.uid).set(mealHistory);
   }
 
@@ -237,14 +244,19 @@ export class TrackingService {
   }
 
   public async fetchMacroGoal() {
-    const {value} = await Preferences.get({key: this.macroGoalKey});
-    this.macrosGoal = JSON.parse(value);
+    const user = await this.userService.fetchUser();
+    if (user) {
+      this.macrosGoal = user.macroGoal;
+    }
     return this.macrosGoal;
   }
 
   public async fetchCalorieGoal() {
-    const {value} = await Preferences.get({key: this.calorieGoalKey});
-    this.calorieGoal = Number(value);
+    const user = await this.userService.fetchUser();
+    console.log(user);
+    if (user) {
+      this.calorieGoal = Number(user.calorieGoal);
+    }
     return this.calorieGoal;
   }
 
