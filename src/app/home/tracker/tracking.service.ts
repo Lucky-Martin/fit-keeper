@@ -176,6 +176,10 @@ export class TrackingService {
       this.fetchCurrentDayFoods().then(value => {
         this.foods = value;
 
+
+        if (!this.foods) {
+          this.foods = [];
+        }
         for (let i = 0; i < this.foods.length; i++) {
           const element = this.foods[i];
 
@@ -220,6 +224,10 @@ export class TrackingService {
   }
 
   public async updateMealHistoryDB(mealHistory: MealHistory) {
+    if (!this.userService.uid) {
+      return;
+    }
+
     await this.userService.database.collection('mealHistory').doc(this.userService.uid).set(mealHistory);
   }
 
