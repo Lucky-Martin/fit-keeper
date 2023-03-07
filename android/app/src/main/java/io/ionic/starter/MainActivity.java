@@ -1,4 +1,4 @@
-package com.devdactic.capalogin;
+package io.ionic.starter;
 
 import android.os.Bundle;
 
@@ -13,10 +13,6 @@ public class MainActivity extends BridgeActivity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    // Initializes the Bridge
-    this.init(savedInstanceState, new ArrayList<Class<? extends Plugin>>() {{
-      // Additional plugins you've installed go here
-      add(GoogleAuth.class);
-    }});
+    this.registerPlugin(GoogleAuth.class);
   }
 }
