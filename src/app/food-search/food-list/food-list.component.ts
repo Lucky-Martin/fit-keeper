@@ -38,6 +38,7 @@ export class FoodListComponent implements OnInit {
 
   private fetchFavourites() {
     this.favouritesService.fetchFavourites().then(value => {
+      console.log(value)
       this.favourites = value;
     });
   }

@@ -77,6 +77,10 @@ export class FavouritesComponent implements OnInit {
     this.fetching = true;
     this.favourites = [];
 
+    if (favouritesList.length <= 0) {
+      return this.fetching = false;
+    }
+
     for (let i = 0; i < favouritesList.length; i++) {
       this.foodService.fetchFoodData(await translate(favouritesList[i], {from: 'bg', to: 'en'})).subscribe(food => {
         (food as any).translated_name = favouritesList[i];

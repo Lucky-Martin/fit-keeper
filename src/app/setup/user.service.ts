@@ -59,8 +59,8 @@ export class UserService {
 
     this.user = userData;
 
-    console.log(this.user);
     if (save) {
+      console.log(this.uid);
       await this.database.collection('users').doc(this.uid).set(Object.assign({}, this.user));
     }
   }

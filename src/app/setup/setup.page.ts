@@ -45,8 +45,10 @@ export class SetupPage implements AfterViewInit {
         this.slideIndex = 3;
         break;
       case 3:
-        await this.userService.createUser(this.user);
-        this.trackingService.calculateCalorieGoal(this.user).then(async () => {
+        this.trackingService.calculateCalorieGoal(this.user).then(async goal => {
+          this.user.macroGoal = goal.macros;
+          this.user.calorieGoal = goal.calories;
+          await this.userService.createUser(this.user);
           await this.router.navigate(['/home']);
         });
         break;
