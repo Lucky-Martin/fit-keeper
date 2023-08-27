@@ -10,7 +10,7 @@ import {IFetchFoodData} from './food-response.model';
 export class FoodService {
   private readonly autoCompleteAP: string = 'https://api.edamam.com/auto-complete';
   private readonly foodDataAP: string = 'https://api.edamam.com/api/food-database/v2/parser';
-  private readonly fetchFoodLimit = 75;
+  private readonly fetchFoodLimit = 10;
 
   constructor(private httpClient: HttpClient) {
   }
